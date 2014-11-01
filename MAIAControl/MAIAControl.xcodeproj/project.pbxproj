@@ -21,6 +21,8 @@
 		045B1C701A0267EA001A993F /* MAIAControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 045B1C6F1A0267EA001A993F /* MAIAControlTests.m */; };
 		045B1C7B1A02689C001A993F /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045B1C7A1A02689C001A993F /* GraphViewController.m */; };
 		045B1C7E1A0268BB001A993F /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045B1C7D1A0268BB001A993F /* TextViewController.m */; };
+		04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */; };
+		04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 04971A3A1A0545410019E9BE /* CmdSocket.m */; };
 		04EDA3781A03B2F20054F0B4 /* GroupClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA3771A03B2F20054F0B4 /* GroupClass.m */; };
 		04EDA37B1A03BA0C0054F0B4 /* XMLManipulate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA37A1A03BA0C0054F0B4 /* XMLManipulate.m */; };
 		04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA37D1A03BD7B0054F0B4 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -70,6 +72,10 @@
 		045B1C7A1A02689C001A993F /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
 		045B1C7C1A0268BB001A993F /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		045B1C7D1A0268BB001A993F /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
+		04971A341A053FB70019E9BE /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		04971A391A0545410019E9BE /* CmdSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CmdSocket.h; sourceTree = "<group>"; };
+		04971A3A1A0545410019E9BE /* CmdSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CmdSocket.m; sourceTree = "<group>"; };
 		04EDA3761A03B2F20054F0B4 /* GroupClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupClass.h; sourceTree = "<group>"; };
 		04EDA3771A03B2F20054F0B4 /* GroupClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupClass.m; sourceTree = "<group>"; };
 		04EDA3791A03BA0C0054F0B4 /* XMLManipulate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLManipulate.h; sourceTree = "<group>"; };
@@ -150,21 +156,13 @@
 		045B1C501A0267EA001A993F /* MAIAControl */ = {
 			isa = PBXGroup;
 			children = (
+				04971A381A0540760019E9BE /* LocalClass */,
+				04971A371A053FD90019E9BE /* ExternalClass */,
 				04EDA3811A03DA3A0054F0B4 /* images */,
-				04EDA37C1A03BD7B0054F0B4 /* GDataXMLNode.h */,
-				04EDA37D1A03BD7B0054F0B4 /* GDataXMLNode.m */,
 				045B1C591A0267EA001A993F /* AppDelegate.h */,
 				045B1C5A1A0267EA001A993F /* AppDelegate.m */,
 				045B1C5C1A0267EA001A993F /* Images.xcassets */,
 				045B1C511A0267EA001A993F /* Supporting Files */,
-				045B1C791A02689C001A993F /* GraphViewController.h */,
-				045B1C7A1A02689C001A993F /* GraphViewController.m */,
-				045B1C7C1A0268BB001A993F /* TextViewController.h */,
-				045B1C7D1A0268BB001A993F /* TextViewController.m */,
-				04EDA3761A03B2F20054F0B4 /* GroupClass.h */,
-				04EDA3771A03B2F20054F0B4 /* GroupClass.m */,
-				04EDA3791A03BA0C0054F0B4 /* XMLManipulate.h */,
-				04EDA37A1A03BA0C0054F0B4 /* XMLManipulate.m */,
 			);
 			path = MAIAControl;
 			sourceTree = "<group>";
@@ -196,6 +194,34 @@
 				045B1C6C1A0267EA001A993F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		04971A371A053FD90019E9BE /* ExternalClass */ = {
+			isa = PBXGroup;
+			children = (
+				04EDA37C1A03BD7B0054F0B4 /* GDataXMLNode.h */,
+				04EDA37D1A03BD7B0054F0B4 /* GDataXMLNode.m */,
+				04971A341A053FB70019E9BE /* GCDAsyncUdpSocket.h */,
+				04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */,
+			);
+			name = ExternalClass;
+			sourceTree = "<group>";
+		};
+		04971A381A0540760019E9BE /* LocalClass */ = {
+			isa = PBXGroup;
+			children = (
+				045B1C791A02689C001A993F /* GraphViewController.h */,
+				045B1C7A1A02689C001A993F /* GraphViewController.m */,
+				045B1C7C1A0268BB001A993F /* TextViewController.h */,
+				045B1C7D1A0268BB001A993F /* TextViewController.m */,
+				04EDA3761A03B2F20054F0B4 /* GroupClass.h */,
+				04EDA3771A03B2F20054F0B4 /* GroupClass.m */,
+				04EDA3791A03BA0C0054F0B4 /* XMLManipulate.h */,
+				04EDA37A1A03BA0C0054F0B4 /* XMLManipulate.m */,
+				04971A391A0545410019E9BE /* CmdSocket.h */,
+				04971A3A1A0545410019E9BE /* CmdSocket.m */,
+			);
+			name = LocalClass;
 			sourceTree = "<group>";
 		};
 		04EDA3811A03DA3A0054F0B4 /* images */ = {
@@ -328,9 +354,11 @@
 				04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */,
 				04EDA37B1A03BA0C0054F0B4 /* XMLManipulate.m in Sources */,
 				04EDA3781A03B2F20054F0B4 /* GroupClass.m in Sources */,
+				04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */,
 				045B1C571A0267EA001A993F /* main.m in Sources */,
 				045B1C7B1A02689C001A993F /* GraphViewController.m in Sources */,
 				045B1C7E1A0268BB001A993F /* TextViewController.m in Sources */,
+				04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

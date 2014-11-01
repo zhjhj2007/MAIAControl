@@ -16,7 +16,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     //self.window.backgroundColor = [UIColor whiteColor];
-    GraphViewController *viewController=[[GraphViewController alloc] initWithNibName:nil bundle:nil];
+    GraphViewController *viewController=[[GraphViewController alloc] init:@"/"];
     //这句是不可以使用导航方式跳转ViewController的
     self.window.rootViewController = viewController;
     //改成下面这句，就可以了

@@ -13,6 +13,7 @@
 //组的读操作，返回词典
 +(NSMutableDictionary *)getGroupInfo:(NSString *)groupPath{
     NSMutableDictionary *groupInfo=[NSMutableDictionary dictionary];
+    
     //filePath为配置文件的路径，其放在程序中默认的某个位置
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath=[paths objectAtIndex:0];
@@ -65,6 +66,7 @@
         NSLog(@"找不到路径!\n");
         return groupInfo;
     }
+    
     NSArray *temp=[tempNode elementsForName:@"GroupName"];
     if ([temp count]>0) {
         [groupInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"GroupName"];
@@ -399,37 +401,66 @@
         [md setObject:@"/" forKey:@"GroupPath"];
         [md setObject:@"G1" forKey:@"GroupName"];
         [md setObject:@"1.png" forKey:@"ImgUrl"];
-        [md setObject:@"100" forKey:@"Location_x"];
-        [md setObject:@"20" forKey:@"Location_y"];
-        [md setObject:@"64" forKey:@"Width"];
-        [md setObject:@"64" forKey:@"Height"];
+        [md setObject:@"200" forKey:@"Location_x"];
+        [md setObject:@"100" forKey:@"Location_y"];
+        [md setObject:@"111" forKey:@"Width"];
+        [md setObject:@"53" forKey:@"Height"];
         [md setObject:@"YES" forKey:@"LabelWillDisplay"];
         [self writeGroupInfoToFile:md];
         [md removeAllObjects];
-        [md setObject:@"/" forKey:@"CmdBtnPath"];
-        [md setObject:@"10.0.0.120" forKey:@"ServerIP"];
-        [md setObject:@"5000" forKey:@"ServerPort"];
+        
+        [md setObject:@"/" forKey:@"GroupPath"];
+        [md setObject:@"G2" forKey:@"GroupName"];
         [md setObject:@"1.png" forKey:@"ImgUrl"];
-        [md setObject:@"180" forKey:@"Location_x"];
-        [md setObject:@"20" forKey:@"Location_y"];
-        [md setObject:@"64" forKey:@"Width"];
-        [md setObject:@"64" forKey:@"Height"];
+        [md setObject:@"200" forKey:@"Location_x"];
+        [md setObject:@"300" forKey:@"Location_y"];
+        [md setObject:@"111" forKey:@"Width"];
+        [md setObject:@"53" forKey:@"Height"];
+        [md setObject:@"YES" forKey:@"LabelWillDisplay"];
+        [self writeGroupInfoToFile:md];
+        [md removeAllObjects];
+
+        [md setObject:@"/" forKey:@"CmdBtnPath"];
+        [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
+        [md setObject:@"8600" forKey:@"ServerPort"];
+        [md setObject:@"1.png" forKey:@"ImgUrl"];
+        [md setObject:@"200" forKey:@"Location_x"];
+        [md setObject:@"400" forKey:@"Location_y"];
+        [md setObject:@"87" forKey:@"Width"];
+        [md setObject:@"69" forKey:@"Height"];
         [md setObject:@"Open all the computer" forKey:@"Cmd"];
         [md setObject:@"Computer" forKey:@"CmdBtnName"];
         [md setObject:@"3" forKey:@"TimeDelay"];
         [md setObject:@"YES" forKey:@"LabelWillDisplay"];
         [self writeCmdBtnInfoToFile:md];
         [md removeAllObjects];
+        
+        [md setObject:@"/" forKey:@"CmdBtnPath"];
+        [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
+        [md setObject:@"8600" forKey:@"ServerPort"];
+        [md setObject:@"1.png" forKey:@"ImgUrl"];
+        [md setObject:@"200" forKey:@"Location_x"];
+        [md setObject:@"2000" forKey:@"Location_y"];
+        [md setObject:@"87" forKey:@"Width"];
+        [md setObject:@"69" forKey:@"Height"];
+        [md setObject:@"Open all the computer" forKey:@"Cmd"];
+        [md setObject:@"Computer1" forKey:@"CmdBtnName"];
+        [md setObject:@"3" forKey:@"TimeDelay"];
+        [md setObject:@"YES" forKey:@"LabelWillDisplay"];
+        [self writeCmdBtnInfoToFile:md];
+        [md removeAllObjects];
     }
 }
-//根据组的地址，获取该组的XML元素
-+(GDataXMLElement *)getGroupElement:(NSString *)groupPath{
+//根据路径，获取该路径下所有的组信息
++(NSMutableArray *)getGroupInfoByPath:(NSString *)curPath{
+    NSMutableArray *infoSet=[[NSMutableArray alloc] init];
+    
     //filePath为配置文件的路径，其放在程序中默认的某个位置
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath=[paths objectAtIndex:0];
     NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
     //处理路径，路径按照每个文件名+‘/’相连,例如：/组1/组2/组3/，注意最后以'/'结尾
-    NSArray *groupNames=[groupPath componentsSeparatedByString:@"/"];
+    NSArray *groupNames=[curPath componentsSeparatedByString:@"/"];
     NSMutableArray *Names=[[NSMutableArray alloc] init];
     for (NSString *temp in groupNames) {
         if (![temp isEqualToString:@""]) {
@@ -437,7 +468,9 @@
         }
     }
     //不存在配置文件，则返回空
-    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) return nil;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        return infoSet;
+    }
     NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
@@ -466,13 +499,178 @@
         }
         if(!flag){
             NSLog(@"找不到路径!\n");
-            return nil;
+            return infoSet;
         }
     }
     if (deep!=Deep) {
         NSLog(@"找不到路径!\n");
-        return nil;
+        return infoSet;
     }
-    return tempNode;
+    NSArray *groups=[tempNode elementsForName:@"Group"];
+    for (GDataXMLElement *group in groups) {
+        //将singleGroupInfo放在循环中，是因为防止数据覆盖。如果放在循环外，则所有数据是一样的。
+        NSMutableDictionary *singleGroupInfo=[NSMutableDictionary dictionary];
+        NSArray *temp=[group elementsForName:@"GroupName"];
+        if ([temp count]>0) {
+            [singleGroupInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"GroupName"];
+        }
+        else continue;
+        temp=[group elementsForName:@"ImgUrl"];
+        if ([temp count]>0) {
+            [singleGroupInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ImgUrl"];
+        }
+        else continue;
+        temp=[group elementsForName:@"Location_x"];
+        if ([temp count]>0) {
+            [singleGroupInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Location_x"];
+        }
+        else continue;
+        temp=[group elementsForName:@"Location_y"];
+        if ([temp count]>0) {
+            [singleGroupInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Location_y"];
+        }
+        else continue;
+        temp=[group elementsForName:@"Width"];
+        if ([temp count]>0) {
+            [singleGroupInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Width"];
+        }
+        else continue;
+        temp=[group elementsForName:@"Height"];
+        if ([temp count]>0) {
+            [singleGroupInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Height"];
+        }
+        else continue;
+        
+        temp=[group elementsForName:@"LabelWillDisplay"];
+        if ([temp count]>0) {
+            [singleGroupInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"LabelWillDisplay"];
+        }
+        else continue;
+        
+        [infoSet addObject:singleGroupInfo];
+        //[singleGroupInfo removeAllObjects];
+    }
+
+    return infoSet;
+}
+//根据路径，获取该路径下所有命令按钮的信息
++(NSMutableArray *)getCmdBtnInfoByPath:(NSString *)curPath{
+    NSMutableArray *infoSet=[[NSMutableArray alloc] init];
+    
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
+    //处理路径，路径按照每个文件名+‘/’相连,例如：/组1/组2/组3/，注意最后以'/'结尾
+    NSArray *groupNames=[curPath componentsSeparatedByString:@"/"];
+    NSMutableArray *Names=[[NSMutableArray alloc] init];
+    for (NSString *temp in groupNames) {
+        if (![temp isEqualToString:@""]) {
+            [Names addObject:temp];
+        }
+    }
+    //不存在配置文件，则返回空
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        return infoSet;
+    }
+    NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    //用于检测根路径的情况
+    int deep=0;
+    int Deep=[Names count];
+    GDataXMLElement *tempNode=[doc rootElement];
+    for (NSString *tempStr in Names) {
+        if ([tempStr isEqualToString:@""]) {
+            Deep--;
+            continue;
+        }
+        BOOL flag=false;
+        NSArray *groups2=[tempNode elementsForName:@"Group"];
+        for (GDataXMLElement *tempElement in groups2) {
+            NSArray *gName=[tempElement elementsForName:@"GroupName"];
+            if ([gName count]>0) {
+                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
+                if ([[GName stringValue] isEqualToString:tempStr]) {
+                    deep++;
+                    flag=true;
+                    tempNode=tempElement;
+                    break;
+                }
+            }
+        }
+        if(!flag){
+            NSLog(@"找不到路径!\n");
+            return infoSet;
+        }
+    }
+    if (deep!=Deep) {
+        NSLog(@"找不到路径!\n");
+        return infoSet;
+    }
+    NSArray *cmdBtns=[tempNode elementsForName:@"Button"];
+    for (GDataXMLElement *cmdBtn in cmdBtns) {
+        //将singleGroupInfo放在循环中，是因为防止数据覆盖。如果放在循环外，则所有数据是一样的。
+        NSMutableDictionary *singleBtnInfo=[NSMutableDictionary dictionary];
+        NSArray *temp=[cmdBtn elementsForName:@"ServerIP"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ServerIP"];
+        }
+        else continue;
+        temp=[cmdBtn elementsForName:@"ServerPort"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ServerPort"];
+        }
+        else continue;
+        temp=[cmdBtn elementsForName:@"Location_x"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Location_x"];
+        }
+        else continue;
+        temp=[cmdBtn elementsForName:@"Location_y"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Location_y"];
+        }
+        else continue;
+        temp=[cmdBtn elementsForName:@"Width"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Width"];
+        }
+        else continue;
+        temp=[cmdBtn elementsForName:@"Height"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Height"];
+        }
+        else continue;
+        
+        temp=[cmdBtn elementsForName:@"Cmd"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Cmd"];
+        }
+        else continue;
+        
+        temp=[cmdBtn elementsForName:@"CmdBtnName"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"CmdBtnName"];
+        }
+        else continue;
+        
+        temp=[cmdBtn elementsForName:@"TimeDelay"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"TimeDelay"];
+        }
+        else continue;
+        
+        temp=[cmdBtn elementsForName:@"LabelWillDisplay"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"LabelWillDisplay"];
+        }
+        
+        [infoSet addObject:singleBtnInfo];
+        //[singleGroupInfo removeAllObjects];
+    }
+    
+    return infoSet;
+
 }
 @end

@@ -19,6 +19,8 @@
 //修改操作
 //首次加载添加测试数据
 +(void)wirteTestData;
-//根据组的地址，获取该组的XML元素
-+(GDataXMLElement *)getGroupElement:(NSString *)groupPath;
+//根据路径，获取该路径下所有的组信息
++(NSMutableArray *)getGroupInfoByPath:(NSString *)curPath;
+//根据路径，获取该路径下所有命令按钮的信息
++(NSMutableArray *)getCmdBtnInfoByPath:(NSString *)curPath;
 @end

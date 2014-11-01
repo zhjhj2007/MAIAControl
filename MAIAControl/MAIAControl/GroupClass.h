@@ -8,10 +8,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XMLManipulate.h"
 
 @interface GroupClass : NSObject
-//groupPath：组在XML书中的位置，用于寻找组的配置信息
+//groupPath：组在XML树中的位置，用于寻找组的配置信息
+@property(nonatomic, retain) NSMutableDictionary *groupInfo;
 @property(nonatomic, copy) NSString *groupPath;
+//初始化函数，根据groupInfo初始化
+-(id)init:(NSString *)groupPath;
 //获取组的视图，包括一个UIButton和一个UILabel
--(UIView *)getGroupView:(NSString *)_groupPath;
+-(id)getGroupView;
 @end

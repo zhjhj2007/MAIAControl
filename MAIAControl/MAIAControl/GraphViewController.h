@@ -9,7 +9,12 @@
 
 #import <UIKit/UIKit.h>
 #import "XMLManipulate.h"
+#import "GroupClass.h"
+#import "CmdSocket.h"
 
-@interface GraphViewController : UIViewController
 
+@interface GraphViewController : UIViewController<UIScrollViewDelegate>
+@property(nonatomic, copy) NSString *curPagePath;
+@property(nonatomic,retain) UIScrollView *scrollView;
+-(id)init:(NSString *)_curPagePath;
 @end
