@@ -11,10 +11,11 @@
 #import "XMLManipulate.h"
 #import "GroupClass.h"
 #import "CmdSocket.h"
+#import "EGORefreshTableHeaderView.h"
 
-
-@interface GraphViewController : UIViewController<UIScrollViewDelegate>
+@interface GraphViewController : UIViewController<UIScrollViewDelegate,EGORefreshTableHeaderDelegate>
 @property(nonatomic, copy) NSString *curPagePath;
 @property(nonatomic,retain) UIScrollView *scrollView;
--(id)init:(NSString *)_curPagePath;
+@property(nonatomic,retain) EGORefreshTableHeaderView *refreshHeaderView;
+-(id)init:(NSString *)curPagePath;
 @end

@@ -39,6 +39,7 @@
 		04EDA3971A03DA880054F0B4 /* login.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EDA38B1A03DA880054F0B4 /* login.png */; };
 		04EDA3981A03DA880054F0B4 /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EDA38C1A03DA880054F0B4 /* normal.png */; };
 		04EDA3991A03DA880054F0B4 /* warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EDA38D1A03DA880054F0B4 /* warn.png */; };
+		04F2C5A71A05E6F200F3353F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,8 @@
 		04EDA38B1A03DA880054F0B4 /* login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login.png; sourceTree = "<group>"; };
 		04EDA38C1A03DA880054F0B4 /* normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal.png; sourceTree = "<group>"; };
 		04EDA38D1A03DA880054F0B4 /* warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warn.png; sourceTree = "<group>"; };
+		04F2C5A51A05E6F200F3353F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +202,8 @@
 		04971A371A053FD90019E9BE /* ExternalClass */ = {
 			isa = PBXGroup;
 			children = (
+				04F2C5A51A05E6F200F3353F /* EGORefreshTableHeaderView.h */,
+				04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */,
 				04EDA37C1A03BD7B0054F0B4 /* GDataXMLNode.h */,
 				04EDA37D1A03BD7B0054F0B4 /* GDataXMLNode.m */,
 				04971A341A053FB70019E9BE /* GCDAsyncUdpSocket.h */,
@@ -352,6 +357,7 @@
 			files = (
 				045B1C5B1A0267EA001A993F /* AppDelegate.m in Sources */,
 				04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */,
+				04F2C5A71A05E6F200F3353F /* EGORefreshTableHeaderView.m in Sources */,
 				04EDA37B1A03BA0C0054F0B4 /* XMLManipulate.m in Sources */,
 				04EDA3781A03B2F20054F0B4 /* GroupClass.m in Sources */,
 				04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */,

@@ -12,6 +12,13 @@
 @synthesize udpclient;
 @synthesize state;
 
+//保存所有者的信息
+-(id)initWithButtonName:(NSString *)btnName{
+    if (self = [super init]) {
+        self.btnName = btnName;
+    }
+    return self;
+}
 //按钮命令发送
 -(void)sendCmd:(NSString *)ServerIP ServerPort:(NSString *)ServerPort CmdText:(NSString *)cmdText{
     NSData *data = [cmdText dataUsingEncoding:NSUnicodeStringEncoding];
@@ -58,6 +65,8 @@
         [self setState:3];
     else if([msg isEqualToString:@"link"])//连接加载
         [self setState:4];
+    NSDictionary *stateInfo=[NSDictionary dictionaryWithObjectsAndKeys:self.btnName, @"CmdBtnName",[NSString stringWithFormat:@"%d",self.state],@"CmdBtnState", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"changeBtnStatus" object:nil userInfo:stateInfo];
 }
 
 @end

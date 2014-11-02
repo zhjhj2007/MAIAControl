@@ -11,5 +11,9 @@
 @interface CmdSocket : NSObject<GCDAsyncUdpSocketDelegate>
 @property (strong,nonatomic) GCDAsyncUdpSocket *udpclient;
 @property int state;
+@property (nonatomic,copy) NSString *btnName;
+//向服务器发送命令
 -(void)sendCmd:(NSString *)ServerIP ServerPort:(NSString *)ServerPort CmdText:(NSString *)cmdText;
+//初始化本类的所有者信息
+-(id)initWithButtonName:(NSString *)btnName;
 @end
