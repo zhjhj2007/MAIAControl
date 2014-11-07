@@ -46,7 +46,7 @@
     }
     //加载所有视图，包括组视图与按钮视图
     [self loadAllViews];
-    //[XMLManipulate setPageBackImgPath:@"/G1/" PageBackImgPath:@"/Users/Mac/Library/Application Support/iPhone Simulator/7.1/Applications/54A55042-FC5E-48D6-8171-161711EA33D5/Documents/child.jpg"];
+   // [XMLManipulate setPageBackImgPath:@"/" PageBackImgPath:@"/Users/Mac/Library/Application Support/iPhone Simulator/7.1/Applications/54A55042-FC5E-48D6-8171-161711EA33D5/Documents/child.jpg"];
     //注册通知中心，用于获取按钮状态更新信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeBtnStatus:) name:@"changeBtnStatus" object:nil];
 }
@@ -198,9 +198,9 @@
     }
     //判断是否为第一个页面，如果不是，加载一个返回按钮
     if (![_curPagePath isEqualToString:@"/"]) {
-        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 60, 60)];
+        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 30, 30)];
         backButton.titleLabel.text = @"back";
-        backButton.backgroundColor = [UIColor redColor];
+        [backButton setBackgroundImage:[UIImage imageNamed:@"Back.png"] forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(backToPre:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:backButton];
     }

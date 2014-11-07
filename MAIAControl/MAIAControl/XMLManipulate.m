@@ -414,7 +414,19 @@
         [md removeAllObjects];
         
         [md setObject:@"/" forKey:@"GroupPath"];
-        [md setObject:@"G2" forKey:@"GroupName"];
+        [md setObject:@"G1" forKey:@"GroupName"];
+        [md setObject:@"1.png" forKey:@"ImgUrl"];
+        [md setObject:@"200" forKey:@"Location_x"];
+        [md setObject:@"100" forKey:@"Location_y"];
+        [md setObject:@"111" forKey:@"Width"];
+        [md setObject:@"53" forKey:@"Height"];
+        [md setObject:@"YES" forKey:@"LabelWillDisplay"];
+        [md setObject:@"GOMON.jpg" forKey:@"PageBackImgPath"];
+        [self writeGroupInfoToFile:md];
+        [md removeAllObjects];
+        
+        [md setObject:@"/G1/" forKey:@"GroupPath"];
+        [md setObject:@"G11" forKey:@"GroupName"];
         [md setObject:@"1.png" forKey:@"ImgUrl"];
         [md setObject:@"200" forKey:@"Location_x"];
         [md setObject:@"300" forKey:@"Location_y"];
@@ -460,8 +472,8 @@
         [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
         [md setObject:@"8600" forKey:@"ServerPort"];
         [md setObject:@"1.png" forKey:@"ImgUrl"];
-        [md setObject:@"200" forKey:@"Location_x"];
-        [md setObject:@"1000" forKey:@"Location_y"];
+        [md setObject:@"300" forKey:@"Location_x"];
+        [md setObject:@"400" forKey:@"Location_y"];
         [md setObject:@"87" forKey:@"Width"];
         [md setObject:@"69" forKey:@"Height"];
         [md setObject:@"Open all the computer" forKey:@"Cmd"];
