@@ -23,4 +23,8 @@
 +(NSMutableArray *)getGroupInfoByPath:(NSString *)curPath;
 //根据路径，获取该路径下所有命令按钮的信息
 +(NSMutableArray *)getCmdBtnInfoByPath:(NSString *)curPath;
+//根据路径，获取该路径下页面的背景图片路径
++(NSString *)getPageBackImgPath:(NSString *)curPath;
+//根据路径，设置该路径下页面的背景图片路径
++(BOOL)setPageBackImgPath:(NSString *)curPath PageBackImgPath:(NSString *)pageBackImgPath;
 @end

@@ -295,6 +295,7 @@
     GDataXMLElement *gwidth=[GDataXMLNode elementWithName:@"Width" stringValue:[groupInfo objectForKey:@"Width"]];
     GDataXMLElement *gheidht=[GDataXMLNode elementWithName:@"Height" stringValue:[groupInfo objectForKey:@"Height"]];
     GDataXMLElement *glabelDisplay = [GDataXMLNode elementWithName:@"LabelWillDisplay" stringValue:[groupInfo objectForKey:@"LabelWillDisplay"]];
+    GDataXMLElement *pageBackImgPath = [GDataXMLNode elementWithName:@"PageBackImgPath" stringValue:[groupInfo objectForKey:@"PageBackImgPath"]];
     [newGroup addChild:gName];
     [newGroup addChild:gImgUrl];
     [newGroup addChild:locationX];
@@ -302,6 +303,7 @@
     [newGroup addChild:gwidth];
     [newGroup addChild:gheidht];
     [newGroup addChild:glabelDisplay];
+    [newGroup addChild:pageBackImgPath];
     
     [tempNode addChild:newGroup];
     NSData *data=doc.XMLData;
@@ -397,6 +399,7 @@
         NSString *xmldata=@"<?xml version=\"1.0\" encoding=\"utf-8\"?><setting></setting>";
         NSData *initData=[xmldata dataUsingEncoding:NSUTF8StringEncoding];
         [initData writeToFile:filePath atomically:YES];
+        [self setPageBackImgPath:@"/" PageBackImgPath:@"GOMON.jpg"];
         NSMutableDictionary *md=[NSMutableDictionary dictionary];
         [md setObject:@"/" forKey:@"GroupPath"];
         [md setObject:@"G1" forKey:@"GroupName"];
@@ -406,6 +409,7 @@
         [md setObject:@"111" forKey:@"Width"];
         [md setObject:@"53" forKey:@"Height"];
         [md setObject:@"YES" forKey:@"LabelWillDisplay"];
+        [md setObject:@"GOMON.jpg" forKey:@"PageBackImgPath"];
         [self writeGroupInfoToFile:md];
         [md removeAllObjects];
         
@@ -417,6 +421,7 @@
         [md setObject:@"111" forKey:@"Width"];
         [md setObject:@"53" forKey:@"Height"];
         [md setObject:@"YES" forKey:@"LabelWillDisplay"];
+        [md setObject:@"GOMON.jpg" forKey:@"PageBackImgPath"];
         [self writeGroupInfoToFile:md];
         [md removeAllObjects];
 
@@ -440,13 +445,30 @@
         [md setObject:@"8600" forKey:@"ServerPort"];
         [md setObject:@"1.png" forKey:@"ImgUrl"];
         [md setObject:@"200" forKey:@"Location_x"];
-        [md setObject:@"2000" forKey:@"Location_y"];
+        [md setObject:@"1000" forKey:@"Location_y"];
         [md setObject:@"87" forKey:@"Width"];
         [md setObject:@"69" forKey:@"Height"];
         [md setObject:@"Open all the computer" forKey:@"Cmd"];
         [md setObject:@"Computer1" forKey:@"CmdBtnName"];
         [md setObject:@"3" forKey:@"TimeDelay"];
         [md setObject:@"YES" forKey:@"LabelWillDisplay"];
+        [md setObject:@"GOMON.jpg" forKey:@"PageBackImgPath"];
+        [self writeCmdBtnInfoToFile:md];
+        [md removeAllObjects];
+        
+        [md setObject:@"/G1/" forKey:@"CmdBtnPath"];
+        [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
+        [md setObject:@"8600" forKey:@"ServerPort"];
+        [md setObject:@"1.png" forKey:@"ImgUrl"];
+        [md setObject:@"200" forKey:@"Location_x"];
+        [md setObject:@"1000" forKey:@"Location_y"];
+        [md setObject:@"87" forKey:@"Width"];
+        [md setObject:@"69" forKey:@"Height"];
+        [md setObject:@"Open all the computer" forKey:@"Cmd"];
+        [md setObject:@"Computer4" forKey:@"CmdBtnName"];
+        [md setObject:@"3" forKey:@"TimeDelay"];
+        [md setObject:@"YES" forKey:@"LabelWillDisplay"];
+        [md setObject:@"GOMON.jpg" forKey:@"PageBackImgPath"];
         [self writeCmdBtnInfoToFile:md];
         [md removeAllObjects];
     }
@@ -672,5 +694,132 @@
     
     return infoSet;
 
+}
+//根据路径，获取该路径下页面的背景图片路径
++(NSString *)getPageBackImgPath:(NSString *)curPath{
+    NSString *pageBackImgPath=nil;
+    
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
+    //处理路径，路径按照每个文件名+‘/’相连,例如：/组1/组2/组3/，注意最后以'/'结尾
+    NSArray *groupNames=[curPath componentsSeparatedByString:@"/"];
+    NSMutableArray *Names=[[NSMutableArray alloc] init];
+    for (NSString *temp in groupNames) {
+        if (![temp isEqualToString:@""]) {
+            [Names addObject:temp];
+        }
+    }
+    //不存在配置文件，则返回空
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        return pageBackImgPath;
+    }
+    NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    //用于检测根路径的情况
+    int deep=0;
+    int Deep=[Names count];
+    GDataXMLElement *tempNode=[doc rootElement];
+    for (NSString *tempStr in Names) {
+        if ([tempStr isEqualToString:@""]) {
+            Deep--;
+            continue;
+        }
+        BOOL flag=false;
+        NSArray *groups2=[tempNode elementsForName:@"Group"];
+        for (GDataXMLElement *tempElement in groups2) {
+            NSArray *gName=[tempElement elementsForName:@"GroupName"];
+            if ([gName count]>0) {
+                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
+                if ([[GName stringValue] isEqualToString:tempStr]) {
+                    deep++;
+                    flag=true;
+                    tempNode=tempElement;
+                    break;
+                }
+            }
+        }
+        if(!flag){
+            NSLog(@"找不到路径!\n");
+            return pageBackImgPath;
+        }
+    }
+    if (deep!=Deep) {
+        NSLog(@"找不到路径!\n");
+        return pageBackImgPath;
+    }
+    NSArray *temp=[tempNode elementsForName:@"PageBackImgPath"];
+    if ([temp count]>0) {
+        pageBackImgPath=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
+    }
+    return pageBackImgPath;
+}
+//根据路径，设置该路径下页面的背景图片路径
++(BOOL)setPageBackImgPath:(NSString *)curPath PageBackImgPath:(NSString *)pageBackImgPath{
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
+    //处理路径，路径按照每个文件名+‘/’相连,例如：/组1/组2/组3/，注意最后以'/'结尾
+    NSArray *groupNames=[curPath componentsSeparatedByString:@"/"];
+    NSMutableArray *Names=[[NSMutableArray alloc] init];
+    for (NSString *temp in groupNames) {
+        if (![temp isEqualToString:@""]) {
+            [Names addObject:temp];
+        }
+    }
+    //不存在配置文件，则返回空
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        return false;
+    }
+    NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    //用于检测根路径的情况
+    int deep=0;
+    int Deep=[Names count];
+    GDataXMLElement *tempNode=[doc rootElement];
+    for (NSString *tempStr in Names) {
+        if ([tempStr isEqualToString:@""]) {
+            Deep--;
+            continue;
+        }
+        BOOL flag=false;
+        NSArray *groups2=[tempNode elementsForName:@"Group"];
+        for (GDataXMLElement *tempElement in groups2) {
+            NSArray *gName=[tempElement elementsForName:@"GroupName"];
+            if ([gName count]>0) {
+                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
+                if ([[GName stringValue] isEqualToString:tempStr]) {
+                    deep++;
+                    flag=true;
+                    tempNode=tempElement;
+                    break;
+                }
+            }
+        }
+        if(!flag){
+            NSLog(@"找不到路径!\n");
+            return false;
+        }
+    }
+    if (deep!=Deep) {
+        NSLog(@"找不到路径!\n");
+        return false;
+    }
+    NSArray *temp=[tempNode elementsForName:@"PageBackImgPath"];
+    if ([temp count]>0) {
+        [(GDataXMLElement *)[temp objectAtIndex:0] setStringValue:pageBackImgPath];
+    }
+    else{
+        GDataXMLElement *tmp=[GDataXMLNode elementWithName:@"PageBackImgPath" stringValue:pageBackImgPath];
+        [tempNode addChild:tmp];
+    }
+    NSData *tmpxmlData=doc.XMLData;
+    [tmpxmlData writeToFile:filePath atomically:YES];
+    NSLog(@"%@页面背景更新成功\n",curPath);
+    return true;
 }
 @end

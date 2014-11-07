@@ -16,6 +16,7 @@
 @interface GraphViewController : UIViewController<UIScrollViewDelegate,EGORefreshTableHeaderDelegate>
 @property(nonatomic, copy) NSString *curPagePath;
 @property(nonatomic,retain) UIScrollView *scrollView;
+@property(nonatomic, assign) BOOL reloading;
 @property(nonatomic,retain) EGORefreshTableHeaderView *refreshHeaderView;
 -(id)init:(NSString *)curPagePath;
 @end
