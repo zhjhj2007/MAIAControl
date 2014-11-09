@@ -13,6 +13,7 @@
 #import "CmdSocket.h"
 #import "EGORefreshTableHeaderView.h"
 #import "FPPopoverController.h"
+#import "SettingViewController.h"
 
 @interface GraphViewController : UIViewController<UIScrollViewDelegate,EGORefreshTableHeaderDelegate,FPPopoverControllerDelegate>
 @property(nonatomic, copy) NSString *curPagePath;

@@ -22,10 +22,23 @@
 		045B1C7B1A02689C001A993F /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045B1C7A1A02689C001A993F /* GraphViewController.m */; };
 		045B1C7E1A0268BB001A993F /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 045B1C7D1A0268BB001A993F /* TextViewController.m */; };
 		0478ED6F1A0C6E1200E2AE61 /* Back.png in Resources */ = {isa = PBXBuildFile; fileRef = 0478ED6E1A0C6E1200E2AE61 /* Back.png */; };
+		04849B4A1A0F74DE00CD497C /* Lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 04849B491A0F74DE00CD497C /* Lock.png */; };
 		0495DE7C1A0BC4610075ED07 /* GOMON.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0495DE7B1A0BC4610075ED07 /* GOMON.jpg */; };
 		0495DE7E1A0BE85B0075ED07 /* child.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0495DE7D1A0BE85B0075ED07 /* child.jpg */; };
 		04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */; };
 		04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 04971A3A1A0545410019E9BE /* CmdSocket.m */; };
+		04EA0E331A0F7D9C00573FFB /* NewButtonAndGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E2A1A0F7D9C00573FFB /* NewButtonAndGroupView.xib */; };
+		04EA0E341A0F7D9C00573FFB /* NewButtonAndGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E2C1A0F7D9C00573FFB /* NewButtonAndGroupViewController.m */; };
+		04EA0E351A0F7D9C00573FFB /* NewGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E2D1A0F7D9C00573FFB /* NewGroupView.xib */; };
+		04EA0E361A0F7D9C00573FFB /* NewGroupViewVontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E2F1A0F7D9C00573FFB /* NewGroupViewVontroller.m */; };
+		04EA0E371A0F7D9C00573FFB /* ShowNextLevelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E301A0F7D9C00573FFB /* ShowNextLevelView.xib */; };
+		04EA0E381A0F7D9C00573FFB /* ShowNextLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E321A0F7D9C00573FFB /* ShowNextLevelViewController.m */; };
+		04EA0E3C1A0F7E6B00573FFB /* SettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E391A0F7E6B00573FFB /* SettingView.xib */; };
+		04EA0E3D1A0F7E6B00573FFB /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E3B1A0F7E6B00573FFB /* SettingViewController.m */; };
+		04EA0E411A0F7E9300573FFB /* AddNewButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E3E1A0F7E9300573FFB /* AddNewButton.xib */; };
+		04EA0E421A0F7E9300573FFB /* AddNewButtonController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E401A0F7E9300573FFB /* AddNewButtonController.m */; };
+		04EA0E451A0F804400573FFB /* NameAndImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E441A0F804400573FFB /* NameAndImageInfo.m */; };
+		04EA0E481A0F830B00573FFB /* imageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E471A0F830B00573FFB /* imageManager.m */; };
 		04EDA3781A03B2F20054F0B4 /* GroupClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA3771A03B2F20054F0B4 /* GroupClass.m */; };
 		04EDA37B1A03BA0C0054F0B4 /* XMLManipulate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA37A1A03BA0C0054F0B4 /* XMLManipulate.m */; };
 		04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA37D1A03BD7B0054F0B4 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -81,12 +94,32 @@
 		045B1C7C1A0268BB001A993F /* TextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		045B1C7D1A0268BB001A993F /* TextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
 		0478ED6E1A0C6E1200E2AE61 /* Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back.png; sourceTree = "<group>"; };
+		04849B491A0F74DE00CD497C /* Lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Lock.png; sourceTree = "<group>"; };
 		0495DE7B1A0BC4610075ED07 /* GOMON.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = GOMON.jpg; sourceTree = "<group>"; };
 		0495DE7D1A0BE85B0075ED07 /* child.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = child.jpg; sourceTree = "<group>"; };
 		04971A341A053FB70019E9BE /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
 		04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		04971A391A0545410019E9BE /* CmdSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CmdSocket.h; sourceTree = "<group>"; };
 		04971A3A1A0545410019E9BE /* CmdSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CmdSocket.m; sourceTree = "<group>"; };
+		04EA0E2A1A0F7D9C00573FFB /* NewButtonAndGroupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewButtonAndGroupView.xib; sourceTree = "<group>"; };
+		04EA0E2B1A0F7D9C00573FFB /* NewButtonAndGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewButtonAndGroupViewController.h; sourceTree = "<group>"; };
+		04EA0E2C1A0F7D9C00573FFB /* NewButtonAndGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewButtonAndGroupViewController.m; sourceTree = "<group>"; };
+		04EA0E2D1A0F7D9C00573FFB /* NewGroupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewGroupView.xib; sourceTree = "<group>"; };
+		04EA0E2E1A0F7D9C00573FFB /* NewGroupViewVontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGroupViewVontroller.h; sourceTree = "<group>"; };
+		04EA0E2F1A0F7D9C00573FFB /* NewGroupViewVontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGroupViewVontroller.m; sourceTree = "<group>"; };
+		04EA0E301A0F7D9C00573FFB /* ShowNextLevelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowNextLevelView.xib; sourceTree = "<group>"; };
+		04EA0E311A0F7D9C00573FFB /* ShowNextLevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowNextLevelViewController.h; sourceTree = "<group>"; };
+		04EA0E321A0F7D9C00573FFB /* ShowNextLevelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowNextLevelViewController.m; sourceTree = "<group>"; };
+		04EA0E391A0F7E6B00573FFB /* SettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingView.xib; sourceTree = "<group>"; };
+		04EA0E3A1A0F7E6B00573FFB /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		04EA0E3B1A0F7E6B00573FFB /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		04EA0E3E1A0F7E9300573FFB /* AddNewButton.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddNewButton.xib; sourceTree = "<group>"; };
+		04EA0E3F1A0F7E9300573FFB /* AddNewButtonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddNewButtonController.h; sourceTree = "<group>"; };
+		04EA0E401A0F7E9300573FFB /* AddNewButtonController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddNewButtonController.m; sourceTree = "<group>"; };
+		04EA0E431A0F804400573FFB /* NameAndImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameAndImageInfo.h; sourceTree = "<group>"; };
+		04EA0E441A0F804400573FFB /* NameAndImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameAndImageInfo.m; sourceTree = "<group>"; };
+		04EA0E461A0F830B00573FFB /* imageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageManager.h; sourceTree = "<group>"; };
+		04EA0E471A0F830B00573FFB /* imageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imageManager.m; sourceTree = "<group>"; };
 		04EDA3761A03B2F20054F0B4 /* GroupClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupClass.h; sourceTree = "<group>"; };
 		04EDA3771A03B2F20054F0B4 /* GroupClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupClass.m; sourceTree = "<group>"; };
 		04EDA3791A03BA0C0054F0B4 /* XMLManipulate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLManipulate.h; sourceTree = "<group>"; };
@@ -217,6 +250,32 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		04849B4B1A0F76DC00CD497C /* SystemConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				04EA0E461A0F830B00573FFB /* imageManager.h */,
+				04EA0E471A0F830B00573FFB /* imageManager.m */,
+				04EA0E431A0F804400573FFB /* NameAndImageInfo.h */,
+				04EA0E441A0F804400573FFB /* NameAndImageInfo.m */,
+				04EA0E3E1A0F7E9300573FFB /* AddNewButton.xib */,
+				04EA0E3F1A0F7E9300573FFB /* AddNewButtonController.h */,
+				04EA0E401A0F7E9300573FFB /* AddNewButtonController.m */,
+				04EA0E391A0F7E6B00573FFB /* SettingView.xib */,
+				04EA0E3A1A0F7E6B00573FFB /* SettingViewController.h */,
+				04EA0E3B1A0F7E6B00573FFB /* SettingViewController.m */,
+				04EA0E2A1A0F7D9C00573FFB /* NewButtonAndGroupView.xib */,
+				04EA0E2B1A0F7D9C00573FFB /* NewButtonAndGroupViewController.h */,
+				04EA0E2C1A0F7D9C00573FFB /* NewButtonAndGroupViewController.m */,
+				04EA0E2D1A0F7D9C00573FFB /* NewGroupView.xib */,
+				04EA0E2E1A0F7D9C00573FFB /* NewGroupViewVontroller.h */,
+				04EA0E2F1A0F7D9C00573FFB /* NewGroupViewVontroller.m */,
+				04EA0E301A0F7D9C00573FFB /* ShowNextLevelView.xib */,
+				04EA0E311A0F7D9C00573FFB /* ShowNextLevelViewController.h */,
+				04EA0E321A0F7D9C00573FFB /* ShowNextLevelViewController.m */,
+			);
+			name = SystemConfiguration;
+			sourceTree = "<group>";
+		};
 		04971A371A053FD90019E9BE /* ExternalClass */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,6 +293,7 @@
 		04971A381A0540760019E9BE /* LocalClass */ = {
 			isa = PBXGroup;
 			children = (
+				04849B4B1A0F76DC00CD497C /* SystemConfiguration */,
 				045B1C791A02689C001A993F /* GraphViewController.h */,
 				045B1C7A1A02689C001A993F /* GraphViewController.m */,
 				045B1C7C1A0268BB001A993F /* TextViewController.h */,
@@ -251,6 +311,7 @@
 		04EDA3811A03DA3A0054F0B4 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				04849B491A0F74DE00CD497C /* Lock.png */,
 				0478ED6E1A0C6E1200E2AE61 /* Back.png */,
 				0495DE7D1A0BE85B0075ED07 /* child.jpg */,
 				0495DE7B1A0BC4610075ED07 /* GOMON.jpg */,
@@ -360,19 +421,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04849B4A1A0F74DE00CD497C /* Lock.png in Resources */,
 				04EDA3901A03DA880054F0B4 /* 8.png in Resources */,
+				04EA0E331A0F7D9C00573FFB /* NewButtonAndGroupView.xib in Resources */,
 				04EDA3991A03DA880054F0B4 /* warn.png in Resources */,
 				04EDA3981A03DA880054F0B4 /* normal.png in Resources */,
 				04EDA3971A03DA880054F0B4 /* login.png in Resources */,
 				04EDA3921A03DA880054F0B4 /* Bug.png in Resources */,
+				04EA0E411A0F7E9300573FFB /* AddNewButton.xib in Resources */,
+				04EA0E351A0F7D9C00573FFB /* NewGroupView.xib in Resources */,
 				04EDA38E1A03DA880054F0B4 /* 1.png in Resources */,
 				045B1C551A0267EA001A993F /* InfoPlist.strings in Resources */,
 				0478ED6F1A0C6E1200E2AE61 /* Back.png in Resources */,
+				04EA0E3C1A0F7E6B00573FFB /* SettingView.xib in Resources */,
 				0495DE7C1A0BC4610075ED07 /* GOMON.jpg in Resources */,
 				04EDA3961A03DA880054F0B4 /* link.png in Resources */,
 				04EDA3911A03DA880054F0B4 /* add.png in Resources */,
 				04EDA3941A03DA880054F0B4 /* error.png in Resources */,
 				04EDA38F1A03DA880054F0B4 /* 2.png in Resources */,
+				04EA0E371A0F7D9C00573FFB /* ShowNextLevelView.xib in Resources */,
 				0495DE7E1A0BE85B0075ED07 /* child.jpg in Resources */,
 				045B1C5D1A0267EA001A993F /* Images.xcassets in Resources */,
 				04EDA3951A03DA880054F0B4 /* iDisk.png in Resources */,
@@ -397,15 +464,22 @@
 			files = (
 				045B1C5B1A0267EA001A993F /* AppDelegate.m in Sources */,
 				04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */,
+				04EA0E481A0F830B00573FFB /* imageManager.m in Sources */,
+				04EA0E381A0F7D9C00573FFB /* ShowNextLevelViewController.m in Sources */,
 				B9AA07741A0E5137001DB552 /* FPPopoverController.m in Sources */,
 				04F2C5A71A05E6F200F3353F /* EGORefreshTableHeaderView.m in Sources */,
+				04EA0E3D1A0F7E6B00573FFB /* SettingViewController.m in Sources */,
 				04EDA37B1A03BA0C0054F0B4 /* XMLManipulate.m in Sources */,
+				04EA0E341A0F7D9C00573FFB /* NewButtonAndGroupViewController.m in Sources */,
 				04EDA3781A03B2F20054F0B4 /* GroupClass.m in Sources */,
 				B9AA07751A0E5137001DB552 /* FPPopoverView.m in Sources */,
 				B9AA07CD1A0EFF19001DB552 /* DemoTableController.m in Sources */,
+				04EA0E421A0F7E9300573FFB /* AddNewButtonController.m in Sources */,
 				04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */,
 				045B1C571A0267EA001A993F /* main.m in Sources */,
 				045B1C7B1A02689C001A993F /* GraphViewController.m in Sources */,
+				04EA0E361A0F7D9C00573FFB /* NewGroupViewVontroller.m in Sources */,
+				04EA0E451A0F804400573FFB /* NameAndImageInfo.m in Sources */,
 				B9AA07761A0E5137001DB552 /* FPTouchView.m in Sources */,
 				045B1C7E1A0268BB001A993F /* TextViewController.m in Sources */,
 				04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */,

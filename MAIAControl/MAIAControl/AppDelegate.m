@@ -16,13 +16,14 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     //self.window.backgroundColor = [UIColor whiteColor];
-    GraphViewController *viewController=[[GraphViewController alloc] init:@"/"];
+    GraphViewController *rootviewController=[[GraphViewController alloc] init:@"/"];
     //这句是不可以使用导航方式跳转ViewController的
-    self.window.rootViewController = viewController;
+    //?self.window.rootViewController = viewController;
     //改成下面这句，就可以了
     //不使用导航栏了，有一个白条不美观，使用展示方法跳转
-    //self.window.rootViewController=[[UINavigationController alloc] initWithRootViewController:viewController];
-    self.window.backgroundColor=[UIColor grayColor];
+    self.window.rootViewController=[[UINavigationController alloc] initWithRootViewController:rootviewController];
+    rootviewController.title=@"主页面";
+    ;self.window.backgroundColor=[UIColor grayColor];
     [self.window makeKeyAndVisible];
     return YES;
 }

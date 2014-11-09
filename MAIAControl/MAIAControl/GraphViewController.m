@@ -29,6 +29,10 @@
     return self;
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -222,13 +226,21 @@
         [self.scrollView addSubview:[self getPopBtnView:tmpDict]];
         
     }
-    //判断是否为第一个页面，如果不是，加载一个返回按钮
+    //判断是否为第一个页面，如果不是，加载一个返回按钮，否则加载登录界面按钮
     if (![_curPagePath isEqualToString:@"/"]) {
         UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 30, 30)];
         backButton.titleLabel.text = @"back";
         [backButton setBackgroundImage:[UIImage imageNamed:@"Back.png"] forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(backToPre:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:backButton];
+    }
+    else{
+        UIButton *LoginButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.height-40, 10, 30, 30)];
+        LoginButton.titleLabel.text = @"Administrator";
+        LoginButton.showsTouchWhenHighlighted=true;
+        [LoginButton setBackgroundImage:[UIImage imageNamed:@"Lock.png"] forState:UIControlStateNormal];
+        [LoginButton addTarget:self action:@selector(showTheLoginView) forControlEvents:UIControlEventTouchUpInside];
+        [self.scrollView addSubview:LoginButton];
     }
     
     [self setBackGroudImg];
@@ -301,7 +313,8 @@
     GraphViewController *next = [[GraphViewController alloc] init:[_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text]];
 
     //[self setModalPresentationStyle:UIModalPresentationPageSheet];
-    [self presentViewController:next animated:YES completion:nil];
+    //?[self presentViewController:next animated:YES completion:nil];
+    [[self navigationController] pushViewController:next animated:YES];
     //[self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
 }
 
@@ -332,8 +345,16 @@
 }
 
 -(void)backToPre:(UIButton *)sender{
-    [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-    [self dismissViewControllerAnimated:YES completion:nil];
+//?    [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    [[self navigationController] popViewControllerAnimated:YES];
+}
+
+-(void)showTheLoginView{
+    SettingViewController *next = [[SettingViewController alloc]  initWithNibName:@"SettingView" bundle:nil];
+    [self.navigationController pushViewController:next animated:YES];
+    
+    
 }
 
 //向服务器发送按钮配置的命令

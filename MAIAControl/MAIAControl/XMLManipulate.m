@@ -706,6 +706,146 @@
         
     }
 }
+#pragma mark delete operation
++(BOOL)deleteGroupByPath:(NSString *)groupPath{
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
+    //处理路径，路径按照每个文件名+‘/’相连,例如：/组1/组2/组3/，注意最后以'/'结尾
+    NSArray *groupNames=[groupPath componentsSeparatedByString:@"/"];
+    NSMutableArray *Names=[[NSMutableArray alloc] init];
+    for (NSString *temp in groupNames) {
+        if (![temp isEqualToString:@""]) {
+            [Names addObject:temp];
+        }
+    }
+    //不存在配置文件，则返回空
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        
+        return false;
+    }
+    NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    //用于检测根路径的情况
+    int deep=0;
+    int Deep=[Names count];
+    GDataXMLElement *tempNode=[doc rootElement];
+    GDataXMLElement *tempChildNode;
+    for (NSString *tempStr in Names) {
+        if ([tempStr isEqualToString:@""]) {
+            Deep--;
+            continue;
+        }
+        BOOL flag=false;
+        NSArray *groups2=[tempNode elementsForName:@"Group"];
+        for (tempChildNode in groups2) {
+            NSArray *gName=[tempChildNode elementsForName:@"GroupName"];
+            if ([gName count]>0) {
+                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
+                if ([[GName stringValue] isEqualToString:tempStr]) {
+                    deep++;
+                    flag=true;
+                    tempNode=tempChildNode;
+                    break;
+                }
+            }
+        }
+        if(!flag){
+            NSLog(@"找不到路径!\n");
+            return false;
+        }
+    }
+    if (deep!=Deep) {
+        NSLog(@"找不到路径!\n");
+        return false;
+    }
+    [tempNode removeChild:tempChildNode];
+    xmlData=doc.XMLData;
+    [xmlData writeToFile:filePath atomically:YES];
+    NSLog(@"%@删除成功\n",[Names objectAtIndex:[Names count]-1]);
+    return true;
+}
++(BOOL)deleteCmdBtnByPath:(NSString *)cmdBtnPath{
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
+    //处理路径，路径按照每个文件名+‘/’相连,例如：/组1/组2/按钮3/，注意最后以'/'结尾，并且最后一个是按钮名
+    //以下是为了处理掉按钮的名字
+    NSArray *fakegroupNames=[cmdBtnPath componentsSeparatedByString:@"/"];
+    NSString *CmdBtnName=[fakegroupNames objectAtIndex:[fakegroupNames count]-2];
+    NSMutableArray *groupNames=[[NSMutableArray alloc] init];
+    for (int i=0; i<[fakegroupNames count]-2; i++) {
+        [groupNames addObject:[fakegroupNames objectAtIndex:i]];
+    }
+    [groupNames addObject:@""];
+    NSMutableArray *Names=[[NSMutableArray alloc] init];
+    for (NSString *temp in groupNames) {
+        if (![temp isEqualToString:@""]) {
+            [Names addObject:temp];
+        }
+    }
+    //不存在配置文件，则返回空
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) return false;
+    NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    int deep=0;
+    int Deep=[Names count];
+    GDataXMLElement *tempNode=[doc rootElement];
+    for (NSString *tempStr in Names) {
+        if ([tempStr isEqualToString:@""]) {
+            Deep--;
+            continue;
+        }
+        BOOL flag=false;
+        NSArray *groups2=[tempNode elementsForName:@"Group"];
+        for (GDataXMLElement *tempElement in groups2) {
+            NSArray *gName=[tempElement elementsForName:@"GroupName"];
+            if ([gName count]>0) {
+                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
+                if ([[GName stringValue] isEqualToString:tempStr]) {
+                    deep++;
+                    flag=true;
+                    tempNode=tempElement;
+                    break;
+                }
+            }
+        }
+        if(!flag){
+            NSLog(@"找不到路径!\n");
+            return false;
+        }
+    }
+    if (deep!=Deep) {
+        NSLog(@"找不到路径!\n");
+        return false;
+    }
+    NSArray *temp=[tempNode elementsForName:@"Button"];
+    GDataXMLElement *tempChildNode;
+    BOOL flag=false;
+    for (tempChildNode in temp){
+        NSArray *bName=[tempChildNode elementsForName:@"CmdBtnName"];
+        if ([bName count]>0) {
+            GDataXMLElement *BName=(GDataXMLElement *)[bName objectAtIndex:0];
+            if ([[BName stringValue] isEqualToString:CmdBtnName]) {
+                flag=true;
+                break;
+            }
+        }
+    }
+    //flag为true是，表示找到了该按钮
+    if (flag) {
+        [tempNode removeChild:tempChildNode];
+        xmlData=doc.XMLData;
+        [xmlData writeToFile:filePath atomically:YES];
+        NSLog(@"%@删除成功\n",[Names objectAtIndex:[Names count]-1]);
+        return true;
+    }
+    return false;
+}
 //根据路径，获取该路径下所有的组信息
 +(NSMutableArray *)getGroupInfoByPath:(NSString *)curPath{
     NSMutableArray *infoSet=[[NSMutableArray alloc] init];

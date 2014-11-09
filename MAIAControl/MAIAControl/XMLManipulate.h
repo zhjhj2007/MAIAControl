@@ -19,6 +19,9 @@
 +(BOOL)writeCmdBtnInfoToFile:(NSMutableDictionary *)cmdBtnInfo;
 +(BOOL)writePopBtnInfoToFile:(NSMutableDictionary *)popBtnInfo;
 //修改操作
+//删除操作
++(BOOL)deleteGroupByPath:(NSString *)groupPath;
++(BOOL)deleteCmdBtnByPath:(NSString *)cmdBtnPath;
 //首次加载添加测试数据
 +(void)wirteTestData;
 //根据路径，获取该路径下所有的组信息
