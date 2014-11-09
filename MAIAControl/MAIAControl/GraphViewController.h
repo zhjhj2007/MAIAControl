@@ -12,8 +12,9 @@
 #import "GroupClass.h"
 #import "CmdSocket.h"
 #import "EGORefreshTableHeaderView.h"
+#import "FPPopoverController.h"
 
-@interface GraphViewController : UIViewController<UIScrollViewDelegate,EGORefreshTableHeaderDelegate>
+@interface GraphViewController : UIViewController<UIScrollViewDelegate,EGORefreshTableHeaderDelegate,FPPopoverControllerDelegate>
 @property(nonatomic, copy) NSString *curPagePath;
 @property(nonatomic,retain) UIScrollView *scrollView;
 @property(nonatomic, assign) BOOL reloading;

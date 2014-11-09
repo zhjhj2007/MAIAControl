@@ -7,6 +7,7 @@
 //
 
 #import "GraphViewController.h"
+#import "DemoTableController.h"
 
 @interface GraphViewController ()
 
@@ -16,7 +17,7 @@
 @synthesize curPagePath=_curPagePath;
 @synthesize scrollView=_scrollView;
 @synthesize refreshHeaderView=_refreshHeaderView;
-@synthesize reloading=_reloading;
+
 #pragma mark init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,7 +47,8 @@
     }
     //加载所有视图，包括组视图与按钮视图
     [self loadAllViews];
-   // [XMLManipulate setPageBackImgPath:@"/" PageBackImgPath:@"/Users/Mac/Library/Application Support/iPhone Simulator/7.1/Applications/54A55042-FC5E-48D6-8171-161711EA33D5/Documents/child.jpg"];
+   // [XMLManipulate setPageBackImgPath:@"/G1/" PageBackImgPath:@"/Users/asmaia-ap2/Library/Application Support/iPhone Simulator/7.1/Applications/9C22BCF3-29E5-4A59-9748-52D9AD8B72DB/Documents/child.jpg"];
+    
     //注册通知中心，用于获取按钮状态更新信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeBtnStatus:) name:@"changeBtnStatus" object:nil];
 }
@@ -68,7 +70,7 @@
 //向服务器发送刷新信息
 -(void) sendRefreshMsg:(UIButton *)sender{
     CmdSocket *cmdSocket = [[CmdSocket alloc] initWithButtonName:sender.titleLabel.text];
-    NSString *cmdBtnPath = [_curPagePath stringByAppendingFormat:@"%@",sender.titleLabel.text ];
+    NSString *cmdBtnPath = [_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text ];
     NSMutableDictionary *md=[XMLManipulate getCmdBtnInfo:cmdBtnPath];
     [cmdSocket sendCmd:[md objectForKey:@"ServerIP"] ServerPort:[md objectForKey:@"ServerPort"] CmdText:[cmdBtnPath stringByAppendingFormat:@":Refresh"]];
     
@@ -136,23 +138,23 @@
 }
 
 //获取命令按钮的视图，不包含下面的标签，被loadAllViews调用
--(id)getBtnView:(NSMutableDictionary *)groupInfo{
-    UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[groupInfo objectForKey:@"Location_x"] floatValue], [[groupInfo objectForKey:@"Location_y"] floatValue], [[groupInfo objectForKey:@"Width"] floatValue], [[groupInfo objectForKey:@"Height"] floatValue])];
+-(id)getBtnView:(NSMutableDictionary *)btnInfo{
+    UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Location_x"] floatValue], [[btnInfo objectForKey:@"Location_y"] floatValue], [[btnInfo objectForKey:@"Width"] floatValue], [[btnInfo objectForKey:@"Height"] floatValue])];
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath=[paths objectAtIndex:0];
-    NSString *ImgPath=[documentsPath stringByAppendingFormat:@"/%@",[groupInfo objectForKey:@"ImgUrl"]];
+    NSString *ImgPath=[documentsPath stringByAppendingFormat:@"/%@",[btnInfo objectForKey:@"ImgUrl"]];
     if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
         [newButton setBackgroundImage:[UIImage imageNamed:@"2.png"] forState:UIControlStateNormal];
     }else{
         [newButton setBackgroundImage:[UIImage imageNamed:ImgPath] forState:UIControlStateNormal];
     }
     newButton.showsTouchWhenHighlighted=true;
-    newButton.titleLabel.text = [groupInfo objectForKey:@"CmdBtnName"];
+    newButton.titleLabel.text = [btnInfo objectForKey:@"CmdBtnName"];
     //为了在下拉刷新时判断按钮是组视图还是命令按钮视图
     [newButton setTag:1101];
     [newButton addTarget:self action:@selector(sendCmdMsg:) forControlEvents:UIControlEventTouchUpInside];
     //为命令按钮添加默认加载状态图标，即link.png
-    UIView *stateImg=[[UIView alloc] initWithFrame:CGRectMake([[groupInfo objectForKey:@"Width"] floatValue]-24, [[groupInfo objectForKey:@"Height"] floatValue]-24, 24, 24)];
+    UIView *stateImg=[[UIView alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Width"] floatValue]-24, [[btnInfo objectForKey:@"Height"] floatValue]-24, 24, 24)];
     [stateImg setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"link.png"]]];
     //为了在刷新状态时找到该视图
     [stateImg setTag:1102];
@@ -162,6 +164,24 @@
     return newButton;
 }
 
+//获取命令按钮的视图，不包含下面的标签，被loadAllViews调用
+-(id)getPopBtnView:(NSMutableDictionary *)btnInfo{
+    UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Location_x"] floatValue], [[btnInfo objectForKey:@"Location_y"] floatValue], [[btnInfo objectForKey:@"Width"] floatValue], [[btnInfo objectForKey:@"Height"] floatValue])];
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *ImgPath=[documentsPath stringByAppendingFormat:@"/%@",[btnInfo objectForKey:@"ImgUrl"]];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
+        [newButton setBackgroundImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    }else{
+        [newButton setBackgroundImage:[UIImage imageNamed:ImgPath] forState:UIControlStateNormal];
+    }
+    newButton.showsTouchWhenHighlighted=true;
+    newButton.titleLabel.text = [btnInfo objectForKey:@"PopBtnName"];
+    //为了在下拉刷新时判断按钮是组视图还是命令按钮视图
+    [newButton setTag:1103];
+    [newButton addTarget:self action:@selector(popMiniView:) forControlEvents:UIControlEventTouchUpInside];
+    return newButton;
+}
 //获取按钮下面的标签视图（包括组按钮与命令按钮），被loadAllViews调用
 -(id)getLabelView:(NSMutableDictionary *)groupInfo BtnTypeName:(NSString *)btnTypeName{
     UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectMake([[groupInfo objectForKey:@"Location_x"] floatValue], [[groupInfo objectForKey:@"Location_y"] floatValue]+[[groupInfo objectForKey:@"Height"] floatValue], [[groupInfo objectForKey:@"Width"] floatValue], 20)];
@@ -194,6 +214,12 @@
     for(NSMutableDictionary *tmpDict in cmdBtnsInfo){
         [self.scrollView addSubview:[self getBtnView:tmpDict]];
         [self.scrollView addSubview:[self getLabelView:tmpDict BtnTypeName:@"CmdBtnName"]];
+        
+    }
+    
+    NSArray *PopBtnsInfo = [XMLManipulate getPopBtnInfoByPath:_curPagePath];
+    for(NSMutableDictionary *tmpDict in PopBtnsInfo){
+        [self.scrollView addSubview:[self getPopBtnView:tmpDict]];
         
     }
     //判断是否为第一个页面，如果不是，加载一个返回按钮
@@ -250,22 +276,70 @@
     }
 }
 
+-(void)disPlayNotification:(NSString *)info{
+    UILabel *topView = [[UILabel alloc] initWithFrame: CGRectMake(0, self.view.bounds.size.height-50, self.view.bounds.size.width, 40)];
+    topView.backgroundColor = [UIColor clearColor];
+    topView.text = info;
+    topView.textColor = [UIColor yellowColor];
+    topView.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:topView];
+    topView.tag = 1104;
+    
+    [self performSelector:@selector(removeView) withObject:nil afterDelay:2];
+    
+}
+
+-(void)removeView{
+    [[self.view viewWithTag:1104] removeFromSuperview];
+}
+
 
 #pragma mark - response function
+//组按钮的跳转函数
 -(void)jump:(UIButton *)sender{
     NSLog(@"%@",sender.titleLabel.text);
     GraphViewController *next = [[GraphViewController alloc] init:[_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text]];
+
+    //[self setModalPresentationStyle:UIModalPresentationPageSheet];
     [self presentViewController:next animated:YES completion:nil];
+    //[self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+}
+
+//小窗口按钮的弹出函数
+-(void)popMiniView:(UIButton *)sender{
+    //the controller we want to present as a popover
+    DemoTableController *controller = [[DemoTableController alloc] initWithStyle:UITableViewStyleGrouped];
+    controller.popBtnPath = [_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text];
+    FPPopoverController *popover = [[FPPopoverController alloc] initWithViewController:controller];
+    
+    //popover.arrowDirection = FPPopoverArrowDirectionAny;
+    popover.tint = FPPopoverDefaultTint;
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        popover.contentSize = CGSizeMake(300, 500);
+    }
+    popover.arrowDirection = FPPopoverArrowDirectionAny;
+    
+    //sender is the UIButton view
+    [popover presentPopoverFromView:sender];
+
+}
+- (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
+          shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
+{
+    [visiblePopoverController dismissPopoverAnimated:YES];
 }
 
 -(void)backToPre:(UIButton *)sender{
+    [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 //向服务器发送按钮配置的命令
 -(void)sendCmdMsg:(UIButton *)sender{
     CmdSocket *cmdSocket = [[CmdSocket alloc] initWithButtonName:sender.titleLabel.text];
-    NSString *cmdBtnPath = [_curPagePath stringByAppendingFormat:@"%@",sender.titleLabel.text ];
+    NSString *cmdBtnPath = [_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text ];
     NSMutableDictionary *md=[XMLManipulate getCmdBtnInfo:cmdBtnPath];
     [cmdSocket sendCmd:[md objectForKey:@"ServerIP"] ServerPort:[md objectForKey:@"ServerPort"] CmdText:[cmdBtnPath stringByAppendingFormat:@":%@",[md objectForKey:@"Cmd"]]];
 }
@@ -276,6 +350,8 @@
     [nd objectForKey:@"CmdBtnName"] ;
     NSString *btnName=[nd objectForKey:@"CmdBtnName"];
     NSInteger btnState=[[nd objectForKey:@"CmdBtnState"] integerValue];
+    NSString *info = [nd objectForKey:@"NotificationInfo"];
+    [self disPlayNotification:info];
     [self refresh:btnName BtnState:btnState];
 }
 #pragma mark UIScrollViewDelegate

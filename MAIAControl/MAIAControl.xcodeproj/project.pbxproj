@@ -43,6 +43,10 @@
 		04EDA3981A03DA880054F0B4 /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EDA38C1A03DA880054F0B4 /* normal.png */; };
 		04EDA3991A03DA880054F0B4 /* warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EDA38D1A03DA880054F0B4 /* warn.png */; };
 		04F2C5A71A05E6F200F3353F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B9AA07741A0E5137001DB552 /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AA076F1A0E5137001DB552 /* FPPopoverController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B9AA07751A0E5137001DB552 /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AA07711A0E5137001DB552 /* FPPopoverView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B9AA07761A0E5137001DB552 /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AA07731A0E5137001DB552 /* FPTouchView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B9AA07CD1A0EFF19001DB552 /* DemoTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AA07CC1A0EFF19001DB552 /* DemoTableController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +108,14 @@
 		04EDA38D1A03DA880054F0B4 /* warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warn.png; sourceTree = "<group>"; };
 		04F2C5A51A05E6F200F3353F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		B9AA076E1A0E5137001DB552 /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
+		B9AA076F1A0E5137001DB552 /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
+		B9AA07701A0E5137001DB552 /* FPPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverView.h; sourceTree = "<group>"; };
+		B9AA07711A0E5137001DB552 /* FPPopoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverView.m; sourceTree = "<group>"; };
+		B9AA07721A0E5137001DB552 /* FPTouchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPTouchView.h; sourceTree = "<group>"; };
+		B9AA07731A0E5137001DB552 /* FPTouchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPTouchView.m; sourceTree = "<group>"; };
+		B9AA07CB1A0EFF19001DB552 /* DemoTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoTableController.h; sourceTree = "<group>"; };
+		B9AA07CC1A0EFF19001DB552 /* DemoTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoTableController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +226,7 @@
 				04EDA37D1A03BD7B0054F0B4 /* GDataXMLNode.m */,
 				04971A341A053FB70019E9BE /* GCDAsyncUdpSocket.h */,
 				04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */,
+				B9AA076D1A0E50EC001DB552 /* FPPopover */,
 			);
 			name = ExternalClass;
 			sourceTree = "<group>";
@@ -255,6 +268,21 @@
 				04EDA38D1A03DA880054F0B4 /* warn.png */,
 			);
 			name = images;
+			sourceTree = "<group>";
+		};
+		B9AA076D1A0E50EC001DB552 /* FPPopover */ = {
+			isa = PBXGroup;
+			children = (
+				B9AA07CB1A0EFF19001DB552 /* DemoTableController.h */,
+				B9AA07CC1A0EFF19001DB552 /* DemoTableController.m */,
+				B9AA076E1A0E5137001DB552 /* FPPopoverController.h */,
+				B9AA076F1A0E5137001DB552 /* FPPopoverController.m */,
+				B9AA07701A0E5137001DB552 /* FPPopoverView.h */,
+				B9AA07711A0E5137001DB552 /* FPPopoverView.m */,
+				B9AA07721A0E5137001DB552 /* FPTouchView.h */,
+				B9AA07731A0E5137001DB552 /* FPTouchView.m */,
+			);
+			name = FPPopover;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,12 +397,16 @@
 			files = (
 				045B1C5B1A0267EA001A993F /* AppDelegate.m in Sources */,
 				04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */,
+				B9AA07741A0E5137001DB552 /* FPPopoverController.m in Sources */,
 				04F2C5A71A05E6F200F3353F /* EGORefreshTableHeaderView.m in Sources */,
 				04EDA37B1A03BA0C0054F0B4 /* XMLManipulate.m in Sources */,
 				04EDA3781A03B2F20054F0B4 /* GroupClass.m in Sources */,
+				B9AA07751A0E5137001DB552 /* FPPopoverView.m in Sources */,
+				B9AA07CD1A0EFF19001DB552 /* DemoTableController.m in Sources */,
 				04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */,
 				045B1C571A0267EA001A993F /* main.m in Sources */,
 				045B1C7B1A02689C001A993F /* GraphViewController.m in Sources */,
+				B9AA07761A0E5137001DB552 /* FPTouchView.m in Sources */,
 				045B1C7E1A0268BB001A993F /* TextViewController.m in Sources */,
 				04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */,
 			);

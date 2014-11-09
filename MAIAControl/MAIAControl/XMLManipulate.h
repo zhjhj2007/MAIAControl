@@ -13,9 +13,11 @@
 //读操作
 +(NSMutableDictionary *)getGroupInfo:(NSString *)groupPath;
 +(NSMutableDictionary *)getCmdBtnInfo:(NSString *)cmdBtnPath;
++(NSMutableDictionary *)getPopBtnInfo:(NSString *)popBtnPath;
 //写操作
 +(BOOL)writeGroupInfoToFile:(NSMutableDictionary *)groupInfo;
 +(BOOL)writeCmdBtnInfoToFile:(NSMutableDictionary *)cmdBtnInfo;
++(BOOL)writePopBtnInfoToFile:(NSMutableDictionary *)popBtnInfo;
 //修改操作
 //首次加载添加测试数据
 +(void)wirteTestData;
@@ -23,6 +25,8 @@
 +(NSMutableArray *)getGroupInfoByPath:(NSString *)curPath;
 //根据路径，获取该路径下所有命令按钮的信息
 +(NSMutableArray *)getCmdBtnInfoByPath:(NSString *)curPath;
+//根据路径，获取该路径下所有弹出按钮的信息
++(NSMutableArray *)getPopBtnInfoByPath:(NSString *)curPath;
 //根据路径，获取该路径下页面的背景图片路径
 +(NSString *)getPageBackImgPath:(NSString *)curPath;
 //根据路径，设置该路径下页面的背景图片路径

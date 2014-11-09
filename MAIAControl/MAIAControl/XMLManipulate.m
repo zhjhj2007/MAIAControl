@@ -9,7 +9,7 @@
 #import "XMLManipulate.h"
 
 @implementation XMLManipulate
-
+#pragma mark Get Operation
 //组的读操作，返回词典
 +(NSMutableDictionary *)getGroupInfo:(NSString *)groupPath{
     NSMutableDictionary *groupInfo=[NSMutableDictionary dictionary];
@@ -227,6 +227,143 @@
     }
     return cmdBtnInfo;
 }
+
++(NSMutableDictionary *)getPopBtnInfo:(NSString *)popBtnPath{
+    NSMutableDictionary *cmdPopBtnInfo=[NSMutableDictionary dictionary];
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
+    //处理路径，路径按照每个文件名+‘/’相连,例如：/组1/组2/按钮3/，注意最后以'/'结尾，并且最后一个是按钮名
+    //以下是为了处理掉按钮的名字
+    NSArray *fakegroupNames=[popBtnPath componentsSeparatedByString:@"/"];
+    NSString *CmdBtnName=[fakegroupNames objectAtIndex:[fakegroupNames count]-2];
+    NSMutableArray *groupNames=[[NSMutableArray alloc] init];
+    for (int i=0; i<[fakegroupNames count]-2; i++) {
+        [groupNames addObject:[fakegroupNames objectAtIndex:i]];
+    }
+    [groupNames addObject:@""];
+    NSMutableArray *Names=[[NSMutableArray alloc] init];
+    for (NSString *temp in groupNames) {
+        if (![temp isEqualToString:@""]) {
+            [Names addObject:temp];
+        }
+    }
+    //不存在配置文件，则返回空
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) return cmdPopBtnInfo;
+    NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    int deep=0;
+    int Deep=[Names count];
+    GDataXMLElement *tempNode=[doc rootElement];
+    for (NSString *tempStr in Names) {
+        if ([tempStr isEqualToString:@""]) {
+            Deep--;
+            continue;
+        }
+        BOOL flag=false;
+        NSArray *groups2=[tempNode elementsForName:@"Group"];
+        for (GDataXMLElement *tempElement in groups2) {
+            NSArray *gName=[tempElement elementsForName:@"GroupName"];
+            if ([gName count]>0) {
+                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
+                if ([[GName stringValue] isEqualToString:tempStr]) {
+                    deep++;
+                    flag=true;
+                    tempNode=tempElement;
+                    break;
+                }
+            }
+        }
+        if(!flag){
+            NSLog(@"找不到路径!\n");
+            return cmdPopBtnInfo;
+        }
+    }
+    if (deep!=Deep) {
+        NSLog(@"找不到路径!\n");
+        return cmdPopBtnInfo;
+    }
+    NSArray *temp=[tempNode elementsForName:@"PopBtn"];
+    GDataXMLElement *cmdBtnElement;
+    BOOL flag=false;
+    for (cmdBtnElement in temp){
+        NSArray *bName=[cmdBtnElement elementsForName:@"PopBtnName"];
+        if ([bName count]>0) {
+            GDataXMLElement *BName=(GDataXMLElement *)[bName objectAtIndex:0];
+            if ([[BName stringValue] isEqualToString:CmdBtnName]) {
+                flag=true;
+                break;
+            }
+        }
+    }
+    //flag为true是，表示找到了该按钮
+    if (flag) {
+        NSArray *temp=[cmdBtnElement elementsForName:@"ImgUrl"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ImgUrl"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"PopBtnName"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"PopBtnName"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"Location_x"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Location_x"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"Location_y"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Location_y"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"Width"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Width"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"Height"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Height"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"LabelWillDisplay"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"LabelWillDisplay"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"Devices"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Devices"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"Cmds"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Cmds"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"CmdNames"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"CmdNames"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"ServerIP"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ServerIP"];
+        }
+        
+        temp=[cmdBtnElement elementsForName:@"ServerPort"];
+        if ([temp count]>0) {
+            [cmdPopBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ServerPort"];
+        }
+    }
+    return cmdPopBtnInfo;
+}
+
+#pragma mark write operation
 //组的写操作，返回是否操作成功
 //注意这里的groupInfo中应该多一个GroupPaht,在调用这个函数的时候注意到这一点
 +(BOOL)writeGroupInfoToFile:(NSMutableDictionary *)groupInfo{
@@ -390,6 +527,84 @@
     NSLog(@"create new cmdBtn sucessfully");
     return true;
 }
+//小窗口按钮的写操作
++(BOOL)writePopBtnInfoToFile:(NSMutableDictionary *)popBtnInfo{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        NSString *xmldata=@"<?xml version=\"1.0\" encoding=\"utf-8\"?><setting></setting>";
+        NSData *initData=[xmldata dataUsingEncoding:NSUTF8StringEncoding];
+        [initData writeToFile:filePath atomically:YES];
+    }
+    
+    NSData *xmlData=[[NSMutableData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    if(doc==nil) return false;
+    NSArray *pathNames=[[popBtnInfo objectForKey:@"PopBtnPath"] componentsSeparatedByString:@"/"];
+    int deep=0;
+    int Deep=[pathNames count];
+    GDataXMLElement *tempNode=[doc rootElement];
+    for (NSString *tempStr in pathNames) {
+        if ([tempStr isEqualToString:@""]) {
+            Deep--;
+            continue;
+        }
+        BOOL flag=false;
+        NSArray *groups=[tempNode elementsForName:@"Group"];
+        for (GDataXMLElement *tempElement in groups) {
+            NSArray *gName=[tempElement elementsForName:@"GroupName"];
+            if ([gName count]>0) {
+                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
+                if ([[GName stringValue] isEqualToString:tempStr]) {
+                    deep++;
+                    flag=true;
+                    tempNode=tempElement;
+                    break;
+                }
+            }
+        }
+        if(!flag){
+            return false;
+        }
+    }
+    if (deep!=Deep) {
+        NSLog(@"找不到路径!\n");
+        return false;
+    }
+    GDataXMLElement *PopButton=[GDataXMLNode elementWithName:@"PopBtn"];
+    GDataXMLElement *PopBtnName=[GDataXMLNode elementWithName:@"PopBtnName" stringValue:[popBtnInfo objectForKey:@"PopBtnName"]];
+    GDataXMLElement *ImgUrl=[GDataXMLNode elementWithName:@"ImgUrl" stringValue:[popBtnInfo objectForKey:@"ImgUrl"]];
+    GDataXMLElement *LocationX=[GDataXMLNode elementWithName:@"Location_x" stringValue:[popBtnInfo objectForKey:@"Location_x"]];
+    GDataXMLElement *LocationY=[GDataXMLNode elementWithName:@"Location_y" stringValue:[popBtnInfo objectForKey:@"Location_y"]];
+    GDataXMLElement *bwidth=[GDataXMLNode elementWithName:@"Width" stringValue:[popBtnInfo objectForKey:@"Width"]];
+    GDataXMLElement *bheidht=[GDataXMLNode elementWithName:@"Height" stringValue:[popBtnInfo objectForKey:@"Height"]];
+    GDataXMLElement *labelDisplay = [GDataXMLNode elementWithName:@"LabelWillDisplay" stringValue:[popBtnInfo objectForKey:@"LabelWillDisplay"]];
+    GDataXMLElement *Devices = [GDataXMLNode elementWithName:@"Devices" stringValue:[popBtnInfo objectForKey:@"Devices"]];
+    GDataXMLElement *Cmds = [GDataXMLNode elementWithName:@"Cmds" stringValue:[popBtnInfo objectForKey:@"Cmds"]];
+    GDataXMLElement *CmdNames = [GDataXMLNode elementWithName:@"CmdNames" stringValue:[popBtnInfo objectForKey:@"CmdNames"]];
+    GDataXMLElement *ServerIP = [GDataXMLNode elementWithName:@"ServerIP" stringValue:[popBtnInfo objectForKey:@"ServerIP"]];
+    GDataXMLElement *ServerPort = [GDataXMLNode elementWithName:@"ServerPort" stringValue:[popBtnInfo objectForKey:@"ServerPort"]];
+    [PopButton addChild:PopBtnName];
+    [PopButton addChild:ImgUrl];
+    [PopButton addChild:LocationX];
+    [PopButton addChild:LocationY];
+    [PopButton addChild:bwidth];
+    [PopButton addChild:bheidht];
+    [PopButton addChild:labelDisplay];
+    [PopButton addChild:Devices];
+    [PopButton addChild:Cmds];
+    [PopButton addChild:CmdNames];
+    [PopButton addChild:ServerIP];
+    [PopButton addChild:ServerPort];
+    [tempNode addChild:PopButton];
+    NSData *data=doc.XMLData;
+    [data writeToFile:filePath atomically:YES];
+    NSLog(@"create new PopcmdBtn sucessfully");
+    return true;
+}
 //添加测试数据
 +(void)wirteTestData{
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -413,17 +628,6 @@
         [self writeGroupInfoToFile:md];
         [md removeAllObjects];
         
-        [md setObject:@"/" forKey:@"GroupPath"];
-        [md setObject:@"G1" forKey:@"GroupName"];
-        [md setObject:@"1.png" forKey:@"ImgUrl"];
-        [md setObject:@"200" forKey:@"Location_x"];
-        [md setObject:@"100" forKey:@"Location_y"];
-        [md setObject:@"111" forKey:@"Width"];
-        [md setObject:@"53" forKey:@"Height"];
-        [md setObject:@"YES" forKey:@"LabelWillDisplay"];
-        [md setObject:@"GOMON.jpg" forKey:@"PageBackImgPath"];
-        [self writeGroupInfoToFile:md];
-        [md removeAllObjects];
         
         [md setObject:@"/G1/" forKey:@"GroupPath"];
         [md setObject:@"G11" forKey:@"GroupName"];
@@ -483,6 +687,23 @@
         [md setObject:@"GOMON.jpg" forKey:@"PageBackImgPath"];
         [self writeCmdBtnInfoToFile:md];
         [md removeAllObjects];
+        
+        [md setObject:@"/" forKey:@"PopBtnPath"];
+        [md setObject:@"?" forKey:@"PopBtnName"];
+        [md setObject:@"1.png" forKey:@"ImgUrl"];
+        [md setObject:@"300" forKey:@"Location_x"];
+        [md setObject:@"300" forKey:@"Location_y"];
+        [md setObject:@"111" forKey:@"Width"];
+        [md setObject:@"53" forKey:@"Height"];
+        [md setObject:@"YES" forKey:@"LabelWillDisplay"];
+        [md setObject:@"c1^c2^c3" forKey:@"Devices"];
+        [md setObject:@"a1|a2^b^c" forKey:@"Cmds"];
+        [md setObject:@"n1^n2^n3^n4" forKey:@"CmdNames"];
+        [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
+        [md setObject:@"8600" forKey:@"ServerPort"];
+        [self writePopBtnInfoToFile:md];
+        [md removeAllObjects];        
+        
     }
 }
 //根据路径，获取该路径下所有的组信息
@@ -706,6 +927,138 @@
     
     return infoSet;
 
+}
+//根据路径，获取该路径下所有弹出按钮的信息
++(NSMutableArray *)getPopBtnInfoByPath:(NSString *)curPath{
+    NSMutableArray *infoSet=[[NSMutableArray alloc] init];
+    
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
+    //处理路径，路径按照每个文件名+‘/’相连,例如：/组1/组2/组3/，注意最后以'/'结尾
+    NSArray *groupNames=[curPath componentsSeparatedByString:@"/"];
+    NSMutableArray *Names=[[NSMutableArray alloc] init];
+    for (NSString *temp in groupNames) {
+        if (![temp isEqualToString:@""]) {
+            [Names addObject:temp];
+        }
+    }
+    //不存在配置文件，则返回空
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        return infoSet;
+    }
+    NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
+    //用于检测根路径的情况
+    int deep=0;
+    int Deep=[Names count];
+    GDataXMLElement *tempNode=[doc rootElement];
+    for (NSString *tempStr in Names) {
+        if ([tempStr isEqualToString:@""]) {
+            Deep--;
+            continue;
+        }
+        BOOL flag=false;
+        NSArray *groups2=[tempNode elementsForName:@"Group"];
+        for (GDataXMLElement *tempElement in groups2) {
+            NSArray *gName=[tempElement elementsForName:@"GroupName"];
+            if ([gName count]>0) {
+                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
+                if ([[GName stringValue] isEqualToString:tempStr]) {
+                    deep++;
+                    flag=true;
+                    tempNode=tempElement;
+                    break;
+                }
+            }
+        }
+        if(!flag){
+            NSLog(@"找不到路径!\n");
+            return infoSet;
+        }
+    }
+    if (deep!=Deep) {
+        NSLog(@"找不到路径!\n");
+        return infoSet;
+    }
+    NSArray *popBtns=[tempNode elementsForName:@"PopBtn"];
+    for (GDataXMLElement *popBtn in popBtns) {
+        //将singleGroupInfo放在循环中，是因为防止数据覆盖。如果放在循环外，则所有数据是一样的。
+        NSMutableDictionary *singleBtnInfo=[NSMutableDictionary dictionary];
+        NSArray *temp=[popBtn elementsForName:@"PopBtnName"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"PopBtnName"];
+        }
+        else continue;
+        temp=[popBtn elementsForName:@"ImgUrl"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ImgUrl"];
+        }
+        else continue;
+        temp=[popBtn elementsForName:@"Location_x"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Location_x"];
+        }
+        else continue;
+        temp=[popBtn elementsForName:@"Location_y"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Location_y"];
+        }
+        else continue;
+        temp=[popBtn elementsForName:@"Width"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Width"];
+        }
+        else continue;
+        temp=[popBtn elementsForName:@"Height"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Height"];
+        }
+        else continue;
+        
+        temp=[popBtn elementsForName:@"Cmds"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Cmds"];
+        }
+        else continue;
+        
+        temp=[popBtn elementsForName:@"LabelWillDisplay"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"LabelWillDisplay"];
+        }
+        else continue;
+        
+        temp=[popBtn elementsForName:@"Devices"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Devices"];
+        }
+        else continue;
+        
+        temp=[popBtn elementsForName:@"CmdNames"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"CmdNames"];
+        }
+        else continue;
+        
+        temp=[popBtn elementsForName:@"ServerIP"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ServerIP"];
+        }
+        else continue;
+        
+        temp=[popBtn elementsForName:@"ServerPort"];
+        if ([temp count]>0) {
+            [singleBtnInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ServerPort"];
+        }
+        else continue;
+        
+        [infoSet addObject:singleBtnInfo];
+        //[singleGroupInfo removeAllObjects];
+    }
+    
+    return infoSet;
 }
 //根据路径，获取该路径下页面的背景图片路径
 +(NSString *)getPageBackImgPath:(NSString *)curPath{

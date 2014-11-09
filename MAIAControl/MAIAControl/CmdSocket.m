@@ -54,8 +54,10 @@
 
 - (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data
       fromAddress:(NSData *)address withFilterContext:(id)filterContext{
-	NSString *msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"RECV: %@", msg);
+	NSString *msgs = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"RECV: %@", msgs);
+    NSArray *replyInfo = [msgs componentsSeparatedByString:@"^"];
+    NSString *msg = [replyInfo objectAtIndex:0];
     
     if([msg isEqualToString:@"exception"])//其他
         [self setState:1];
@@ -65,7 +67,12 @@
         [self setState:3];
     else if([msg isEqualToString:@"link"])//连接加载
         [self setState:4];
-    NSDictionary *stateInfo=[NSDictionary dictionaryWithObjectsAndKeys:self.btnName, @"CmdBtnName",[NSString stringWithFormat:@"%d",self.state],@"CmdBtnState", nil];
+    NSString *notificationInfo=@"";
+    if ([replyInfo count] ==2) {
+        notificationInfo=[replyInfo objectAtIndex:1];
+    }
+
+    NSDictionary *stateInfo=[NSDictionary dictionaryWithObjectsAndKeys:self.btnName, @"CmdBtnName",[NSString stringWithFormat:@"%d",self.state],@"CmdBtnState",notificationInfo,@"NotificationInfo",nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"changeBtnStatus" object:nil userInfo:stateInfo];
 }
 
