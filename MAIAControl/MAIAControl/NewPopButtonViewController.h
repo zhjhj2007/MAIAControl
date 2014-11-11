@@ -1,16 +1,14 @@
 //
-//  AddNewButtonController.h
-//  SettingViewDemo
+//  NewPopButtonViewController.h
+//  MAIAControl
 //
-//  Created by mac on 12-1-5.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by Mac on 14-11-10.
+//  Copyright (c) 2014年 MAIA. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "XMLManipulate.h"
 
-@interface AddNewButtonController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-
+@interface NewPopButtonViewController : UIViewController<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *selectNewImg;
 @property (nonatomic, retain) IBOutlet UITextField *textFieldX;
 @property (nonatomic, retain) IBOutlet UITextField *textFieldY;
@@ -20,11 +18,10 @@
 @property (nonatomic, retain) IBOutlet UITextField *textFieldPort;
 @property (nonatomic, retain) IBOutlet UITextField *textFieldCommand;
 @property (nonatomic, retain) IBOutlet UITextField *textFieldDiscription;
+@property (weak, nonatomic) IBOutlet UITextField *deviceNames;
 @property (nonatomic, retain) IBOutlet UILabel *labelTitle;
-@property (nonatomic, retain) IBOutlet UITextField *timeDelay;
+@property (weak, nonatomic) IBOutlet UITextField *cmdNames;
 @property (nonatomic,retain) IBOutlet UISegmentedControl *isDisplay;
-
-
 @property (retain) UIPopoverController *popoverController;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////

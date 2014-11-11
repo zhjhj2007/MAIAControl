@@ -9,14 +9,15 @@
 #import "NameAndImageInfo.h"
 
 @implementation NameAndImageInfo
-@synthesize name,ImgURL,isButton;
+@synthesize name=_name;
+@synthesize imgURL=_imgURL;
+@synthesize type=_type;
 
--(id) init:(NSString *)nameValue ImgURL:(NSString *)ImgURLVale isButton:(bool)isButtonValue
-{
+-(id) init:(NSString *)nameValue ImgURL:(NSString *)imgURLVale ButtonTypeValue:(ButtonType)buttonTypeValue{
     if((self=[super init])){
-        self.ImgURL=ImgURLVale;
-        self.name = nameValue;
-        self.isButton = isButtonValue;
+        _name=nameValue;
+        _imgURL=imgURLVale;
+        _type=buttonTypeValue;
     }
     return self;
 }

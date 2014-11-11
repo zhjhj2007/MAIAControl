@@ -27,12 +27,14 @@
 		0495DE7E1A0BE85B0075ED07 /* child.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0495DE7D1A0BE85B0075ED07 /* child.jpg */; };
 		04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */; };
 		04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 04971A3A1A0545410019E9BE /* CmdSocket.m */; };
+		04D696211A110B9900C2016D /* popBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D696201A110B9900C2016D /* popBtn.png */; };
+		04E62E5C1A1065D00069B86F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E62E5A1A1059390069B86F /* AssetsLibrary.framework */; };
+		04E62E601A10F0DA0069B86F /* NewPopButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62E5E1A10F0DA0069B86F /* NewPopButtonViewController.m */; };
+		04E62E611A10F0DA0069B86F /* NewPopButtonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E62E5F1A10F0DA0069B86F /* NewPopButtonViewController.xib */; };
 		04EA0E331A0F7D9C00573FFB /* NewButtonAndGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E2A1A0F7D9C00573FFB /* NewButtonAndGroupView.xib */; };
 		04EA0E341A0F7D9C00573FFB /* NewButtonAndGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E2C1A0F7D9C00573FFB /* NewButtonAndGroupViewController.m */; };
 		04EA0E351A0F7D9C00573FFB /* NewGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E2D1A0F7D9C00573FFB /* NewGroupView.xib */; };
 		04EA0E361A0F7D9C00573FFB /* NewGroupViewVontroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E2F1A0F7D9C00573FFB /* NewGroupViewVontroller.m */; };
-		04EA0E371A0F7D9C00573FFB /* ShowNextLevelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E301A0F7D9C00573FFB /* ShowNextLevelView.xib */; };
-		04EA0E381A0F7D9C00573FFB /* ShowNextLevelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E321A0F7D9C00573FFB /* ShowNextLevelViewController.m */; };
 		04EA0E3C1A0F7E6B00573FFB /* SettingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E391A0F7E6B00573FFB /* SettingView.xib */; };
 		04EA0E3D1A0F7E6B00573FFB /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E3B1A0F7E6B00573FFB /* SettingViewController.m */; };
 		04EA0E411A0F7E9300573FFB /* AddNewButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E3E1A0F7E9300573FFB /* AddNewButton.xib */; };
@@ -101,15 +103,17 @@
 		04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		04971A391A0545410019E9BE /* CmdSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CmdSocket.h; sourceTree = "<group>"; };
 		04971A3A1A0545410019E9BE /* CmdSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CmdSocket.m; sourceTree = "<group>"; };
+		04D696201A110B9900C2016D /* popBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popBtn.png; sourceTree = "<group>"; };
+		04E62E5A1A1059390069B86F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		04E62E5D1A10F0DA0069B86F /* NewPopButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPopButtonViewController.h; sourceTree = "<group>"; };
+		04E62E5E1A10F0DA0069B86F /* NewPopButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPopButtonViewController.m; sourceTree = "<group>"; };
+		04E62E5F1A10F0DA0069B86F /* NewPopButtonViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPopButtonViewController.xib; sourceTree = "<group>"; };
 		04EA0E2A1A0F7D9C00573FFB /* NewButtonAndGroupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewButtonAndGroupView.xib; sourceTree = "<group>"; };
 		04EA0E2B1A0F7D9C00573FFB /* NewButtonAndGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewButtonAndGroupViewController.h; sourceTree = "<group>"; };
 		04EA0E2C1A0F7D9C00573FFB /* NewButtonAndGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewButtonAndGroupViewController.m; sourceTree = "<group>"; };
 		04EA0E2D1A0F7D9C00573FFB /* NewGroupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewGroupView.xib; sourceTree = "<group>"; };
 		04EA0E2E1A0F7D9C00573FFB /* NewGroupViewVontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewGroupViewVontroller.h; sourceTree = "<group>"; };
 		04EA0E2F1A0F7D9C00573FFB /* NewGroupViewVontroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewGroupViewVontroller.m; sourceTree = "<group>"; };
-		04EA0E301A0F7D9C00573FFB /* ShowNextLevelView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowNextLevelView.xib; sourceTree = "<group>"; };
-		04EA0E311A0F7D9C00573FFB /* ShowNextLevelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowNextLevelViewController.h; sourceTree = "<group>"; };
-		04EA0E321A0F7D9C00573FFB /* ShowNextLevelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowNextLevelViewController.m; sourceTree = "<group>"; };
 		04EA0E391A0F7E6B00573FFB /* SettingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingView.xib; sourceTree = "<group>"; };
 		04EA0E3A1A0F7E6B00573FFB /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		04EA0E3B1A0F7E6B00573FFB /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04E62E5C1A1065D00069B86F /* AssetsLibrary.framework in Frameworks */,
 				04EDA3801A03D3940054F0B4 /* libxml2.dylib in Frameworks */,
 				045B1C4D1A0267EA001A993F /* CoreGraphics.framework in Frameworks */,
 				045B1C4F1A0267EA001A993F /* UIKit.framework in Frameworks */,
@@ -198,6 +203,7 @@
 		045B1C491A0267EA001A993F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04E62E5A1A1059390069B86F /* AssetsLibrary.framework */,
 				04EDA37F1A03D3940054F0B4 /* libxml2.dylib */,
 				045B1C4A1A0267EA001A993F /* Foundation.framework */,
 				045B1C4C1A0267EA001A993F /* CoreGraphics.framework */,
@@ -263,15 +269,15 @@
 				04EA0E391A0F7E6B00573FFB /* SettingView.xib */,
 				04EA0E3A1A0F7E6B00573FFB /* SettingViewController.h */,
 				04EA0E3B1A0F7E6B00573FFB /* SettingViewController.m */,
+				04E62E5D1A10F0DA0069B86F /* NewPopButtonViewController.h */,
+				04E62E5E1A10F0DA0069B86F /* NewPopButtonViewController.m */,
+				04E62E5F1A10F0DA0069B86F /* NewPopButtonViewController.xib */,
 				04EA0E2A1A0F7D9C00573FFB /* NewButtonAndGroupView.xib */,
 				04EA0E2B1A0F7D9C00573FFB /* NewButtonAndGroupViewController.h */,
 				04EA0E2C1A0F7D9C00573FFB /* NewButtonAndGroupViewController.m */,
 				04EA0E2D1A0F7D9C00573FFB /* NewGroupView.xib */,
 				04EA0E2E1A0F7D9C00573FFB /* NewGroupViewVontroller.h */,
 				04EA0E2F1A0F7D9C00573FFB /* NewGroupViewVontroller.m */,
-				04EA0E301A0F7D9C00573FFB /* ShowNextLevelView.xib */,
-				04EA0E311A0F7D9C00573FFB /* ShowNextLevelViewController.h */,
-				04EA0E321A0F7D9C00573FFB /* ShowNextLevelViewController.m */,
 			);
 			name = SystemConfiguration;
 			sourceTree = "<group>";
@@ -311,6 +317,7 @@
 		04EDA3811A03DA3A0054F0B4 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				04D696201A110B9900C2016D /* popBtn.png */,
 				04849B491A0F74DE00CD497C /* Lock.png */,
 				0478ED6E1A0C6E1200E2AE61 /* Back.png */,
 				0495DE7D1A0BE85B0075ED07 /* child.jpg */,
@@ -437,11 +444,12 @@
 				0495DE7C1A0BC4610075ED07 /* GOMON.jpg in Resources */,
 				04EDA3961A03DA880054F0B4 /* link.png in Resources */,
 				04EDA3911A03DA880054F0B4 /* add.png in Resources */,
+				04D696211A110B9900C2016D /* popBtn.png in Resources */,
 				04EDA3941A03DA880054F0B4 /* error.png in Resources */,
 				04EDA38F1A03DA880054F0B4 /* 2.png in Resources */,
-				04EA0E371A0F7D9C00573FFB /* ShowNextLevelView.xib in Resources */,
 				0495DE7E1A0BE85B0075ED07 /* child.jpg in Resources */,
 				045B1C5D1A0267EA001A993F /* Images.xcassets in Resources */,
+				04E62E611A10F0DA0069B86F /* NewPopButtonViewController.xib in Resources */,
 				04EDA3951A03DA880054F0B4 /* iDisk.png in Resources */,
 				04EDA3931A03DA880054F0B4 /* DeskIcon.png in Resources */,
 			);
@@ -465,7 +473,6 @@
 				045B1C5B1A0267EA001A993F /* AppDelegate.m in Sources */,
 				04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */,
 				04EA0E481A0F830B00573FFB /* imageManager.m in Sources */,
-				04EA0E381A0F7D9C00573FFB /* ShowNextLevelViewController.m in Sources */,
 				B9AA07741A0E5137001DB552 /* FPPopoverController.m in Sources */,
 				04F2C5A71A05E6F200F3353F /* EGORefreshTableHeaderView.m in Sources */,
 				04EA0E3D1A0F7E6B00573FFB /* SettingViewController.m in Sources */,
@@ -475,6 +482,7 @@
 				B9AA07751A0E5137001DB552 /* FPPopoverView.m in Sources */,
 				B9AA07CD1A0EFF19001DB552 /* DemoTableController.m in Sources */,
 				04EA0E421A0F7E9300573FFB /* AddNewButtonController.m in Sources */,
+				04E62E601A10F0DA0069B86F /* NewPopButtonViewController.m in Sources */,
 				04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */,
 				045B1C571A0267EA001A993F /* main.m in Sources */,
 				045B1C7B1A02689C001A993F /* GraphViewController.m in Sources */,

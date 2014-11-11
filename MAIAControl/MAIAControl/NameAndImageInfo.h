@@ -7,14 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
+typedef enum{
+    NSGroupType,
+    NSButtonType,
+    NSPopBtnType
+}ButtonType;
 @interface NameAndImageInfo : NSObject
-{
-    NSString *name;
-    NSString *ImgURL;
-    bool isButton;
-}
-@property (copy, nonatomic) NSString *name,*ImgURL;
-@property bool isButton;
--(id) init:(NSString *)nameValue ImgURL:(NSString *)ImgURLVale isButton:(bool)isButtonValue;
+@property (copy, nonatomic) NSString *name,*imgURL;
+@property ButtonType type;
+-(id) init:(NSString *)nameValue ImgURL:(NSString *)imgURLVale ButtonTypeValue:(ButtonType)buttonTypeValue;
 @end

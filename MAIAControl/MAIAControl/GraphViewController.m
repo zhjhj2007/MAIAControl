@@ -30,7 +30,12 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
+//    for(UIView *view in [self.view subviews]){
+//        [view removeFromSuperview];
+//    }
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    //加载所有视图，包括组视图与按钮视图
+//    [self loadAllViews];
 }
 
 - (void)viewDidLoad
@@ -39,20 +44,7 @@
     // Do any additional setup after loading the view.
     //程序初次运行的时候，如果不存在用户配置，自动加载默认配置
     [XMLManipulate wirteTestData];
-    //设置scrollView
-    [self setScrollView];
-    //加载顶部刷新
-    if (_refreshHeaderView == nil) {
-        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, 0-[self.view bounds].size.width, [self.view bounds].size.height, [self.view bounds].size.width)];
-        view.delegate =self;
-        [self.scrollView addSubview:view];
-        _refreshHeaderView = view;
-        [_refreshHeaderView refreshLastUpdatedDate];
-    }
-    //加载所有视图，包括组视图与按钮视图
     [self loadAllViews];
-   // [XMLManipulate setPageBackImgPath:@"/G1/" PageBackImgPath:@"/Users/asmaia-ap2/Library/Application Support/iPhone Simulator/7.1/Applications/9C22BCF3-29E5-4A59-9748-52D9AD8B72DB/Documents/child.jpg"];
-    
     //注册通知中心，用于获取按钮状态更新信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeBtnStatus:) name:@"changeBtnStatus" object:nil];
 }
@@ -80,6 +72,23 @@
     
 }
 #pragma mark getview function
+//加载顶部刷新
+-(void)setRefreshHeaderView{
+    if (_refreshHeaderView == nil) {
+        float width= [self.view bounds].size.width;
+        float height= [self.view bounds].size.height;
+        if (width<height) {
+            float tmp=width;
+            width=height;
+            height=tmp;
+        }
+        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0, 0-height, width,height)];
+        view.delegate =self;
+        [self.scrollView addSubview:view];
+        _refreshHeaderView = view;
+        [_refreshHeaderView refreshLastUpdatedDate];
+    }
+}
 //设置scrollView
 -(void)setScrollView{
     NSArray *groupsInfo=[XMLManipulate getGroupInfoByPath:_curPagePath];
@@ -125,13 +134,21 @@
 //获取组按钮的视图，不包含下面的标签，被loadAllViews调用
 -(id)getGroupView:(NSMutableDictionary *)groupInfo{
     UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[groupInfo objectForKey:@"Location_x"] floatValue], [[groupInfo objectForKey:@"Location_y"] floatValue], [[groupInfo objectForKey:@"Width"] floatValue], [[groupInfo objectForKey:@"Height"] floatValue])];
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath=[paths objectAtIndex:0];
-    NSString *ImgPath=[documentsPath stringByAppendingFormat:@"/%@",[groupInfo objectForKey:@"ImgUrl"]];
+    NSString *ImgPath=[groupInfo objectForKey:@"ImgUrl"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
         [newButton setBackgroundImage:[UIImage imageNamed:@"iDisk.png"] forState:UIControlStateNormal];
     }else{
-        [newButton setBackgroundImage:[UIImage imageNamed:ImgPath] forState:UIControlStateNormal];
+        //[newButton setBackgroundImage:[UIImage imageNamed:ImgPath] forState:UIControlStateNormal];
+        //进行图片拉伸
+        UIImageView *strechTest = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:ImgPath]];
+        CGRect frame = strechTest.frame;
+        frame.size.width =[[groupInfo objectForKey:@"Width"] floatValue];
+        frame.size.height=[[groupInfo objectForKey:@"Height"] floatValue];
+        strechTest.frame = frame;
+        //把imageView放入button中，并设置为back
+        [newButton addSubview:strechTest];
+        [newButton sendSubviewToBack:strechTest];
+        [newButton setBackgroundColor:[UIColor clearColor]];
     }
     
     newButton.showsTouchWhenHighlighted=true;
@@ -144,13 +161,24 @@
 //获取命令按钮的视图，不包含下面的标签，被loadAllViews调用
 -(id)getBtnView:(NSMutableDictionary *)btnInfo{
     UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Location_x"] floatValue], [[btnInfo objectForKey:@"Location_y"] floatValue], [[btnInfo objectForKey:@"Width"] floatValue], [[btnInfo objectForKey:@"Height"] floatValue])];
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath=[paths objectAtIndex:0];
-    NSString *ImgPath=[documentsPath stringByAppendingFormat:@"/%@",[btnInfo objectForKey:@"ImgUrl"]];
+    NSString *ImgPath=[btnInfo objectForKey:@"ImgUrl"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
         [newButton setBackgroundImage:[UIImage imageNamed:@"2.png"] forState:UIControlStateNormal];
     }else{
-        [newButton setBackgroundImage:[UIImage imageNamed:ImgPath] forState:UIControlStateNormal];
+        //[newButton setBackgroundImage:[UIImage imageNamed:ImgPath] forState:UIControlStateNormal];
+        //  [btnView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithContentsOfFile:ImgPath]]];
+        // [newButton setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithContentsOfFile:ImgPath]]];
+        //进行图片拉伸
+        UIImageView *strechTest = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:ImgPath]];
+        CGRect frame = strechTest.frame;
+        frame.size.width =[[btnInfo objectForKey:@"Width"] floatValue];
+        frame.size.height=[[btnInfo objectForKey:@"Height"] floatValue];
+        strechTest.frame = frame;
+        //把imageView放入button中，并设置为back
+        [newButton addSubview:strechTest];
+        [newButton sendSubviewToBack:strechTest];
+        [newButton setBackgroundColor:[UIColor clearColor]];
+        
     }
     newButton.showsTouchWhenHighlighted=true;
     newButton.titleLabel.text = [btnInfo objectForKey:@"CmdBtnName"];
@@ -177,7 +205,17 @@
     if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
         [newButton setBackgroundImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
     }else{
-        [newButton setBackgroundImage:[UIImage imageNamed:ImgPath] forState:UIControlStateNormal];
+        //[newButton setBackgroundImage:[UIImage imageNamed:ImgPath] forState:UIControlStateNormal];
+        //进行图片拉伸
+        UIImageView *strechTest = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:ImgPath]];
+        CGRect frame = strechTest.frame;
+        frame.size.width =[[btnInfo objectForKey:@"Width"] floatValue];
+        frame.size.height=[[btnInfo objectForKey:@"Height"] floatValue];
+        strechTest.frame = frame;
+        //把imageView放入button中，并设置为back
+        [newButton addSubview:strechTest];
+        [newButton sendSubviewToBack:strechTest];
+        [newButton setBackgroundColor:[UIColor clearColor]];
     }
     newButton.showsTouchWhenHighlighted=true;
     newButton.titleLabel.text = [btnInfo objectForKey:@"PopBtnName"];
@@ -188,6 +226,9 @@
 }
 //获取按钮下面的标签视图（包括组按钮与命令按钮），被loadAllViews调用
 -(id)getLabelView:(NSMutableDictionary *)groupInfo BtnTypeName:(NSString *)btnTypeName{
+    if (![[groupInfo objectForKey:@"LabelWillDisplay"] isEqualToString:@"YES"]) {
+        return nil;
+    }
     UILabel *newLabel = [[UILabel alloc] initWithFrame:CGRectMake([[groupInfo objectForKey:@"Location_x"] floatValue], [[groupInfo objectForKey:@"Location_y"] floatValue]+[[groupInfo objectForKey:@"Height"] floatValue], [[groupInfo objectForKey:@"Width"] floatValue], 20)];
     [newLabel setNumberOfLines:0];
     NSString *text = [groupInfo objectForKey:btnTypeName];
@@ -202,23 +243,46 @@
     if (![[NSFileManager defaultManager] fileExistsAtPath:pageBackImgPath]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"GOMON.jpg"]]];
     }else{
-        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageWithContentsOfFile:pageBackImgPath]]];
+        //进行图片拉伸
+        UIImageView *strechTest = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:pageBackImgPath]];
+        CGRect frame = strechTest.frame;
+        float width= [self.view bounds].size.width;
+        float height= [self.view bounds].size.height;
+        if (width<height) {
+            float tmp=width;
+            width=height;
+            height=tmp;
+        }
+        frame.size.width =width;
+        frame.size.height=height;
+        strechTest.frame = frame;
+        //把imageView放入view中，并设置为back
+        [self.view addSubview:strechTest];
+        [self.view  sendSubviewToBack:strechTest];
+        //[self.view setBackgroundColor:[UIColor clearColor]];
     }
-    //  [self.view setBackgroundColor:[UIColor blueColor]];
 }
 //加载所有视图
 -(void)loadAllViews{
+    //以下两个个操作一定要放在添加按钮和组等控件之前，因为他们都是放在scrollView中的
+    [self setScrollView];
+    [self setRefreshHeaderView];
+    [self setBackGroudImg];
+    
     NSArray *groupsInfo=[XMLManipulate getGroupInfoByPath:_curPagePath];
     for(NSMutableDictionary *tmpDict in groupsInfo){
         [self.scrollView addSubview:[self getGroupView:tmpDict]];
-        [self.scrollView addSubview:[self getLabelView:tmpDict BtnTypeName:@"GroupName"]];
+        if ([self getLabelView:tmpDict BtnTypeName:@"GroupName"]!=nil) {
+            [self.scrollView addSubview:[self getLabelView:tmpDict BtnTypeName:@"GroupName"]];
+        }
     }
     
     NSArray *cmdBtnsInfo = [XMLManipulate getCmdBtnInfoByPath:_curPagePath];
     for(NSMutableDictionary *tmpDict in cmdBtnsInfo){
         [self.scrollView addSubview:[self getBtnView:tmpDict]];
-        [self.scrollView addSubview:[self getLabelView:tmpDict BtnTypeName:@"CmdBtnName"]];
-        
+        if ([self getLabelView:tmpDict BtnTypeName:@"CmdBtnName"]!=nil) {
+            [self.scrollView addSubview:[self getLabelView:tmpDict BtnTypeName:@"CmdBtnName"]];
+        }
     }
     
     NSArray *PopBtnsInfo = [XMLManipulate getPopBtnInfoByPath:_curPagePath];
@@ -242,8 +306,6 @@
         [LoginButton addTarget:self action:@selector(showTheLoginView) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:LoginButton];
     }
-    
-    [self setBackGroudImg];
 }
 
 //根据服务器返回的信息，刷新按钮状态

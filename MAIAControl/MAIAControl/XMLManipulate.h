@@ -19,9 +19,12 @@
 +(BOOL)writeCmdBtnInfoToFile:(NSMutableDictionary *)cmdBtnInfo;
 +(BOOL)writePopBtnInfoToFile:(NSMutableDictionary *)popBtnInfo;
 //修改操作
++(BOOL)updateGroupInfo:(NSString *)groupPath GroupInfo:(NSDictionary *)groupInfo;
++(BOOL)updateCmdBtnInfo:(NSString *)cmdBtnPath CmdBtnInfo:(NSDictionary *)cmdBtnInfo;
 //删除操作
 +(BOOL)deleteGroupByPath:(NSString *)groupPath;
 +(BOOL)deleteCmdBtnByPath:(NSString *)cmdBtnPath;
++(BOOL)deletePopBtnByPath:(NSString *)popBtnPath;
 //首次加载添加测试数据
 +(void)wirteTestData;
 //根据路径，获取该路径下所有的组信息
@@ -34,4 +37,6 @@
 +(NSString *)getPageBackImgPath:(NSString *)curPath;
 //根据路径，设置该路径下页面的背景图片路径
 +(BOOL)setPageBackImgPath:(NSString *)curPath PageBackImgPath:(NSString *)pageBackImgPath;
+//获取程序目录的路径
++(NSString *)getDocumentPath;
 @end

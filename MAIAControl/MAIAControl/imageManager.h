@@ -15,4 +15,7 @@
 + (UIImage *) getBackGroundImg;
 + (int) helpFlag;
 +(int) getHelpFlag;
+
+//保存选中的图片到程序的文件夹中
++(BOOL)saveImgToFileSystem:(UIImage *)image ImageName:(NSString *)imageName OldImgPath:(NSString *)oldImgPath;
 @end

@@ -10,7 +10,7 @@
 
 @implementation SettingViewController
 @synthesize menuList,myTableView;
-@synthesize buttonAndGroup,pathValue;
+@synthesize pathValue;
 @synthesize toolBar;
 @synthesize popoverController;
 @synthesize onHelp;
@@ -30,8 +30,6 @@
         self.pathValue=Path;
         self.menuList=[[NSMutableArray alloc] init];
         [self loadSetting:Path];
-        self.navController=[[UINavigationController alloc] init];
-        [self.view addSubview:self.navController.view];
     }
     return self;
 }
@@ -66,20 +64,13 @@
 {
     [super viewDidLoad];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    //跳转到新增界面
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewButtnAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
     
-    //UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(backBtnClick)];
-    
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"主界面" style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClick)];
+    //左边是默认的返回上一层按钮，右边是新增按钮
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewButtnAction:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     
     UIBarButtonItem *edit = [[UIBarButtonItem alloc]initWithTitle:@"删除" style:UIBarButtonItemStyleDone target:self action:@selector(deleteButtonInfo)];
-    
     UIBarButtonItem *backGround = [[UIBarButtonItem alloc]initWithTitle:@"背景" style:UIBarButtonItemStyleDone target:self action:@selector(setViewBackground:)];
-    
-    //UISwitch *switchHelp=[[UISwitch alloc] initWithFrame:CGRectMake(100, 0, 90, 90)];
     
     int flag=[imageManager getHelpFlag];
     NSString *temp;
@@ -89,30 +80,15 @@
     else
         temp=@"帮助可见";
     onHelp = [[UIBarButtonItem alloc]initWithTitle:temp style:UIBarButtonItemStyleDone target:self action:@selector(changeHelp)];
-    //
-    //    NSMutableArray *tbItems = [NSMutableArray array];
-    //
     UIBarButtonItem *ss=[[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target:self action:nil];
     ss.width = self.view.frame.size.width-200.0;
-    //
-    //    UIBarButtonItem *dd=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-    //    dd.title = @"背景";
-    //    dd.width = 20.0f;
-    //    [tbItems addObject:ss];
-    //    [tbItems addObject:dd];
-    //
-    //   [self setToolbarItems:[NSArray arrayWithObjects:edit,backGround,nil]];
-    
     
     toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, self.view.frame.size.height - toolBar.frame.size.height-44.0, self.view.frame.size.width,44.0)];
     [toolBar setBarStyle:UIBarStyleDefault];
     toolBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     [toolBar setItems:[NSArray arrayWithObjects:edit,onHelp,ss,backGround,nil] animated:YES];
     
-    //toolBar.items = tbItems;
     [self.view addSubview:toolBar];
-    
-    // [self.toolBar setAlpha:0.4f];
     
     self.menuList = [[NSMutableArray alloc] init];
     if(self.pathValue == nil)
@@ -123,10 +99,8 @@
     //每次加载前，清空menulist
     [menuList removeAllObjects];
     [self loadSetting:self.pathValue];
-    // [self.myTableView setEditing:YES animated:YES];
-    
-    // Do any additional setup after loading the view from its nib.
 }
+//按背景按钮，触发时间，弹出选择照片窗口
 - (IBAction)setViewBackground:(id)sender
 {
     UIImagePickerController *picker =[[UIImagePickerController alloc] init];
@@ -145,61 +119,62 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Error accessing photo library" delegate:nil cancelButtonTitle:@"close" otherButtonTitles: nil];
         [alert show];
     }
-    //  [self presentModalViewController:picker animated:YES];
 }
--(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
-{
+
+//代理方法，设置背景图片
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    NSURL *imageURL = [info valueForKey:UIImagePickerControllerReferenceURL];
+    NSString *query=[imageURL query];
+    NSArray *tmps=[query componentsSeparatedByString:@"="];
+    NSArray *tmps2=[[tmps objectAtIndex:1] componentsSeparatedByString:@"&"];
+    NSString *imageName=[[tmps2 objectAtIndex:0] stringByAppendingFormat:@".%@", [tmps objectAtIndex:2]];
+    NSLog(@"%@",imageName);
+    UIImage *image=[info objectForKey:UIImagePickerControllerOriginalImage];
+    NSString *oldImgPath=[XMLManipulate getPageBackImgPath:pathValue];
+    [imageManager saveImgToFileSystem:image ImageName:imageName OldImgPath:oldImgPath];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-    [imageView setFrame:CGRectMake(0, 0,self.view.frame.size.width, self.view.frame.size.height)];
-    [imageView setTag:120];
-    
-    //    for (UIView *subview in self.view.subviews) {
-    //        if ([subview tag]==120) {
-    //            [subview removeFromSuperview];
-    //            [subview release];
-    //        }
-    //    }
-    // [self.view setBackgroundColor:[UIColor colorWithPatternImage:imageView.image]];
-    [imageManager saveBackGroundImg:image];
-    
-    [self.view insertSubview:imageView atIndex:0];
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *newImgPath=[documentsPath stringByAppendingFormat:@"/%@",imageName];
+    [XMLManipulate setPageBackImgPath:pathValue PageBackImgPath:newImgPath];
     [self.popoverController dismissPopoverAnimated:YES];
-    //[imageView release];
-    
 }
+
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-   // [picker dismissModalViewControllerAnimated:YES];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
--(void)backBtnClick
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 -(void)loadSetting:(NSString *)groupPath{
     NSLog(@"初始化");
     NSArray *groups=[XMLManipulate getGroupInfoByPath:groupPath];
     NSArray *btns=[XMLManipulate getCmdBtnInfoByPath:groupPath];
+    NSArray *popBtns=[XMLManipulate getPopBtnInfoByPath:groupPath];
     
     //添加组
     NameAndImageInfo *nameAndImage = nil;
-    
     for (NSDictionary *group in groups) {
         NSString *GroupName=[group objectForKey:@"GroupName"];
         NSString *ImgUrl=[group objectForKey:@"ImgUrl"];
-        nameAndImage=[[NameAndImageInfo alloc] init:GroupName ImgURL:ImgUrl isButton:false];
+        nameAndImage=[[NameAndImageInfo alloc] init:GroupName ImgURL:ImgUrl ButtonTypeValue:NSGroupType];
         [self.menuList addObject:nameAndImage];
     }
-    
-    //添加按钮
+    //添加命令按钮
     for (NSDictionary *Button in btns) {
         NSString *GroupName=[Button objectForKey:@"CmdBtnName"];
         NSString *ImgUrl=[Button objectForKey:@"ImgUrl"];
-        nameAndImage=[[NameAndImageInfo alloc] init:GroupName ImgURL:ImgUrl isButton:false];
+        nameAndImage=[[NameAndImageInfo alloc] init:GroupName ImgURL:ImgUrl ButtonTypeValue:NSButtonType];
+        [self.menuList addObject:nameAndImage];
+    }
+    //添加弹出按钮
+    for (NSDictionary *PopBtn in popBtns) {
+        NSString *PopBtnName=[PopBtn objectForKey:@"PopBtnName"];
+        NSString *ImgUrl=[PopBtn objectForKey:@"ImgUrl"];
+        nameAndImage=[[NameAndImageInfo alloc] init:PopBtnName ImgURL:ImgUrl ButtonTypeValue:NSPopBtnType];
         [self.menuList addObject:nameAndImage];
     }
 }
+
 bool flag = false;
 -(void)deleteButtonInfo
 {
@@ -217,19 +192,15 @@ bool flag = false;
 }
 - (IBAction)addNewButtnAction:(id)sender
 {
-    //这里为什么传递过去的路径是空？
-    self.buttonAndGroup = [[NewButtonAndGroupViewController alloc]initWithNibName:@"NewButtonAndGroupView" bundle:nil Path:@""];
-    self.buttonAndGroup.title = @"添加界面";
-    [self.navigationController pushViewController:self.buttonAndGroup animated:YES];
+    NewButtonAndGroupViewController *next=[[NewButtonAndGroupViewController alloc] initWithNibName:@"NewButtonAndGroupView" bundle:nil Path:pathValue];
+    next.title=@"添加界面";
+    [self.navigationController pushViewController:next animated:YES];
     
     
 }
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    //[self.menuList release];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -258,10 +229,10 @@ bool flag = false;
 	if (!cell)
 	{
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier];
-        if (nameAndImage.isButton) {
+        if (nameAndImage.type==NSButtonType) {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
-        else
+        else if(nameAndImage.type==NSGroupType)
         {
             cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         }
@@ -275,27 +246,21 @@ bool flag = false;
     }
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
 	// get the view controller's info dictionary based on the indexPath's row
-    
-    NSLog(@"按钮首页面：%@",nameAndImage.name);
-    UIImage *image = nil;
-    
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath=[paths objectAtIndex:0];
-    NSString *ImgPath=[documentsPath stringByAppendingFormat:@"/%@",nameAndImage.ImgURL];
-    image=[UIImage imageWithContentsOfFile:ImgPath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath])
+    UIImage *image;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:nameAndImage.imgURL])
     {
-        image=[UIImage imageWithContentsOfFile:ImgPath];
+        image=[UIImage imageWithContentsOfFile:nameAndImage.imgURL];
     }
     else
     {
-        if(nameAndImage.isButton)
-        {
+        if(nameAndImage.type==NSButtonType){
             image = [UIImage imageNamed:@"Bug.png"];
         }
-        else
-        {
+        else if(nameAndImage.type==NSGroupType){
             image = [UIImage imageNamed:@"iDisk.png"];
+        }
+        else if(nameAndImage.type==NSPopBtnType){
+            image=[UIImage imageNamed:@"popBtn.png"];
         }
     }
     cell.textLabel.text = nameAndImage.name;
@@ -306,14 +271,16 @@ bool flag = false;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NameAndImageInfo *rowData = [self.menuList objectAtIndex:indexPath.row];
-    if(!rowData.isButton)
-    {
-        NewGroupViewVontroller *nextLevelView = [[NewGroupViewVontroller alloc] initWithNibName:@"NewGroupView" Path:[self.pathValue stringByAppendingFormat:@"%@",rowData.name] isNew:false];
+    if(rowData.type==NSGroupType){
+        NewGroupViewVontroller *nextLevelView = [[NewGroupViewVontroller alloc] initWithNibName:@"NewGroupView" CurPath:pathValue isNew:false GroupName:rowData.name];
         [self.navigationController pushViewController:nextLevelView animated:YES];
     }
-    else
-    {
-        AddNewButtonController *nextLevelView = [[AddNewButtonController alloc] initWithNibName:@"AddNewButton" Path:[self.pathValue stringByAppendingFormat:@"%@",rowData.name] isNew:false];
+    else if(rowData.type==NSButtonType){
+        AddNewButtonController *nextLevelView=[[AddNewButtonController alloc] initWithNibName:@"AddNewButton" CurPath:pathValue isNew:false CmdBtnName:rowData.name];
+        [self.navigationController pushViewController:nextLevelView animated:YES];
+    }
+    else if(rowData.type==NSPopBtnType){
+        NewPopButtonViewController *nextLevelView=[[NewPopButtonViewController alloc] initWithNibName:@"NewPopButtonViewController" CurPath:pathValue isNew:false CmdBtnName:rowData.name];
         [self.navigationController pushViewController:nextLevelView animated:YES];
     }
     
@@ -321,7 +288,7 @@ bool flag = false;
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     NameAndImageInfo *rowData = [self.menuList objectAtIndex:indexPath.row];
-    ShowNextLevelViewController *nextLevelView = [[ShowNextLevelViewController alloc] initWithNibName:@"ShowNextLevelView" bundle:nil Path:[self.pathValue stringByAppendingFormat:@"%@",rowData.name]];
+    SettingViewController *nextLevelView=[[SettingViewController alloc] initWithNibName:@"SettingView" bundle:nil Path:[self.pathValue stringByAppendingFormat:@"%@/",rowData.name]];
     [self.navigationController pushViewController:nextLevelView animated:YES];
 }
 -(BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -352,13 +319,16 @@ bool flag = false;
     if(editingStyle == UITableViewCellEditingStyleDelete)
     {
         NameAndImageInfo *rowData = [self.menuList objectAtIndex:indexPath.row];
-        if(rowData.isButton)
+        if(rowData.type==NSButtonType)
         {
-            [XMLManipulate deleteCmdBtnByPath:[self.pathValue stringByAppendingFormat:@"/%@",rowData.name]];
+            [XMLManipulate deleteCmdBtnByPath:[self.pathValue stringByAppendingFormat:@"%@/",rowData.name]];
         }
-        else
+        else if(rowData.type==NSGroupType)
         {
-            [XMLManipulate deleteGroupByPath:[self.pathValue stringByAppendingFormat:@"/%@",rowData.name]];
+            [XMLManipulate deleteGroupByPath:[self.pathValue stringByAppendingFormat:@"%@/",rowData.name]];
+        }
+        else if(rowData.type==NSPopBtnType){
+            [XMLManipulate deletePopBtnByPath:[self.pathValue stringByAppendingFormat:@"%@/",rowData.name]];
         }
         [self.menuList removeObjectAtIndex:indexPath.row];
         [self.myTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -369,5 +339,6 @@ bool flag = false;
 {
     return 60;
 }
+
 
 @end

@@ -9,6 +9,7 @@
 #import "imageManager.h"
 
 @implementation imageManager
+
 +(void) saveBackGroundImg:(UIImage *)image{
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath=[paths objectAtIndex:0];
@@ -134,5 +135,38 @@
     NSString *countName=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     int temp=[countName intValue];
     return temp;
+}
+//保存选中的图片到程序的文件夹中
++(BOOL)saveImgToFileSystem:(UIImage *)image ImageName:(NSString *)imageName OldImgPath:(NSString *)oldImgPath{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *newImgPath=[documentsPath stringByAppendingFormat:@"/%@",imageName];
+    //删除原来的图片
+    if ([[NSFileManager defaultManager] fileExistsAtPath:oldImgPath]){
+        [[NSFileManager defaultManager] removeItemAtPath:oldImgPath error:nil];
+        NSLog(@"%@已经删除\n",oldImgPath);
+    }
+    @try
+    {
+        NSData *imageData = nil;
+        NSString *ext = [imageName pathExtension];
+        if ([ext isEqualToString:@"png"]){
+            imageData = UIImagePNGRepresentation(image);
+        }
+        else{
+            imageData = UIImageJPEGRepresentation(image,0);
+        }
+        
+        if ((imageData == nil) || ([imageData length] <= 0))
+            return false;
+        
+        [imageData writeToFile:newImgPath atomically:YES];
+        NSLog(@"保存图片：%@\n",imageName);
+        return true;
+    }
+    @catch (NSException *e)
+    {
+        NSLog(@"create thumbnail exception.");
+    }
 }
 @end

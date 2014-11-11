@@ -10,11 +10,17 @@
 
 @implementation NewGroupViewVontroller
 @synthesize isDisplay;
-@synthesize textFieldX,textFieldY,textFieldName,textFieldWidth,textFieldHeight,labelWillDisplay;
+@synthesize textFieldX,textFieldY,textFieldName,textFieldWidth,textFieldHeight;
 @synthesize popoverController;
-@synthesize groupImage,imageView,pathValue,isNew,labelTitle;
-@synthesize imgPath;
-@synthesize newImg;
+@synthesize imageView,pathValue,labelTitle;
+@synthesize curPath=_curPath;
+@synthesize groupName=_groupName;
+@synthesize selectedImgPath=_selectedImgPath;
+@synthesize isNew=_isNew;
+@synthesize labelWillDisplay=_labelWillDisplay;
+
+
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -25,20 +31,28 @@
     }
     return self;
 }
--(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil Path:(NSString *)Path{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-        self.pathValue=Path;
-    }
-    return self;
-}
--(id) initWithNibName:(NSString *)nibNameOrNil Path:(NSString *)Path isNew:(BOOL)New{
+
+-(id)initWithNibName:(NSString *)nibNameOrNil CurPath:(NSString *)curPath isNew:(BOOL)New{
     self = [super initWithNibName:nibNameOrNil bundle:nil];
     if (self) {
         // Custom initialization
-        self.pathValue=Path;
-        self.isNew = New;
+        _labelWillDisplay=@"NO";
+        _isNew=New;
+        _selectedImgPath=@"?";
+        _curPath=curPath;
+        _groupName=@"?";
+    }
+    return self;
+}
+-(id)initWithNibName:(NSString *)nibNameOrNil CurPath:(NSString *)curPath isNew:(BOOL)New GroupName:(NSString *)groupName{
+    self = [super initWithNibName:nibNameOrNil bundle:nil];
+    if (self) {
+        // Custom initialization
+        _labelWillDisplay=@"NO";
+        _isNew=New;
+        _selectedImgPath=@"?";
+        _curPath=curPath;
+        _groupName=groupName;
     }
     return self;
 }
@@ -50,171 +64,31 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
--(void) loadSetting{
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath=[paths objectAtIndex:0];
-    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"setting.xml"];
-    
-    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        NSString *xmldata=@"<?xml version=\"1.0\" encoding=\"utf-8\"?><setting></setting>";
-        NSData *initData=[xmldata dataUsingEncoding:NSUTF8StringEncoding];
-        [initData writeToFile:filePath atomically:YES];
-    }
-    
-    NSData *xmlData=[[NSMutableData alloc] initWithContentsOfFile:filePath];
-    NSError *error;
-    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
-    if(doc==nil) return;
-    NSArray *path=[self.pathValue componentsSeparatedByString:@"/"];
-    int Deep=[path count];
-    NSString *tempStr;
-    GDataXMLElement *tempNode=[doc rootElement];
-    //先找到按钮所属的分组
-    for (int i=0;i<Deep-1;i++) {
-        tempStr=(NSString *)[path objectAtIndex:i];
-        if ([tempStr isEqualToString:@""]) {
-            continue;
-        }
-        BOOL flag=false;
-        NSArray *groups=[tempNode elementsForName:@"Group"];
-        for (GDataXMLElement *tempElement in groups) {
-            NSArray *gName=[tempElement elementsForName:@"GroupName"];
-            if ([gName count]>0) {
-                GDataXMLElement *GName=(GDataXMLElement *)[gName objectAtIndex:0];
-                if ([[GName stringValue] isEqualToString:tempStr]) {
-                    flag=true;
-                    tempNode=tempElement;
-                    break;
-                }
-            }
-        }
-        if(!flag){
-            NSLog(@"找不到路径!\n");
-            return;
-        }
-    }
-    //寻找该节点的Button
-        
-    tempStr=(NSString *)[path objectAtIndex:(Deep-1)];
-    NSArray *groups=[tempNode elementsForName:@"Group"];
-   
-    for (GDataXMLElement *tempElement in groups) {
-        NSArray *bName=[tempElement elementsForName:@"GroupName"];
-        if ([bName count]>0) {
-            GDataXMLElement *BName=(GDataXMLElement *)[bName objectAtIndex:0];
-            if ([[BName stringValue] isEqualToString:tempStr]) {
-                //获取按钮的信息
-                NSArray *temp=[tempElement elementsForName:@"GroupName"];
-                
-                temp=[tempElement elementsForName:@"Location_x"];
-                if ([temp count]>0) {
-                    textFieldX.text=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
-                }
-                temp=[tempElement elementsForName:@"Location_y"];
-                if ([temp count]>0) {
-                    textFieldY.text=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
-                }
-                temp=[tempElement elementsForName:@"Width"];
-                if ([temp count]>0) {
-                    textFieldWidth.text=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
-                }
-                temp=[tempElement elementsForName:@"Height"];
-                if ([temp count]>0) {
-                    textFieldHeight.text=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
-                }
-                temp=[tempElement elementsForName:@"GroupName"];
-                if ([temp count]>0) {
-                    textFieldName.text=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
-                }
-                
-                temp=[tempElement elementsForName:@"labelWillDisplay"];
-                if ([temp count]>0) {
-                    NSString *tmp=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
-                    isDisplay.selectedSegmentIndex=[tmp isEqualToString:@"YES"]?1:0;
-                }
-                
-                temp=[tempElement elementsForName:@"ImgUrl"];
-                if ([temp count]>0) {
-                    NSString *url=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
-                    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                    NSString *documentsPath=[paths objectAtIndex:0];
-                    NSString *Imgsrc=[documentsPath stringByAppendingFormat:@"/%@",url];
-                    NSLog(@"修改分组信息:%@",textFieldName.text);
-                    self.imgPath=url;
-                    if ([[NSFileManager defaultManager] fileExistsAtPath:Imgsrc]) 
-                    {
-                        UIImage *img=[UIImage imageWithContentsOfFile:Imgsrc];
-                        self.imageView.image=img;
-                    }
-                    else
-                    {
-                        UIImage *img=[UIImage imageNamed:@"iDisk.png"];
-                        self.imageView.image=img;
-                    }
-                }
-                break;
-            }
-        }
-    }
-}
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
-    self.newImg=NO;
-    //self.labelWillDisplay = @"NO";
     [super viewDidLoad];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEditButtnAction)];
     self.navigationItem.rightBarButtonItem = rightButton;
-    if(!self.isNew)
+    
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backToAdd)];
+    self.navigationItem.leftBarButtonItem = leftButton;
+    
+    if(self.isNew)
     {
-        self.labelTitle.text = @"修改分组信息";
+        self.labelTitle.text = @"新增组按钮信息页面";
+        self.labelTitle.font = [UIFont fontWithName:@"Helvetica" size:30.0];
+    }
+    else{
+        self.labelTitle.text = @"更新组按钮信息页面";
         self.labelTitle.font = [UIFont fontWithName:@"Helvetica" size:30.0];
         [self loadSetting];
     }
    
     // Do any additional setup after loading the view from its nib.
 }
--(void)doneEditButtnAction
-{
-    NSString* valueX = self.textFieldX .text;
-    NSString* valueY = self.textFieldY.text;
-    NSString* valueWidth = self.textFieldWidth.text;
-    NSString* valueHeight = self.textFieldHeight.text;
-    NSString* valueName = self.textFieldName.text;
-    NSString *tempPath=self.pathValue;
-    
-    //NSString *imgUrl=[imageManager writeImage:self.groupImage OldImgName:self.imgPath];
-    NSString *imgUrl;
-    if(newImg)
-    {imgUrl=[imageManager writeImage:self.groupImage OldImgName:self.imgPath];}
-    else
-    {imgUrl=self.imgPath;}
-    
-    if (!isNew) {
-        NSArray *tempPaths=[self.pathValue componentsSeparatedByString:@"/"];
-        tempPath=@"";
-        for (int i=0; i<[tempPaths count]-1; i++) {
-            NSString *temp=(NSString *)[tempPaths objectAtIndex:i];
-            tempPath=[tempPath stringByAppendingFormat:@"/%@",temp];
-        }
-    }
-    if (!isNew) {
-         //?[newGroupClass update:self.pathValue GroupName:valueName ImgURL:imgUrl Location_x:valueX Location_y:valueY Width:valueWidth Height:valueHeight Display:self.labelWillDisplay];
-    }
-    else
-    {
-        //?
-//        newGroupClass *newGroup = [[newGroupClass alloc]init:valueName ImgURL:imgUrl Location_x:valueX Location_y:valueY Width:valueWidth Height:valueHeight Path:self.pathValue display:self.labelWillDisplay];
-//        [newGroup savesetting];
-    }
-    
-    //[self.parentViewController loadSetting:self.pathValue];
-    //[self.parentViewController viewWillAppear:YES];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    //[self.navigationController pushViewController:self.parentViewController animated:YES];  
-}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -234,6 +108,61 @@
     }
 }
 
+#pragma mark response function
+-(void)backToAdd{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)doneEditButtnAction
+{
+    NSString* valueX = self.textFieldX .text;
+    NSString* valueY = self.textFieldY.text;
+    NSString* valueWidth = self.textFieldWidth.text;
+    NSString* valueHeight = self.textFieldHeight.text;
+    NSString* valueName = self.textFieldName.text;
+    
+    NSMutableDictionary *md=[NSMutableDictionary dictionary];
+    [md setObject:_curPath forKey:@"GroupPath"];
+    [md setObject:valueName forKey:@"GroupName"];
+    [md setObject:_selectedImgPath forKey:@"ImgUrl"];
+    [md setObject:valueX forKey:@"Location_x"];
+    [md setObject:valueY forKey:@"Location_y"];
+    [md setObject:valueWidth forKey:@"Width"];
+    [md setObject:valueHeight forKey:@"Height"];
+    [md setObject:_labelWillDisplay forKey:@"LabelWillDisplay"];
+    if (_isNew){
+        [XMLManipulate writeGroupInfoToFile:md];
+    }
+    else{
+        NSString *groupPath=[_curPath stringByAppendingFormat:@"%@/", _groupName];
+        [XMLManipulate updateGroupInfo:groupPath GroupInfo:md];
+    }
+    
+    [md removeAllObjects];    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void) loadSetting{
+    NSDictionary *groupInfo=[XMLManipulate getGroupInfo:[_curPath stringByAppendingFormat:@"%@/",_groupName]];
+    textFieldName.text=[groupInfo objectForKey:@"GroupName"];
+    textFieldX.text=[groupInfo objectForKey:@"Location_x"];
+    textFieldY.text=[groupInfo objectForKey:@"Location_y"];
+    textFieldWidth.text=[groupInfo objectForKey:@"Width"];
+    textFieldHeight.text=[groupInfo objectForKey:@"Height"];
+    isDisplay.selectedSegmentIndex=[[groupInfo objectForKey:@"LabelWillDisplay"] isEqualToString:@"YES"]?1:0;
+    _labelWillDisplay=[groupInfo objectForKey:@"LabelWillDisplay"];
+    NSString *imgPath=[groupInfo objectForKey:@"ImgUrl"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:imgPath])
+    {
+        UIImage *img=[UIImage imageWithContentsOfFile:imgPath];
+        self.imageView.image=img;
+        _selectedImgPath=imgPath;
+    }
+    else
+    {
+        UIImage *img=[UIImage imageNamed:@"1.png"];
+        self.imageView.image=img;
+    }
+}
 - (IBAction)pickGroupImage:(id)sender {
     UIImagePickerController *picker =[[UIImagePickerController alloc] init];
     if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
@@ -252,15 +181,20 @@
         [alert show];
     }
 }
--(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
-{
-    self.newImg=YES;
-    imageView.image = image;
-    self.groupImage = image;
+-(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    UIImage *selectedImg=[info objectForKey:UIImagePickerControllerOriginalImage];
+    self.imageView.image=[info objectForKey:UIImagePickerControllerOriginalImage];
+    //    self.textFieldHeight.text = [NSString stringWithFormat:@"%.0f", selectedImg.size.height];
+    //    self.textFieldWidth.text = [NSString stringWithFormat:@"%.0f",selectedImg.size.width];
     
-    self.textFieldHeight.text = [NSString stringWithFormat:@"%.0f", image.size.height];
-    self.textFieldWidth.text = [NSString stringWithFormat:@"%.0f",image.size.width];
-    
+    NSURL *imageURL = [info valueForKey:UIImagePickerControllerReferenceURL];
+    NSString *query=[imageURL query];
+    NSArray *tmps=[query componentsSeparatedByString:@"="];
+    NSArray *tmps2=[[tmps objectAtIndex:1] componentsSeparatedByString:@"&"];
+    NSString *imageName=[[tmps2 objectAtIndex:0] stringByAppendingFormat:@".%@", [tmps objectAtIndex:2]];
+    NSLog(@"%@",imageName);
+    [imageManager saveImgToFileSystem:selectedImg ImageName:imageName OldImgPath:_selectedImgPath];
+    _selectedImgPath=[[XMLManipulate getDocumentPath] stringByAppendingFormat:@"/%@",imageName];
     [self.popoverController dismissPopoverAnimated:YES];
 }
 - (IBAction)textFieldReturn:(id)sender {

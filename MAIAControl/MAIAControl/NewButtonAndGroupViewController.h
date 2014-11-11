@@ -10,6 +10,7 @@
 #import "AddNewButtonController.h"
 #import "NewGroupViewVontroller.h"
 #import "NameAndImageInfo.h"
+#import "NewPopButtonViewController.h"
 #import "GCDAsyncUdpSocket.h"
 #import "GDataXMLNode.h"
 

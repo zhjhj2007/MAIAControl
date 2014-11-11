@@ -85,8 +85,6 @@
         NSLog(@"找不到路径!\n");
         return;
     }
-    //    NSArray *groups=[[doc rootElement] nodesForXPath:[groupPath stringByAppendingFormat:path] error:nil];
-    //    NSArray *btns=[[doc rootElement] nodesForXPath:[groupPath stringByAppendingFormat:path] error:nil];
     NSArray *groups=[tempNode elementsForName:@"Group"];
    
     //添加组
@@ -104,12 +102,14 @@
             ImgUrl=[(GDataXMLElement *)[temp objectAtIndex:0] stringValue];
         }
         else continue;
-        nameAndImage=[[NameAndImageInfo alloc] init:GroupName ImgURL:ImgUrl isButton:false];
+        nameAndImage=[[NameAndImageInfo alloc] init:GroupName ImgURL:ImgUrl ButtonTypeValue:NSGroupType];
         [self.menuList addObject:nameAndImage];
     }
-    nameAndImage=[[NameAndImageInfo alloc] init:@"添加按钮" ImgURL:@"url" isButton:true];
+    nameAndImage=[[NameAndImageInfo alloc] init:@"添加命令按钮" ImgURL:@"url" ButtonTypeValue:NSButtonType];
     [self.menuList addObject:nameAndImage];
-    nameAndImage=[[NameAndImageInfo alloc] init:@"添加分组" ImgURL:@"url" isButton:true];
+    nameAndImage=[[NameAndImageInfo alloc] init:@"添加分组" ImgURL:@"url" ButtonTypeValue:NSButtonType];
+    [self.menuList addObject:nameAndImage];
+    nameAndImage=[[NameAndImageInfo alloc] init:@"添加弹出按钮" ImgURL:@"url" ButtonTypeValue:NSButtonType];
     [self.menuList addObject:nameAndImage];
     
 }
@@ -128,19 +128,6 @@
     [super viewDidLoad];
     
     self.title = self.pathValue;
-    UIBarButtonItem *backBtn = nil;
-    if([self.pathValue isEqualToString:@""])
-    {
-        backBtn=[[UIBarButtonItem alloc]initWithTitle:@"返回设置" style:UIBarButtonItemStyleDone target:self action:@selector(backBtnClick)];
-    }
-    else
-    {
-        NSArray *names=[self.pathValue componentsSeparatedByString:@"/"];
-        NSString *GroupNameTemp=(NSString *)[names objectAtIndex:[names count]-1];
-        backBtn=[[UIBarButtonItem alloc]initWithTitle:GroupNameTemp style:UIBarButtonItemStyleDone target:self action:@selector(backBtnClick)];
-    }
-    
-    [[self navigationItem] setLeftBarButtonItem:backBtn];
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -187,10 +174,10 @@
 	{
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellIdentifier];
         
-		if (nameAndImage.isButton) {
+		if (nameAndImage.type==NSButtonType) {
             cell.accessoryType = UITableViewCellAccessoryNone;
         }
-        else
+        else if(nameAndImage.type==NSGroupType)
         {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -204,15 +191,13 @@
     
     NSLog(@"add:%@",nameAndImage.name);
     UIImage *image = nil;
-    if(nameAndImage.isButton)
+    if(nameAndImage.type==NSButtonType)
     {
         image = [UIImage imageNamed:@"add.png"];
     }
-    else
+    else if(nameAndImage.type==NSGroupType)
     {
-        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsPath=[paths objectAtIndex:0];
-        NSString *ImgPath=[documentsPath stringByAppendingFormat:@"/%@",nameAndImage.ImgURL];
+        NSString *ImgPath=nameAndImage.imgURL;
         image=[UIImage imageWithContentsOfFile:ImgPath];
         if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath])
         {
@@ -231,22 +216,27 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NameAndImageInfo *rowData = [self.menuList objectAtIndex:indexPath.row];
-    if([rowData.name isEqualToString:@"添加按钮"])
+    if([rowData.name isEqualToString:@"添加命令按钮"])
     {
-        AddNewButtonController *newButton = [[AddNewButtonController alloc]initWithNibName:@"AddNewButton" Path:self.pathValue isNew:true];
+        AddNewButtonController *newButton = [[AddNewButtonController alloc]initWithNibName:@"AddNewButton" CurPath:pathValue isNew:YES];
  
         newButton.title = rowData.name;
         [self.navigationController pushViewController:newButton animated:YES];
     }
     else if([rowData.name isEqualToString:@"添加分组"])
     {
-        NewGroupViewVontroller *newGroup = [[NewGroupViewVontroller alloc]initWithNibName:@"NewGroupView" Path:self.pathValue isNew:true ];
+        NewGroupViewVontroller *newGroup=[[NewGroupViewVontroller alloc] initWithNibName:@"NewGroupView" CurPath:pathValue isNew:true];
         newGroup.title = rowData.name;
         [self.navigationController pushViewController:newGroup animated:YES];
     }
+    else if ([rowData.name isEqualToString:@"添加弹出按钮"]){
+        NewPopButtonViewController *next=[[NewPopButtonViewController alloc] initWithNibName:@"NewPopButtonViewController" CurPath:pathValue isNew:true];
+        next.title=rowData.name;
+        [self.navigationController pushViewController:next animated:YES];
+    }
 	else
     {
-        NewButtonAndGroupViewController *nextLevelView = [[NewButtonAndGroupViewController alloc]initWithNibName:@"NewButtonAndGroupView" bundle:nil Path:[self.pathValue stringByAppendingFormat:@"/%@",rowData.name]];
+        NewButtonAndGroupViewController *nextLevelView = [[NewButtonAndGroupViewController alloc]initWithNibName:@"NewButtonAndGroupView" bundle:nil Path:[self.pathValue stringByAppendingFormat:@"%@/",rowData.name]];
         
         nextLevelView.title = rowData.name;
         [self.navigationController pushViewController:nextLevelView animated:YES];
