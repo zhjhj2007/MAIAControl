@@ -22,7 +22,7 @@
     //改成下面这句，就可以了
     //不使用导航栏了，有一个白条不美观，使用展示方法跳转
     self.window.rootViewController=[[UINavigationController alloc] initWithRootViewController:rootviewController];
-    rootviewController.title=@"主页面";
+    rootviewController.title=@"中控iPad客户端";
     ;self.window.backgroundColor=[UIColor grayColor];
     [self.window makeKeyAndVisible];
     return YES;

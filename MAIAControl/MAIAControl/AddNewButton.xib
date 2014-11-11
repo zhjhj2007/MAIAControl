@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddNewButtonController">
             <connections>
                 <outlet property="isDisplay" destination="54" id="56"/>
+                <outlet property="isWarn" destination="wYW-sY-90d" id="zN7-M3-WEr"/>
                 <outlet property="labelTitle" destination="15" id="43"/>
                 <outlet property="selectNewImg" destination="45" id="76I-kf-9lt"/>
                 <outlet property="textFieldCommand" destination="14" id="25"/>
@@ -207,6 +208,25 @@
                     </segments>
                     <connections>
                         <action selector="displayChanged:" destination="-1" eventType="valueChanged" id="55"/>
+                    </connections>
+                </segmentedControl>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="是否警告执行：" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" id="wEY-0l-TO3">
+                    <rect key="frame" x="554" y="479" width="162" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="wYW-sY-90d">
+                    <rect key="frame" x="738" y="473" width="119" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <segments>
+                        <segment title="否"/>
+                        <segment title="是"/>
+                    </segments>
+                    <connections>
+                        <action selector="displayChanged:" destination="-1" eventType="valueChanged" id="ueK-Y9-eU0"/>
+                        <action selector="warnChanged:" destination="-1" eventType="valueChanged" id="SRa-wA-Ook"/>
                     </connections>
                 </segmentedControl>
             </subviews>

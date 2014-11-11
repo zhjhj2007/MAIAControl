@@ -21,6 +21,7 @@
 //修改操作
 +(BOOL)updateGroupInfo:(NSString *)groupPath GroupInfo:(NSDictionary *)groupInfo;
 +(BOOL)updateCmdBtnInfo:(NSString *)cmdBtnPath CmdBtnInfo:(NSDictionary *)cmdBtnInfo;
++(BOOL)updatePopBtnInfo:(NSString *)popBtnPath PopBtnInfo:(NSDictionary *)popBtnInfo;
 //删除操作
 +(BOOL)deleteGroupByPath:(NSString *)groupPath;
 +(BOOL)deleteCmdBtnByPath:(NSString *)cmdBtnPath;

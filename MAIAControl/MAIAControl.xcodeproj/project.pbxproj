@@ -41,7 +41,6 @@
 		04EA0E421A0F7E9300573FFB /* AddNewButtonController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E401A0F7E9300573FFB /* AddNewButtonController.m */; };
 		04EA0E451A0F804400573FFB /* NameAndImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E441A0F804400573FFB /* NameAndImageInfo.m */; };
 		04EA0E481A0F830B00573FFB /* imageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E471A0F830B00573FFB /* imageManager.m */; };
-		04EDA3781A03B2F20054F0B4 /* GroupClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA3771A03B2F20054F0B4 /* GroupClass.m */; };
 		04EDA37B1A03BA0C0054F0B4 /* XMLManipulate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA37A1A03BA0C0054F0B4 /* XMLManipulate.m */; };
 		04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EDA37D1A03BD7B0054F0B4 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		04EDA3801A03D3940054F0B4 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EDA37F1A03D3940054F0B4 /* libxml2.dylib */; };
@@ -58,6 +57,11 @@
 		04EDA3981A03DA880054F0B4 /* normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EDA38C1A03DA880054F0B4 /* normal.png */; };
 		04EDA3991A03DA880054F0B4 /* warn.png in Resources */ = {isa = PBXBuildFile; fileRef = 04EDA38D1A03DA880054F0B4 /* warn.png */; };
 		04F2C5A71A05E6F200F3353F /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		04FC9F431A1255DD00DF4433 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FC9F411A1255DD00DF4433 /* LoginViewController.m */; };
+		04FC9F441A1255DD00DF4433 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04FC9F421A1255DD00DF4433 /* LoginViewController.xib */; };
+		04FC9F481A1255F700DF4433 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04FC9F461A1255F700DF4433 /* AboutViewController.m */; };
+		04FC9F491A1255F700DF4433 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04FC9F471A1255F700DF4433 /* AboutViewController.xib */; };
+		04FC9F4B1A125B5700DF4433 /* pure.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04FC9F4A1A125B5700DF4433 /* pure.jpg */; };
 		B9AA07741A0E5137001DB552 /* FPPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AA076F1A0E5137001DB552 /* FPPopoverController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B9AA07751A0E5137001DB552 /* FPPopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AA07711A0E5137001DB552 /* FPPopoverView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B9AA07761A0E5137001DB552 /* FPTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9AA07731A0E5137001DB552 /* FPTouchView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -124,8 +128,6 @@
 		04EA0E441A0F804400573FFB /* NameAndImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameAndImageInfo.m; sourceTree = "<group>"; };
 		04EA0E461A0F830B00573FFB /* imageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageManager.h; sourceTree = "<group>"; };
 		04EA0E471A0F830B00573FFB /* imageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imageManager.m; sourceTree = "<group>"; };
-		04EDA3761A03B2F20054F0B4 /* GroupClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupClass.h; sourceTree = "<group>"; };
-		04EDA3771A03B2F20054F0B4 /* GroupClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupClass.m; sourceTree = "<group>"; };
 		04EDA3791A03BA0C0054F0B4 /* XMLManipulate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLManipulate.h; sourceTree = "<group>"; };
 		04EDA37A1A03BA0C0054F0B4 /* XMLManipulate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLManipulate.m; sourceTree = "<group>"; };
 		04EDA37C1A03BD7B0054F0B4 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
@@ -145,6 +147,13 @@
 		04EDA38D1A03DA880054F0B4 /* warn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = warn.png; sourceTree = "<group>"; };
 		04F2C5A51A05E6F200F3353F /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
 		04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		04FC9F401A1255DD00DF4433 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		04FC9F411A1255DD00DF4433 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		04FC9F421A1255DD00DF4433 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
+		04FC9F451A1255F700DF4433 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		04FC9F461A1255F700DF4433 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		04FC9F471A1255F700DF4433 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
+		04FC9F4A1A125B5700DF4433 /* pure.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pure.jpg; sourceTree = "<group>"; };
 		B9AA076E1A0E5137001DB552 /* FPPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverController.h; sourceTree = "<group>"; };
 		B9AA076F1A0E5137001DB552 /* FPPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FPPopoverController.m; sourceTree = "<group>"; };
 		B9AA07701A0E5137001DB552 /* FPPopoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPPopoverView.h; sourceTree = "<group>"; };
@@ -278,6 +287,12 @@
 				04EA0E2D1A0F7D9C00573FFB /* NewGroupView.xib */,
 				04EA0E2E1A0F7D9C00573FFB /* NewGroupViewVontroller.h */,
 				04EA0E2F1A0F7D9C00573FFB /* NewGroupViewVontroller.m */,
+				04FC9F401A1255DD00DF4433 /* LoginViewController.h */,
+				04FC9F411A1255DD00DF4433 /* LoginViewController.m */,
+				04FC9F421A1255DD00DF4433 /* LoginViewController.xib */,
+				04FC9F451A1255F700DF4433 /* AboutViewController.h */,
+				04FC9F461A1255F700DF4433 /* AboutViewController.m */,
+				04FC9F471A1255F700DF4433 /* AboutViewController.xib */,
 			);
 			name = SystemConfiguration;
 			sourceTree = "<group>";
@@ -304,8 +319,6 @@
 				045B1C7A1A02689C001A993F /* GraphViewController.m */,
 				045B1C7C1A0268BB001A993F /* TextViewController.h */,
 				045B1C7D1A0268BB001A993F /* TextViewController.m */,
-				04EDA3761A03B2F20054F0B4 /* GroupClass.h */,
-				04EDA3771A03B2F20054F0B4 /* GroupClass.m */,
 				04EDA3791A03BA0C0054F0B4 /* XMLManipulate.h */,
 				04EDA37A1A03BA0C0054F0B4 /* XMLManipulate.m */,
 				04971A391A0545410019E9BE /* CmdSocket.h */,
@@ -317,6 +330,7 @@
 		04EDA3811A03DA3A0054F0B4 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				04FC9F4A1A125B5700DF4433 /* pure.jpg */,
 				04D696201A110B9900C2016D /* popBtn.png */,
 				04849B491A0F74DE00CD497C /* Lock.png */,
 				0478ED6E1A0C6E1200E2AE61 /* Back.png */,
@@ -434,6 +448,7 @@
 				04EDA3991A03DA880054F0B4 /* warn.png in Resources */,
 				04EDA3981A03DA880054F0B4 /* normal.png in Resources */,
 				04EDA3971A03DA880054F0B4 /* login.png in Resources */,
+				04FC9F491A1255F700DF4433 /* AboutViewController.xib in Resources */,
 				04EDA3921A03DA880054F0B4 /* Bug.png in Resources */,
 				04EA0E411A0F7E9300573FFB /* AddNewButton.xib in Resources */,
 				04EA0E351A0F7D9C00573FFB /* NewGroupView.xib in Resources */,
@@ -443,11 +458,13 @@
 				04EA0E3C1A0F7E6B00573FFB /* SettingView.xib in Resources */,
 				0495DE7C1A0BC4610075ED07 /* GOMON.jpg in Resources */,
 				04EDA3961A03DA880054F0B4 /* link.png in Resources */,
+				04FC9F441A1255DD00DF4433 /* LoginViewController.xib in Resources */,
 				04EDA3911A03DA880054F0B4 /* add.png in Resources */,
 				04D696211A110B9900C2016D /* popBtn.png in Resources */,
 				04EDA3941A03DA880054F0B4 /* error.png in Resources */,
 				04EDA38F1A03DA880054F0B4 /* 2.png in Resources */,
 				0495DE7E1A0BE85B0075ED07 /* child.jpg in Resources */,
+				04FC9F4B1A125B5700DF4433 /* pure.jpg in Resources */,
 				045B1C5D1A0267EA001A993F /* Images.xcassets in Resources */,
 				04E62E611A10F0DA0069B86F /* NewPopButtonViewController.xib in Resources */,
 				04EDA3951A03DA880054F0B4 /* iDisk.png in Resources */,
@@ -478,7 +495,6 @@
 				04EA0E3D1A0F7E6B00573FFB /* SettingViewController.m in Sources */,
 				04EDA37B1A03BA0C0054F0B4 /* XMLManipulate.m in Sources */,
 				04EA0E341A0F7D9C00573FFB /* NewButtonAndGroupViewController.m in Sources */,
-				04EDA3781A03B2F20054F0B4 /* GroupClass.m in Sources */,
 				B9AA07751A0E5137001DB552 /* FPPopoverView.m in Sources */,
 				B9AA07CD1A0EFF19001DB552 /* DemoTableController.m in Sources */,
 				04EA0E421A0F7E9300573FFB /* AddNewButtonController.m in Sources */,
@@ -490,7 +506,9 @@
 				04EA0E451A0F804400573FFB /* NameAndImageInfo.m in Sources */,
 				B9AA07761A0E5137001DB552 /* FPTouchView.m in Sources */,
 				045B1C7E1A0268BB001A993F /* TextViewController.m in Sources */,
+				04FC9F431A1255DD00DF4433 /* LoginViewController.m in Sources */,
 				04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */,
+				04FC9F481A1255F700DF4433 /* AboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

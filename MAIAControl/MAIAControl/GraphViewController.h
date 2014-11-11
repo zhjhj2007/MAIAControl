@@ -9,16 +9,19 @@
 
 #import <UIKit/UIKit.h>
 #import "XMLManipulate.h"
-#import "GroupClass.h"
 #import "CmdSocket.h"
 #import "EGORefreshTableHeaderView.h"
 #import "FPPopoverController.h"
 #import "SettingViewController.h"
+#import "LoginViewController.h"
+#import "AboutViewController.h"
 
-@interface GraphViewController : UIViewController<UIScrollViewDelegate,EGORefreshTableHeaderDelegate,FPPopoverControllerDelegate>
+@interface GraphViewController : UIViewController<UIScrollViewDelegate,EGORefreshTableHeaderDelegate,FPPopoverControllerDelegate, UIAlertViewDelegate>
 @property(nonatomic, copy) NSString *curPagePath;
 @property(nonatomic,retain) UIScrollView *scrollView;
 @property(nonatomic, assign) BOOL reloading;
 @property(nonatomic,retain) EGORefreshTableHeaderView *refreshHeaderView;
+//定义IP、按钮名字、按钮路径、端口和命令，用于存储提示操作之前的数据
+@property(nonatomic, copy)NSString *storageIP, *storagePort, *storageCmd, *storageCmdBtnPath, *storageCmdBtnName;
 -(id)init:(NSString *)curPagePath;
 @end

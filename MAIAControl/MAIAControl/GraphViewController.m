@@ -17,6 +17,11 @@
 @synthesize curPagePath=_curPagePath;
 @synthesize scrollView=_scrollView;
 @synthesize refreshHeaderView=_refreshHeaderView;
+@synthesize storageCmd=_storageCmd;
+@synthesize storageIP=_storageIP;
+@synthesize storagePort=_storagePort;
+@synthesize storageCmdBtnPath=_storageCmdBtnPath;
+@synthesize storageCmdBtnName=_storageCmdBtnName;
 
 #pragma mark init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -47,6 +52,8 @@
     [self loadAllViews];
     //注册通知中心，用于获取按钮状态更新信息
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeBtnStatus:) name:@"changeBtnStatus" object:nil];
+    UITapGestureRecognizer*tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(Actiondo:)];
+    [self.view addGestureRecognizer:tapGesture];
 }
 
 - (void)didReceiveMemoryWarning
@@ -199,9 +206,7 @@
 //获取命令按钮的视图，不包含下面的标签，被loadAllViews调用
 -(id)getPopBtnView:(NSMutableDictionary *)btnInfo{
     UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Location_x"] floatValue], [[btnInfo objectForKey:@"Location_y"] floatValue], [[btnInfo objectForKey:@"Width"] floatValue], [[btnInfo objectForKey:@"Height"] floatValue])];
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath=[paths objectAtIndex:0];
-    NSString *ImgPath=[documentsPath stringByAppendingFormat:@"/%@",[btnInfo objectForKey:@"ImgUrl"]];
+    NSString *ImgPath=[btnInfo objectForKey:@"ImgUrl"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
         [newButton setBackgroundImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
     }else{
@@ -288,8 +293,17 @@
     NSArray *PopBtnsInfo = [XMLManipulate getPopBtnInfoByPath:_curPagePath];
     for(NSMutableDictionary *tmpDict in PopBtnsInfo){
         [self.scrollView addSubview:[self getPopBtnView:tmpDict]];
-        
+        if ([self getLabelView:tmpDict BtnTypeName:@"PopBtnName"]!=nil) {
+            [self.scrollView addSubview:[self getLabelView:tmpDict BtnTypeName:@"PopBtnName"]];
+        }
     }
+    //加载一个按钮，用于控制显示NavigationBar
+    UIButton *LoginButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.height-40, 10, 30, 30)];
+    LoginButton.titleLabel.text = @"Administrator";
+    LoginButton.showsTouchWhenHighlighted=true;
+    [LoginButton setBackgroundImage:[UIImage imageNamed:@"Lock.png"] forState:UIControlStateNormal];
+    [LoginButton addTarget:self action:@selector(showTheNavigationBar) forControlEvents:UIControlEventTouchUpInside];
+    [self.scrollView addSubview:LoginButton];
     //判断是否为第一个页面，如果不是，加载一个返回按钮，否则加载登录界面按钮
     if (![_curPagePath isEqualToString:@"/"]) {
         UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 30, 30)];
@@ -299,12 +313,13 @@
         [self.scrollView addSubview:backButton];
     }
     else{
-        UIButton *LoginButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.height-40, 10, 30, 30)];
-        LoginButton.titleLabel.text = @"Administrator";
-        LoginButton.showsTouchWhenHighlighted=true;
-        [LoginButton setBackgroundImage:[UIImage imageNamed:@"Lock.png"] forState:UIControlStateNormal];
-        [LoginButton addTarget:self action:@selector(showTheLoginView) forControlEvents:UIControlEventTouchUpInside];
-        [self.scrollView addSubview:LoginButton];
+        UIBarButtonItem *nextBtn=[[UIBarButtonItem alloc]initWithTitle:@"配置" style:UIBarButtonItemStyleDone target:self action:@selector(showTheLoginView)];
+        [[self navigationItem] setRightBarButtonItem:nextBtn];
+        
+        UIButton *modalViewButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+        [modalViewButton addTarget:self action:@selector(modalViewAction:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *modalBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:modalViewButton];
+        self.navigationItem.leftBarButtonItem = modalBarButtonItem;
     }
 }
 
@@ -373,11 +388,16 @@
 -(void)jump:(UIButton *)sender{
     NSLog(@"%@",sender.titleLabel.text);
     GraphViewController *next = [[GraphViewController alloc] init:[_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text]];
-
-    //[self setModalPresentationStyle:UIModalPresentationPageSheet];
-    //?[self presentViewController:next animated:YES completion:nil];
-    [[self navigationController] pushViewController:next animated:YES];
-    //[self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    next.title=[_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text];
+    //[[self navigationController] pushViewController:next animated:YES];
+    
+    CATransition *animation = [CATransition animation];
+    [animation setDuration:0.8];
+    [animation setType:kCATransitionFade];
+    [animation setSubtype: kCATransitionFromTop];
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
+    [self.navigationController pushViewController:next animated:NO];
+    [self.navigationController.view.layer addAnimation:animation forKey:nil];
 }
 
 //小窗口按钮的弹出函数
@@ -411,20 +431,33 @@
 //    [self dismissViewControllerAnimated:YES completion:nil];
     [[self navigationController] popViewControllerAnimated:YES];
 }
-
+-(void)showTheNavigationBar{
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+}
 -(void)showTheLoginView{
-    SettingViewController *next = [[SettingViewController alloc]  initWithNibName:@"SettingView" bundle:nil];
+//    SettingViewController *next = [[SettingViewController alloc]  initWithNibName:@"SettingView" bundle:nil];
+//    [self.navigationController pushViewController:next animated:YES];
+    LoginViewController *next=[[LoginViewController alloc] init];
     [self.navigationController pushViewController:next animated:YES];
-    
-    
 }
 
 //向服务器发送按钮配置的命令
 -(void)sendCmdMsg:(UIButton *)sender{
-    CmdSocket *cmdSocket = [[CmdSocket alloc] initWithButtonName:sender.titleLabel.text];
     NSString *cmdBtnPath = [_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text ];
     NSMutableDictionary *md=[XMLManipulate getCmdBtnInfo:cmdBtnPath];
-    [cmdSocket sendCmd:[md objectForKey:@"ServerIP"] ServerPort:[md objectForKey:@"ServerPort"] CmdText:[cmdBtnPath stringByAppendingFormat:@":%@",[md objectForKey:@"Cmd"]]];
+    _storageCmdBtnName=sender.titleLabel.text;
+    _storageIP=[md objectForKey:@"ServerIP"];
+    _storagePort=[md objectForKey:@"ServerPort"];
+    _storageCmdBtnPath=cmdBtnPath;
+    _storageCmd=[md objectForKey:@"Cmd"];
+    if ([[md objectForKey:@"WarnWillDisplay"] compare:@"YES" options:NSCaseInsensitiveSearch]==NSOrderedSame) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"操作提示" message:@"是否执行该命令" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+        [alertView show];
+    }
+    else{
+        CmdSocket *cmdSocket = [[CmdSocket alloc] initWithButtonName:_storageCmdBtnName];
+        [cmdSocket sendCmd:_storageIP ServerPort:_storagePort CmdText:[_storageCmdBtnPath stringByAppendingFormat:@":%@",_storageCmd]];
+    }
 }
 
 //注册中心对应的回调函数，当按钮的状态改变是，会调用该函数，设置按钮的状态
@@ -437,6 +470,11 @@
     [self disPlayNotification:info];
     [self refresh:btnName BtnState:btnState];
 }
+
+//手势操作，取消navigation的显示
+-(void)Actiondo:(id)sender{
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+}
 #pragma mark UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
@@ -445,6 +483,15 @@
     [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
 }
 
+- (void)modalViewAction:(id)sender
+{
+    int flag=[imageManager getHelpFlag];
+    if (flag==1) {
+        AboutViewController *target=[[AboutViewController alloc]initWithNibName:@"AboutViewController" bundle:nil];
+        [self.navigationController pushViewController:target animated:YES];
+    }
+    
+}
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
@@ -503,5 +550,12 @@
     _reloading = NO;
     [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_scrollView];
     
+}
+#pragma  mark UIAlertView Delegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex==1) {
+        CmdSocket *cmdSocket = [[CmdSocket alloc] initWithButtonName:_storageCmdBtnName];
+        [cmdSocket sendCmd:_storageIP ServerPort:_storagePort CmdText:[_storageCmdBtnPath stringByAppendingFormat:@":%@",_storageCmd]];
+    }
 }
 @end

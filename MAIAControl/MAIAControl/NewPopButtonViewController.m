@@ -60,6 +60,23 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEditButtnAction)];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(backToAdd)];
+    self.navigationItem.leftBarButtonItem = leftButton;
+    
+    if(self.isNew)
+    {
+        self.labelTitle.text = @"新增弹出按钮信息页面";
+        self.labelTitle.font = [UIFont fontWithName:@"Helvetica" size:30.0];
+    }
+    else{
+        self.labelTitle.text = @"更新弹出按钮信息页面";
+        self.labelTitle.font = [UIFont fontWithName:@"Helvetica" size:30.0];
+        [self loadSetting];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,15 +86,17 @@
 }
 #pragma mark loading
 -(void) loadSetting{
-    NSDictionary *cmdBtnInfo=[XMLManipulate getCmdBtnInfo:[_curPath stringByAppendingFormat:@"%@/",_cmdBtnName]];
-    textFieldDiscription.text=[cmdBtnInfo objectForKey:@"CmdBtnName"];
+    NSDictionary *cmdBtnInfo=[XMLManipulate getPopBtnInfo:[_curPath stringByAppendingFormat:@"%@/",_cmdBtnName]];
+    textFieldDiscription.text=[cmdBtnInfo objectForKey:@"PopBtnName"];
     textFieldX.text=[cmdBtnInfo objectForKey:@"Location_x"];
     textFieldY.text=[cmdBtnInfo objectForKey:@"Location_y"];
     textFieldWidth.text=[cmdBtnInfo objectForKey:@"Width"];
     textFieldHeight.text=[cmdBtnInfo objectForKey:@"Height"];
     textFieldIp.text=[cmdBtnInfo objectForKey:@"ServerIP"];
     textFieldPort.text=[cmdBtnInfo objectForKey:@"ServerPort"];
-    textFieldCommand.text=[cmdBtnInfo objectForKey:@"Cmd"];
+    textFieldCommand.text=[cmdBtnInfo objectForKey:@"Cmds"];
+    deviceNames.text=[cmdBtnInfo objectForKey:@"Devices"];
+    cmdNames.text=[cmdBtnInfo objectForKey:@"CmdNames"];
     isDisplay.selectedSegmentIndex=[[cmdBtnInfo objectForKey:@"LabelWillDisplay"] isEqualToString:@"YES"]?1:0;
     _labelWillDisplay=[cmdBtnInfo objectForKey:@"LabelWillDisplay"];
     NSString *imgPath=[cmdBtnInfo objectForKey:@"ImgUrl"];
@@ -89,7 +108,7 @@
     }
     else
     {
-        UIImage *img=[UIImage imageNamed:@"Bug.png"];
+        UIImage *img=[UIImage imageNamed:@"popBtn.png"];
         self.selectNewImg.image=img;
     }
 }
@@ -108,9 +127,11 @@
     NSString* valuePort = self.textFieldPort.text;
     NSString* valueCommand = self.textFieldCommand.text;
     NSString* valueDescription = self.textFieldDiscription.text;
+    NSString *devices=self.deviceNames.text;
+    NSString *cmdNamesValue=self.cmdNames.text;
     
     NSMutableDictionary *md=[NSMutableDictionary dictionary];
-    [md setObject:_curPath forKey:@"CmdBtnPath"];
+    [md setObject:_curPath forKey:@"PopBtnPath"];
     [md setObject:valueIp forKey:@"ServerIP"];
     [md setObject:valuePort forKey:@"ServerPort"];
     [md setObject:_selectedImgPath forKey:@"ImgUrl"];
@@ -118,15 +139,17 @@
     [md setObject:valueY forKey:@"Location_y"];
     [md setObject:valueWidth forKey:@"Width"];
     [md setObject:valueHeight forKey:@"Height"];
-    [md setObject:valueCommand forKey:@"Cmd"];
-    [md setObject:valueDescription forKey:@"CmdBtnName"];
+    [md setObject:valueCommand forKey:@"Cmds"];
+    [md setObject:valueDescription forKey:@"PopBtnName"];
     [md setObject:_labelWillDisplay forKey:@"LabelWillDisplay"];
+    [md setObject:devices forKey:@"Devices"];
+    [md setObject:cmdNamesValue forKey:@"CmdNames"];
     if (_isNew){
-        [XMLManipulate writeCmdBtnInfoToFile:md];
+        [XMLManipulate writePopBtnInfoToFile:md];
     }
     else{
         NSString *cmdBtnPath=[_curPath stringByAppendingFormat:@"%@/", _cmdBtnName];
-        [XMLManipulate updateCmdBtnInfo:cmdBtnPath CmdBtnInfo:md];
+        [XMLManipulate updatePopBtnInfo:cmdBtnPath PopBtnInfo:md];
     }
     
     [md removeAllObjects];

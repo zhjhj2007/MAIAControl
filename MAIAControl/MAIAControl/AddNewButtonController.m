@@ -11,13 +11,14 @@
 
 @implementation AddNewButtonController
 @synthesize textFieldX,textFieldY,textFieldIp,textFieldPort,textFieldWidth,textFieldHeight,textFieldCommand,textFieldDiscription,timeDelay,isDisplay;
-@synthesize selectNewImg,popoverController;
+@synthesize selectNewImg,popoverController,isWarn;
 @synthesize labelTitle;
 @synthesize labelWillDisplay=_labelWillDisplay;
 @synthesize isNew=_isNew;
 @synthesize selectedImgPath=_selectedImgPath;
 @synthesize curPath=_curPath;
 @synthesize cmdBtnName=_cmdBtnName;
+@synthesize warnWillDisplay=_warnWillDisplay;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,6 +39,7 @@
         _selectedImgPath=@"?";
         _curPath=curPath;
         _cmdBtnName=@"?";
+        _warnWillDisplay=@"NO";
     }
     return self;
 }
@@ -51,6 +53,7 @@
         _selectedImgPath=@"?";
         _curPath=curPath;
         _cmdBtnName=cmdBtnName;
+        _warnWillDisplay=@"NO";
     }
     return self;
 }
@@ -103,6 +106,8 @@
     timeDelay.text=[cmdBtnInfo objectForKey:@"TimeDelay"];
     isDisplay.selectedSegmentIndex=[[cmdBtnInfo objectForKey:@"LabelWillDisplay"] isEqualToString:@"YES"]?1:0;
     _labelWillDisplay=[cmdBtnInfo objectForKey:@"LabelWillDisplay"];
+    isWarn.selectedSegmentIndex=[[cmdBtnInfo objectForKey:@"WarnWillDisplay"] isEqualToString:@"YES"]?1:0;
+    _warnWillDisplay=[cmdBtnInfo objectForKey:@"WarnWillDisplay"];
     NSString *imgPath=[cmdBtnInfo objectForKey:@"ImgUrl"];
     if ([[NSFileManager defaultManager] fileExistsAtPath:imgPath])
     {
@@ -143,6 +148,7 @@
     [md setObject:valueDescription forKey:@"CmdBtnName"];
     [md setObject:valueDelay forKey:@"TimeDelay"];
     [md setObject:_labelWillDisplay forKey:@"LabelWillDisplay"];
+    [md setObject:_warnWillDisplay forKey:@"WarnWillDisplay"];
     if (_isNew){
         [XMLManipulate writeCmdBtnInfoToFile:md];
     }
@@ -237,6 +243,14 @@
         self.labelWillDisplay = @"NO";
     }else{
         self.labelWillDisplay = @"YES";
+    }
+}
+
+- (IBAction)warnChanged:(id)sender {
+    if (0 == [sender selectedSegmentIndex]) {
+        _warnWillDisplay = @"NO";
+    }else{
+        _warnWillDisplay = @"YES";
     }
 }
 

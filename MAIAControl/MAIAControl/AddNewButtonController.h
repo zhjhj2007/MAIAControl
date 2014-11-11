@@ -23,6 +23,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *labelTitle;
 @property (nonatomic, retain) IBOutlet UITextField *timeDelay;
 @property (nonatomic,retain) IBOutlet UISegmentedControl *isDisplay;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *isWarn;
 
 
 @property (retain) UIPopoverController *popoverController;
@@ -36,10 +37,12 @@
 //用于判断按钮是新增还是更新
 @property(nonatomic, assign) BOOL isNew;
 @property (nonatomic,copy) NSString *labelWillDisplay;
+@property (nonatomic,copy) NSString *warnWillDisplay;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (IBAction)pickButtonImage:(id)sender;
 - (IBAction)textFielfReturn:(id)sender;
 - (IBAction)displayChanged:(id)sender;
+- (IBAction)warnChanged:(id)sender;
 
 -(void) loadSetting;
 //新增按钮调用该初始化函数
