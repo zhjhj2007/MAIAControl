@@ -198,7 +198,6 @@
     else if(nameAndImage.type==NSGroupType)
     {
         NSString *ImgPath=nameAndImage.imgURL;
-        image=[UIImage imageWithContentsOfFile:ImgPath];
         if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath])
         {
             image=[UIImage imageWithContentsOfFile:ImgPath];

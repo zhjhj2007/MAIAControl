@@ -17,6 +17,7 @@
 #import "AboutViewController.h"
 #import "YLGIFImage.h"
 #import "YLImageView.h"
+#import "ILBarButtonItem.h"
 
 @interface GraphViewController : UIViewController<UIScrollViewDelegate,EGORefreshTableHeaderDelegate,FPPopoverControllerDelegate, UIAlertViewDelegate>
 @property(nonatomic, copy) NSString *curPagePath;

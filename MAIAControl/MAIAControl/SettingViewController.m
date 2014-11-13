@@ -81,13 +81,16 @@
     else
         temp=@"帮助可见";
     onHelp = [[UIBarButtonItem alloc]initWithTitle:temp style:UIBarButtonItemStyleDone target:self action:@selector(changeHelp)];
-//    UIBarButtonItem *ss=[[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target:self action:nil];
-//    ss.width = self.view.frame.size.width-150.0;
     
     toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, self.view.frame.size.height - toolBar.frame.size.height-44.0, self.view.frame.size.width,44.0)];
     [toolBar setBarStyle:UIBarStyleDefault];
     toolBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [toolBar setItems:[NSArray arrayWithObjects:edit,onHelp,systemSetting,backGround,nil] animated:YES];
+    //空白按钮，用于将四个按钮隔开
+    UIBarButtonItem *itemButtonEmpty = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [toolBar setItems:[NSArray arrayWithObjects:edit,itemButtonEmpty,onHelp,itemButtonEmpty,systemSetting,itemButtonEmpty,backGround,nil] animated:YES];
+    //以下两句可以将toolBar设置为透明
+//    [toolBar setBackgroundImage:[UIImage new]forToolbarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+//    [toolBar setShadowImage:[UIImage new] forToolbarPosition:UIToolbarPositionAny];
     
     [self.view addSubview:toolBar];
     
@@ -137,10 +140,10 @@
     NSString *oldImgPath=[XMLManipulate getPageBackImgPath:pathValue];
     [imageManager saveImgToFileSystem:image ImageName:imageName OldImgPath:oldImgPath];
     
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath=[paths objectAtIndex:0];
-    NSString *newImgPath=[documentsPath stringByAppendingFormat:@"/%@",imageName];
-    [XMLManipulate setPageBackImgPath:pathValue PageBackImgPath:newImgPath];
+//    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsPath=[paths objectAtIndex:0];
+//    NSString *newImgPath=[documentsPath stringByAppendingFormat:@"/%@",imageName];
+    [XMLManipulate setPageBackImgPath:pathValue PageBackImgPath:imageName];
     [self.popoverController dismissPopoverAnimated:YES];
 }
 
@@ -159,21 +162,24 @@
     NameAndImageInfo *nameAndImage = nil;
     for (NSDictionary *group in groups) {
         NSString *GroupName=[group objectForKey:@"GroupName"];
-        NSString *ImgUrl=[group objectForKey:@"ImgUrl"];
+        NSString *documentPath=[XMLManipulate getDocumentPath];
+        NSString *ImgUrl=[documentPath stringByAppendingFormat:@"/%@", [group objectForKeyedSubscript:@"ImgUrl"] ];
         nameAndImage=[[NameAndImageInfo alloc] init:GroupName ImgURL:ImgUrl ButtonTypeValue:NSGroupType];
         [self.menuList addObject:nameAndImage];
     }
     //添加命令按钮
     for (NSDictionary *Button in btns) {
         NSString *GroupName=[Button objectForKey:@"CmdBtnName"];
-        NSString *ImgUrl=[Button objectForKey:@"ImgUrl"];
+        NSString *documentPath=[XMLManipulate getDocumentPath];
+        NSString *ImgUrl=[documentPath stringByAppendingFormat:@"/%@", [Button objectForKeyedSubscript:@"ImgUrl"] ];
         nameAndImage=[[NameAndImageInfo alloc] init:GroupName ImgURL:ImgUrl ButtonTypeValue:NSButtonType];
         [self.menuList addObject:nameAndImage];
     }
     //添加弹出按钮
     for (NSDictionary *PopBtn in popBtns) {
         NSString *PopBtnName=[PopBtn objectForKey:@"PopBtnName"];
-        NSString *ImgUrl=[PopBtn objectForKey:@"ImgUrl"];
+        NSString *documentPath=[XMLManipulate getDocumentPath];
+        NSString *ImgUrl=[documentPath stringByAppendingFormat:@"/%@", [PopBtn objectForKeyedSubscript:@"ImgUrl"] ];
         nameAndImage=[[NameAndImageInfo alloc] init:PopBtnName ImgURL:ImgUrl ButtonTypeValue:NSPopBtnType];
         [self.menuList addObject:nameAndImage];
     }

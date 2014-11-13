@@ -37,6 +37,9 @@
 		04E62E5C1A1065D00069B86F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E62E5A1A1059390069B86F /* AssetsLibrary.framework */; };
 		04E62E601A10F0DA0069B86F /* NewPopButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62E5E1A10F0DA0069B86F /* NewPopButtonViewController.m */; };
 		04E62E611A10F0DA0069B86F /* NewPopButtonViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04E62E5F1A10F0DA0069B86F /* NewPopButtonViewController.xib */; };
+		04E8C5991A14F5D000B2F287 /* ILBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E8C5981A14F5D000B2F287 /* ILBarButtonItem.m */; };
+		04E8C59C1A14F62B00B2F287 /* gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E8C59A1A14F62B00B2F287 /* gear.png */; };
+		04E8C59D1A14F62B00B2F287 /* gearSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 04E8C59B1A14F62B00B2F287 /* gearSelected.png */; };
 		04EA0E331A0F7D9C00573FFB /* NewButtonAndGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E2A1A0F7D9C00573FFB /* NewButtonAndGroupView.xib */; };
 		04EA0E341A0F7D9C00573FFB /* NewButtonAndGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EA0E2C1A0F7D9C00573FFB /* NewButtonAndGroupViewController.m */; };
 		04EA0E351A0F7D9C00573FFB /* NewGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EA0E2D1A0F7D9C00573FFB /* NewGroupView.xib */; };
@@ -127,6 +130,10 @@
 		04E62E5D1A10F0DA0069B86F /* NewPopButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPopButtonViewController.h; sourceTree = "<group>"; };
 		04E62E5E1A10F0DA0069B86F /* NewPopButtonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPopButtonViewController.m; sourceTree = "<group>"; };
 		04E62E5F1A10F0DA0069B86F /* NewPopButtonViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPopButtonViewController.xib; sourceTree = "<group>"; };
+		04E8C5971A14F5D000B2F287 /* ILBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILBarButtonItem.h; sourceTree = "<group>"; };
+		04E8C5981A14F5D000B2F287 /* ILBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILBarButtonItem.m; sourceTree = "<group>"; };
+		04E8C59A1A14F62B00B2F287 /* gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear.png; sourceTree = "<group>"; };
+		04E8C59B1A14F62B00B2F287 /* gearSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gearSelected.png; sourceTree = "<group>"; };
 		04EA0E2A1A0F7D9C00573FFB /* NewButtonAndGroupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewButtonAndGroupView.xib; sourceTree = "<group>"; };
 		04EA0E2B1A0F7D9C00573FFB /* NewButtonAndGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewButtonAndGroupViewController.h; sourceTree = "<group>"; };
 		04EA0E2C1A0F7D9C00573FFB /* NewButtonAndGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewButtonAndGroupViewController.m; sourceTree = "<group>"; };
@@ -318,6 +325,7 @@
 		04971A371A053FD90019E9BE /* ExternalClass */ = {
 			isa = PBXGroup;
 			children = (
+				B9AA076D1A0E50EC001DB552 /* FPPopover */,
 				04CA3F0A1A13976700C1F9A0 /* YLGIFImage */,
 				04F2C5A51A05E6F200F3353F /* EGORefreshTableHeaderView.h */,
 				04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */,
@@ -325,7 +333,8 @@
 				04EDA37D1A03BD7B0054F0B4 /* GDataXMLNode.m */,
 				04971A341A053FB70019E9BE /* GCDAsyncUdpSocket.h */,
 				04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */,
-				B9AA076D1A0E50EC001DB552 /* FPPopover */,
+				04E8C5971A14F5D000B2F287 /* ILBarButtonItem.h */,
+				04E8C5981A14F5D000B2F287 /* ILBarButtonItem.m */,
 			);
 			name = ExternalClass;
 			sourceTree = "<group>";
@@ -360,6 +369,8 @@
 		04EDA3811A03DA3A0054F0B4 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				04E8C59A1A14F62B00B2F287 /* gear.png */,
+				04E8C59B1A14F62B00B2F287 /* gearSelected.png */,
 				04CA3F111A1398BC00C1F9A0 /* refresh1.gif */,
 				04CA3F081A13970600C1F9A0 /* catTest.gif */,
 				04FC9F4A1A125B5700DF4433 /* pure.jpg */,
@@ -486,8 +497,10 @@
 				04EDA3921A03DA880054F0B4 /* Bug.png in Resources */,
 				04EA0E411A0F7E9300573FFB /* AddNewButton.xib in Resources */,
 				04EA0E351A0F7D9C00573FFB /* NewGroupView.xib in Resources */,
+				04E8C59D1A14F62B00B2F287 /* gearSelected.png in Resources */,
 				04EDA38E1A03DA880054F0B4 /* 1.png in Resources */,
 				045B1C551A0267EA001A993F /* InfoPlist.strings in Resources */,
+				04E8C59C1A14F62B00B2F287 /* gear.png in Resources */,
 				04CA3F1C1A13BC7700C1F9A0 /* SystemViewController.xib in Resources */,
 				0478ED6F1A0C6E1200E2AE61 /* Back.png in Resources */,
 				04EA0E3C1A0F7E6B00573FFB /* SettingView.xib in Resources */,
@@ -552,6 +565,7 @@
 				B9AA07751A0E5137001DB552 /* FPPopoverView.m in Sources */,
 				B9AA07CD1A0EFF19001DB552 /* DemoTableController.m in Sources */,
 				04EA0E421A0F7E9300573FFB /* AddNewButtonController.m in Sources */,
+				04E8C5991A14F5D000B2F287 /* ILBarButtonItem.m in Sources */,
 				04E62E601A10F0DA0069B86F /* NewPopButtonViewController.m in Sources */,
 				04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */,
 				045B1C571A0267EA001A993F /* main.m in Sources */,

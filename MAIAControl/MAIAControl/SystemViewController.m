@@ -84,15 +84,16 @@
 }
 -(void)loadSetting{
     NSDictionary *info=[XMLManipulate getSystemConfiguration];
+    NSString *documentPath=[XMLManipulate getDocumentPath];
     self.UserName.text=[info objectForKey:@"UserName"];
     self.Password.text=[info objectForKey:@"Password"];
-    self.rightImgView.image=[UIImage imageWithContentsOfFile:[info objectForKey:@"RightImgPath"]];
-    self.backBtnImgView.image=[UIImage imageWithContentsOfFile:[info objectForKey:@"BackImgPath"]];
+    self.rightImgView.image=[UIImage imageWithContentsOfFile:[documentPath stringByAppendingFormat:@"/%@",[info objectForKey:@"RightImgPath"]]];
+    self.backBtnImgView.image=[UIImage imageWithContentsOfFile:[documentPath stringByAppendingFormat:@"/%@",[info objectForKey:@"BackImgPath"]]];
 //    self.refreshImgView.image=[UIImage imageWithContentsOfFile:[info objectForKey:@"RefreshImgPath"]];
-    self.state1ImgView.image=[UIImage imageWithContentsOfFile:[info objectForKey:@"State1ImgPath"]];
-    self.state2ImgView.image=[UIImage imageWithContentsOfFile:[info objectForKey:@"State2ImgPath"]];
-    self.state3ImgView.image=[UIImage imageWithContentsOfFile:[info objectForKey:@"State3ImgPath"]];
-    self.state4ImgView.image=[UIImage imageWithContentsOfFile:[info objectForKey:@"State4ImgPath"]];
+    self.state1ImgView.image=[UIImage imageWithContentsOfFile:[documentPath stringByAppendingFormat:@"/%@",[info objectForKey:@"State1ImgPath"]]];
+    self.state2ImgView.image=[UIImage imageWithContentsOfFile:[documentPath stringByAppendingFormat:@"/%@",[info objectForKey:@"State2ImgPath"]]];
+    self.state3ImgView.image=[UIImage imageWithContentsOfFile:[documentPath stringByAppendingFormat:@"/%@",[info objectForKey:@"State3ImgPath"]]];
+    self.state4ImgView.image=[UIImage imageWithContentsOfFile:[documentPath stringByAppendingFormat:@"/%@",[info objectForKey:@"State4ImgPath"]]];
     self.showInfoTime.text=[info objectForKey:@"ShowInfoTime"];
     
     @try {
@@ -176,20 +177,20 @@
     NSArray *tmps2=[[tmps objectAtIndex:1] componentsSeparatedByString:@"&"];
     NSString *imageName=[[tmps2 objectAtIndex:0] stringByAppendingFormat:@".%@", [tmps objectAtIndex:2]];
     NSLog(@"%@",imageName);
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsPath=[paths objectAtIndex:0];
-    NSString *newImgPath=[documentsPath stringByAppendingFormat:@"/%@",imageName];
+//    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsPath=[paths objectAtIndex:0];
+//    NSString *newImgPath=[documentsPath stringByAppendingFormat:@"/%@",imageName];
     NSString *oldImgPath;
     switch (_imgIndex) {
         case 1:
             self.rightImgView.image=[info objectForKey:UIImagePickerControllerOriginalImage];
             oldImgPath=[systeminfo objectForKey:@"RightImgPath"];
-            [_systemInfo setObject:newImgPath forKey:@"RightImgPath"];
+            [_systemInfo setObject:imageName forKey:@"RightImgPath"];
             break;
         case 2:
             self.backBtnImgView.image=[info objectForKey:UIImagePickerControllerOriginalImage];
             oldImgPath=[systeminfo objectForKey:@"BackImgPath"];
-            [_systemInfo setObject:newImgPath forKey:@"BackImgPath"];
+            [_systemInfo setObject:imageName forKey:@"BackImgPath"];
             break;
 //        case 3:
 //            self.refreshImgView.image=[info objectForKey:UIImagePickerControllerOriginalImage];
@@ -199,22 +200,22 @@
         case 4:
             self.state1ImgView.image=[info objectForKey:UIImagePickerControllerOriginalImage];
             oldImgPath=[systeminfo objectForKey:@"State1ImgPath"];
-            [_systemInfo setObject:newImgPath forKey:@"State1ImgPath"];
+            [_systemInfo setObject:imageName forKey:@"State1ImgPath"];
             break;
         case 5:
             self.state2ImgView.image=[info objectForKey:UIImagePickerControllerOriginalImage];
             oldImgPath=[systeminfo objectForKey:@"State2ImgPath"];
-            [_systemInfo setObject:newImgPath forKey:@"State2ImgPath"];
+            [_systemInfo setObject:imageName forKey:@"State2ImgPath"];
             break;
         case 6:
             self.state3ImgView.image=[info objectForKey:UIImagePickerControllerOriginalImage];
             oldImgPath=[systeminfo objectForKey:@"State3ImgPath"];
-            [_systemInfo setObject:newImgPath forKey:@"State3ImgPath"];
+            [_systemInfo setObject:imageName forKey:@"State3ImgPath"];
             break;
         case 7:
             self.state4ImgView.image=[info objectForKey:UIImagePickerControllerOriginalImage];
             oldImgPath=[systeminfo objectForKey:@"State4ImgPath"];
-            [_systemInfo setObject:newImgPath forKey:@"State4ImgPath"];
+            [_systemInfo setObject:imageName forKey:@"State4ImgPath"];
             break;
             
         default:

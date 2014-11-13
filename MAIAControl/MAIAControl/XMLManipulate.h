@@ -43,4 +43,5 @@
 //设置系统配置信息
 +(BOOL)setSystemConfiguration:(NSDictionary *)systemInfo;
 +(NSDictionary *)getSystemConfiguration;
++(NSString *)getAboutInfo;
 @end

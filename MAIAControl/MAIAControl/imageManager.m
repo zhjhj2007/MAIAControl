@@ -141,6 +141,7 @@
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath=[paths objectAtIndex:0];
     NSString *newImgPath=[documentsPath stringByAppendingFormat:@"/%@",imageName];
+    oldImgPath=[documentsPath stringByAppendingFormat:@"/%@",oldImgPath];
     //删除原来的图片
     if ([[NSFileManager defaultManager] fileExistsAtPath:oldImgPath]){
         [[NSFileManager defaultManager] removeItemAtPath:oldImgPath error:nil];

@@ -141,7 +141,8 @@
 //获取组按钮的视图，不包含下面的标签，被loadAllViews调用
 -(id)getGroupView:(NSMutableDictionary *)groupInfo{
     UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[groupInfo objectForKey:@"Location_x"] floatValue], [[groupInfo objectForKey:@"Location_y"] floatValue], [[groupInfo objectForKey:@"Width"] floatValue], [[groupInfo objectForKey:@"Height"] floatValue])];
-    NSString *ImgPath=[groupInfo objectForKey:@"ImgUrl"];
+    NSString *documentPath=[XMLManipulate getDocumentPath];
+    NSString *ImgPath=[documentPath stringByAppendingFormat:@"/%@",[groupInfo objectForKey:@"ImgUrl"]];
     if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
         [newButton setBackgroundImage:[UIImage imageNamed:@"iDisk.png"] forState:UIControlStateNormal];
     }else{
@@ -168,7 +169,8 @@
 //获取命令按钮的视图，不包含下面的标签，被loadAllViews调用
 -(id)getBtnView:(NSMutableDictionary *)btnInfo{
     UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Location_x"] floatValue], [[btnInfo objectForKey:@"Location_y"] floatValue], [[btnInfo objectForKey:@"Width"] floatValue], [[btnInfo objectForKey:@"Height"] floatValue])];
-    NSString *ImgPath=[btnInfo objectForKey:@"ImgUrl"];
+    NSString *documentPath=[XMLManipulate getDocumentPath];
+    NSString *ImgPath=[documentPath stringByAppendingFormat:@"/%@",[btnInfo objectForKey:@"ImgUrl"]];
     if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
         [newButton setBackgroundImage:[UIImage imageNamed:@"2.png"] forState:UIControlStateNormal];
     }else{
@@ -207,7 +209,8 @@
 //获取命令按钮的视图，不包含下面的标签，被loadAllViews调用
 -(id)getPopBtnView:(NSMutableDictionary *)btnInfo{
     UIButton *newButton=[[UIButton alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Location_x"] floatValue], [[btnInfo objectForKey:@"Location_y"] floatValue], [[btnInfo objectForKey:@"Width"] floatValue], [[btnInfo objectForKey:@"Height"] floatValue])];
-    NSString *ImgPath=[btnInfo objectForKey:@"ImgUrl"];
+    NSString *documentPath=[XMLManipulate getDocumentPath];
+    NSString *ImgPath=[documentPath stringByAppendingFormat:@"/%@",[btnInfo objectForKey:@"ImgUrl"]];
     if (![[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
         [newButton setBackgroundImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
     }else{
@@ -245,7 +248,8 @@
 
 //设置背景图片
 -(void) setBackGroudImg{
-    NSString *pageBackImgPath=[XMLManipulate getPageBackImgPath:_curPagePath];
+    NSString *documentPath=[XMLManipulate getDocumentPath];
+    NSString *pageBackImgPath=[documentPath stringByAppendingFormat:@"/%@",[XMLManipulate getPageBackImgPath:_curPagePath]];
     if (![[NSFileManager defaultManager] fileExistsAtPath:pageBackImgPath]) {
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"GOMON.jpg"]]];
     }else{
@@ -304,8 +308,10 @@
     LoginButton.titleLabel.text = @"Administrator";
     LoginButton.showsTouchWhenHighlighted=true;
     //判断是否配置了用户设置的图标
-    if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"RightImgPath"]])
-        [LoginButton setBackgroundImage:[UIImage imageWithContentsOfFile:[nd objectForKey:@"RightImgPath"]] forState:UIControlStateNormal];
+    NSString *documentPath=[XMLManipulate getDocumentPath];
+    NSString *ImgPath=[documentPath stringByAppendingFormat:@"/%@", [nd objectForKeyedSubscript:@"RightImgPath"] ];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath])
+        [LoginButton setBackgroundImage:[UIImage imageWithContentsOfFile:ImgPath] forState:UIControlStateNormal];
     else
         [LoginButton setBackgroundImage:[UIImage imageNamed:@"Lock.png"] forState:UIControlStateNormal];
     [LoginButton addTarget:self action:@selector(showTheNavigationBar) forControlEvents:UIControlEventTouchUpInside];
@@ -315,26 +321,29 @@
         UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 30, 30)];
         backButton.titleLabel.text = @"back";
         //判断是否配置了用户设置的图标
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"BackImgPath"]]) {
-            [backButton setBackgroundImage:[UIImage imageWithContentsOfFile:[nd objectForKey:@"BackImgPath"]] forState:UIControlStateNormal];
+        ImgPath=[documentPath stringByAppendingFormat:@"/%@", [nd objectForKeyedSubscript:@"BackImgPath"] ];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath]) {
+            [backButton setBackgroundImage:[UIImage imageWithContentsOfFile:ImgPath] forState:UIControlStateNormal];
         }
         else    [backButton setBackgroundImage:[UIImage imageNamed:@"Back.png"] forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(backToPre:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:backButton];
     }
     else{
-        UIBarButtonItem *nextBtn=[[UIBarButtonItem alloc]initWithTitle:@"配置" style:UIBarButtonItemStyleDone target:self action:@selector(showTheLoginView)];
-        [[self navigationItem] setRightBarButtonItem:nextBtn];
-        
         UIButton *modalViewButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
         [modalViewButton addTarget:self action:@selector(modalViewAction:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *modalBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:modalViewButton];
         self.navigationItem.leftBarButtonItem = modalBarButtonItem;
+        
+        ILBarButtonItem *settingsBtn = [ILBarButtonItem barItemWithImage:[UIImage imageNamed:@"gear.png"] selectedImage:[UIImage imageNamed:@"gearSelected.png"] target:self action:@selector (showTheLoginView)];
+        self.navigationItem.rightBarButtonItem=settingsBtn;
     }
     
-    //    YLImageView* imageView = [[YLImageView alloc] initWithFrame:CGRectMake(0, 160, 100, 100)];
-    //    [self.scrollView addSubview:imageView];
-    //    imageView.image = [YLGIFImage imageNamed:@"catTest.gif"];
+//    if ([self.navigationController.navigationBar respondsToSelector:@selector(setBarTintColor:)]) { // iOS 7+
+//        self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+//    } else { // what year is this? 2012?
+//        self.navigationController.navigationBar.tintColor = [UIColor greenColor];
+//    }
 }
 
 //根据服务器返回的信息，刷新按钮状态
@@ -352,32 +361,38 @@
     }
     UIImage *img;
     NSDictionary *nd=[XMLManipulate getSystemConfiguration];
+    NSString *documentPath=[XMLManipulate getDocumentPath];
+    NSString *ImgPath=@"";
     switch (btnState) {
             //warn
         case 1:
-            if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"State1ImgPath"]])
-                img=[YLGIFImage imageWithContentsOfFile:[nd objectForKey:@"State1ImgPath"]];
+            ImgPath=[documentPath stringByAppendingFormat:@"/%@", [nd objectForKeyedSubscript:@"State1ImgPath"] ];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath])
+                img=[YLGIFImage imageWithContentsOfFile:ImgPath];
             else
                 img=[YLGIFImage imageNamed:@"warn.png"];
             break;
             //normal
         case 2:
-            if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"State2ImgPath"]])
-                img=[YLGIFImage imageWithContentsOfFile:[nd objectForKey:@"State2ImgPath"]];
+            ImgPath=[documentPath stringByAppendingFormat:@"/%@", [nd objectForKeyedSubscript:@"State2ImgPath"] ];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath])
+                img=[YLGIFImage imageWithContentsOfFile:ImgPath];
             else
                 img=[YLGIFImage imageNamed:@"normal.png"];
             break;
             //error
         case 3:
-            if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"State3ImgPath"]])
-                img=[YLGIFImage imageWithContentsOfFile:[nd objectForKey:@"State3ImgPath"]];
+            ImgPath=[documentPath stringByAppendingFormat:@"/%@", [nd objectForKeyedSubscript:@"State3ImgPath"] ];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath])
+                img=[YLGIFImage imageWithContentsOfFile:ImgPath];
             else
                 img=[YLGIFImage imageNamed:@"error.png"];
             break;
             //link
         case 4:
-            if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"State4ImgPath"]])
-                img=[YLGIFImage imageWithContentsOfFile:[nd objectForKey:@"State4ImgPath"]];
+            ImgPath=[documentPath stringByAppendingFormat:@"/%@", [nd objectForKeyedSubscript:@"State4ImgPath"] ];
+            if ([[NSFileManager defaultManager] fileExistsAtPath:ImgPath])
+                img=[YLGIFImage imageWithContentsOfFile:ImgPath];
             else
                 img=[YLGIFImage imageNamed:@"link.png"];
             break;

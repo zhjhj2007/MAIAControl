@@ -35,8 +35,8 @@
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     //用于检测根路径的情况
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -109,7 +109,7 @@
     NSArray *fakegroupNames=[cmdBtnPath componentsSeparatedByString:@"/"];
     NSString *CmdBtnName=[fakegroupNames objectAtIndex:[fakegroupNames count]-2];
     NSMutableArray *groupNames=[[NSMutableArray alloc] init];
-    for (int i=0; i<[fakegroupNames count]-2; i++) {
+    for (NSInteger i=0; i<[fakegroupNames count]-2; i++) {
         [groupNames addObject:[fakegroupNames objectAtIndex:i]];
     }
     [groupNames addObject:@""];
@@ -124,8 +124,8 @@
     NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -244,7 +244,7 @@
     NSArray *fakegroupNames=[popBtnPath componentsSeparatedByString:@"/"];
     NSString *CmdBtnName=[fakegroupNames objectAtIndex:[fakegroupNames count]-2];
     NSMutableArray *groupNames=[[NSMutableArray alloc] init];
-    for (int i=0; i<[fakegroupNames count]-2; i++) {
+    for (NSInteger i=0; i<[fakegroupNames count]-2; i++) {
         [groupNames addObject:[fakegroupNames objectAtIndex:i]];
     }
     [groupNames addObject:@""];
@@ -259,8 +259,8 @@
     NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -387,8 +387,8 @@
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     if(doc==nil) return false;
     NSArray *pathNames=[[groupInfo objectForKey:@"GroupPath"] componentsSeparatedByString:@"/"];
-    int deep=0;
-    int Deep=[pathNames count];
+    NSInteger deep=0;
+    NSInteger Deep=[pathNames count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in pathNames) {
         if ([tempStr isEqualToString:@""]) {
@@ -471,8 +471,8 @@
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     if(doc==nil) return false;
     NSArray *pathNames=[[cmdBtnInfo objectForKey:@"CmdBtnPath"] componentsSeparatedByString:@"/"];
-    int deep=0;
-    int Deep=[pathNames count];
+    NSInteger deep=0;
+    NSInteger Deep=[pathNames count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in pathNames) {
         if ([tempStr isEqualToString:@""]) {
@@ -551,8 +551,8 @@
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     if(doc==nil) return false;
     NSArray *pathNames=[[popBtnInfo objectForKey:@"PopBtnPath"] componentsSeparatedByString:@"/"];
-    int deep=0;
-    int Deep=[pathNames count];
+    NSInteger deep=0;
+    NSInteger Deep=[pathNames count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in pathNames) {
         if ([tempStr isEqualToString:@""]) {
@@ -737,8 +737,8 @@
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     //用于检测根路径的情况
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -814,7 +814,7 @@
     NSArray *fakegroupNames=[cmdBtnPath componentsSeparatedByString:@"/"];
     NSString *CmdBtnName=[fakegroupNames objectAtIndex:[fakegroupNames count]-2];
     NSMutableArray *groupNames=[[NSMutableArray alloc] init];
-    for (int i=0; i<[fakegroupNames count]-2; i++) {
+    for (NSInteger i=0; i<[fakegroupNames count]-2; i++) {
         [groupNames addObject:[fakegroupNames objectAtIndex:i]];
     }
     [groupNames addObject:@""];
@@ -829,8 +829,8 @@
     NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -951,7 +951,7 @@
     NSArray *fakegroupNames=[popBtnPath componentsSeparatedByString:@"/"];
     NSString *CmdBtnName=[fakegroupNames objectAtIndex:[fakegroupNames count]-2];
     NSMutableArray *groupNames=[[NSMutableArray alloc] init];
-    for (int i=0; i<[fakegroupNames count]-2; i++) {
+    for (NSInteger i=0; i<[fakegroupNames count]-2; i++) {
         [groupNames addObject:[fakegroupNames objectAtIndex:i]];
     }
     [groupNames addObject:@""];
@@ -966,8 +966,8 @@
     NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -1106,8 +1106,8 @@
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     //用于检测根路径的情况
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     GDataXMLElement *tempChildNode;
     for (NSString *tempStr in Names) {
@@ -1154,7 +1154,7 @@
     NSArray *fakegroupNames=[cmdBtnPath componentsSeparatedByString:@"/"];
     NSString *CmdBtnName=[fakegroupNames objectAtIndex:[fakegroupNames count]-2];
     NSMutableArray *groupNames=[[NSMutableArray alloc] init];
-    for (int i=0; i<[fakegroupNames count]-2; i++) {
+    for (NSInteger i=0; i<[fakegroupNames count]-2; i++) {
         [groupNames addObject:[fakegroupNames objectAtIndex:i]];
     }
     [groupNames addObject:@""];
@@ -1169,8 +1169,8 @@
     NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -1233,7 +1233,7 @@
     NSArray *fakegroupNames=[popBtnPath componentsSeparatedByString:@"/"];
     NSString *CmdBtnName=[fakegroupNames objectAtIndex:[fakegroupNames count]-2];
     NSMutableArray *groupNames=[[NSMutableArray alloc] init];
-    for (int i=0; i<[fakegroupNames count]-2; i++) {
+    for (NSInteger i=0; i<[fakegroupNames count]-2; i++) {
         [groupNames addObject:[fakegroupNames objectAtIndex:i]];
     }
     [groupNames addObject:@""];
@@ -1248,8 +1248,8 @@
     NSData *xmlData=[[NSData alloc] initWithContentsOfFile:filePath];
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -1326,8 +1326,8 @@
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     //用于检测根路径的情况
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -1428,8 +1428,8 @@
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     //用于检测根路径的情况
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -1561,8 +1561,8 @@
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     //用于检测根路径的情况
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -1693,8 +1693,8 @@
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     //用于检测根路径的情况
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -1752,8 +1752,8 @@
     NSError *error;
     GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:xmlData options:0 error:&error];
     //用于检测根路径的情况
-    int deep=0;
-    int Deep=[Names count];
+    NSInteger deep=0;
+    NSInteger Deep=[Names count];
     GDataXMLElement *tempNode=[doc rootElement];
     for (NSString *tempStr in Names) {
         if ([tempStr isEqualToString:@""]) {
@@ -1895,5 +1895,14 @@
         [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ShowInfoTime"];
     }
     return systemInfo;
+}
++(NSString *)getAboutInfo{
+    NSString *filePath=[[XMLManipulate getDocumentPath] stringByAppendingString:@"/Aboutus.txt"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        NSData *data=[[NSData alloc] initWithContentsOfFile:filePath];
+        NSString *info=[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        return info;
+    }
+    return @"";
 }
 @end

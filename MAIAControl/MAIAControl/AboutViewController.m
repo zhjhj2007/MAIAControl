@@ -9,6 +9,7 @@
 #import "AboutViewController.h"
 
 @interface AboutViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *IntroduceInfo;
 
 @end
 
@@ -28,6 +29,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self setTitle:@"苏州名雅科技有限责任公司"];
+    
+    // 字符串
+    NSString *str = [XMLManipulate getAboutInfo];
+    self.IntroduceInfo.text=str;
 }
 
 - (void)didReceiveMemoryWarning

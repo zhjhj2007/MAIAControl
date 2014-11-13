@@ -150,12 +150,13 @@
     textFieldHeight.text=[groupInfo objectForKey:@"Height"];
     isDisplay.selectedSegmentIndex=[[groupInfo objectForKey:@"LabelWillDisplay"] isEqualToString:@"YES"]?1:0;
     _labelWillDisplay=[groupInfo objectForKey:@"LabelWillDisplay"];
-    NSString *imgPath=[groupInfo objectForKey:@"ImgUrl"];
+    NSString *documentPath=[XMLManipulate getDocumentPath];
+    NSString *imgPath=[documentPath stringByAppendingFormat:@"/%@", [groupInfo objectForKeyedSubscript:@"ImgUrl"] ];
     if ([[NSFileManager defaultManager] fileExistsAtPath:imgPath])
     {
         UIImage *img=[UIImage imageWithContentsOfFile:imgPath];
         self.imageView.image=img;
-        _selectedImgPath=imgPath;
+        _selectedImgPath=[groupInfo objectForKeyedSubscript:@"ImgUrl"] ;
     }
     else
     {
@@ -194,15 +195,12 @@
     NSString *imageName=[[tmps2 objectAtIndex:0] stringByAppendingFormat:@".%@", [tmps objectAtIndex:2]];
     NSLog(@"%@",imageName);
     [imageManager saveImgToFileSystem:selectedImg ImageName:imageName OldImgPath:_selectedImgPath];
-    _selectedImgPath=[[XMLManipulate getDocumentPath] stringByAppendingFormat:@"/%@",imageName];
+//    _selectedImgPath=[[XMLManipulate getDocumentPath] stringByAppendingFormat:@"/%@",imageName];
+    _selectedImgPath=imageName;
     [self.popoverController dismissPopoverAnimated:YES];
 }
 - (IBAction)textFieldReturn:(id)sender {
-    [self.textFieldX resignFirstResponder];
-    [self.textFieldY resignFirstResponder];
-    [self.textFieldWidth resignFirstResponder];
-    [self.textFieldHeight resignFirstResponder];
-    [self.textFieldName resignFirstResponder];
+    [sender resignFirstResponder];
 }
 
 - (IBAction)changeDisplay:(id)sender {
