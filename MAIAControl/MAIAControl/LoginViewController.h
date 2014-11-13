@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SettingViewController.h"
 #import "GraphViewController.h"
+#import "XMLManipulate.h"
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
 @end

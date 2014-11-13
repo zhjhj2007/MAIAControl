@@ -649,7 +649,7 @@
         [md removeAllObjects];
 
         [md setObject:@"/" forKey:@"CmdBtnPath"];
-        [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
+        [md setObject:@"192.168.1.180" forKey:@"ServerIP"];
         [md setObject:@"8600" forKey:@"ServerPort"];
         [md setObject:@"1.png" forKey:@"ImgUrl"];
         [md setObject:@"200" forKey:@"Location_x"];
@@ -665,7 +665,7 @@
         [md removeAllObjects];
         
         [md setObject:@"/" forKey:@"CmdBtnPath"];
-        [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
+        [md setObject:@"192.168.1.180" forKey:@"ServerIP"];
         [md setObject:@"8600" forKey:@"ServerPort"];
         [md setObject:@"1.png" forKey:@"ImgUrl"];
         [md setObject:@"200" forKey:@"Location_x"];
@@ -681,7 +681,7 @@
         [md removeAllObjects];
         
         [md setObject:@"/G1/" forKey:@"CmdBtnPath"];
-        [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
+        [md setObject:@"192.168.1.180" forKey:@"ServerIP"];
         [md setObject:@"8600" forKey:@"ServerPort"];
         [md setObject:@"1.png" forKey:@"ImgUrl"];
         [md setObject:@"300" forKey:@"Location_x"];
@@ -707,7 +707,7 @@
         [md setObject:@"c1^c2^c3" forKey:@"Devices"];
         [md setObject:@"a1|a2^b^c" forKey:@"Cmds"];
         [md setObject:@"n1^n2^n3^n4" forKey:@"CmdNames"];
-        [md setObject:@"192.168.43.100" forKey:@"ServerIP"];
+        [md setObject:@"192.168.1.180" forKey:@"ServerIP"];
         [md setObject:@"8600" forKey:@"ServerPort"];
         [self writePopBtnInfoToFile:md];
         [md removeAllObjects];        
@@ -1801,5 +1801,99 @@
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath=[paths objectAtIndex:0];
     return documentsPath;
+}
++(BOOL)setSystemConfiguration:(NSDictionary *)systemInfo{
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"systemConfiguration.xml"];
+    NSString *xmldata=@"<?xml version=\"1.0\" encoding=\"utf-8\"?><setting></setting>";
+    NSData *info=[xmldata dataUsingEncoding:NSUTF8StringEncoding];
+    [info writeToFile:filePath atomically:YES];
+    info=[[NSMutableData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:info options:0 error:&error];
+    GDataXMLElement *rootNode=[doc rootElement];
+    GDataXMLElement *UserName=[GDataXMLNode elementWithName:@"UserName" stringValue:[systemInfo objectForKey:@"UserName"]];
+    GDataXMLElement *Passward=[GDataXMLNode elementWithName:@"Password" stringValue:[systemInfo objectForKey:@"Password"]];
+    GDataXMLElement *RightImgPath=[GDataXMLNode elementWithName:@"RightImgPath" stringValue:[systemInfo objectForKey:@"RightImgPath"]];
+    GDataXMLElement *BackImgPath=[GDataXMLNode elementWithName:@"BackImgPath" stringValue:[systemInfo objectForKey:@"BackImgPath"]];
+    GDataXMLElement *RefreshImgPath=[GDataXMLNode elementWithName:@"RefreshImgPath" stringValue:[systemInfo objectForKey:@"RefreshImgPath"]];
+    GDataXMLElement *State1ImgPath=[GDataXMLNode elementWithName:@"State1ImgPath" stringValue:[systemInfo objectForKey:@"State1ImgPath"]];
+    GDataXMLElement *State2ImgPath=[GDataXMLNode elementWithName:@"State2ImgPath" stringValue:[systemInfo objectForKey:@"State2ImgPath"]];
+    GDataXMLElement *State3ImgPath=[GDataXMLNode elementWithName:@"State3ImgPath" stringValue:[systemInfo objectForKey:@"State3ImgPath"]];
+    GDataXMLElement *State4ImgPath=[GDataXMLNode elementWithName:@"State4ImgPath" stringValue:[systemInfo objectForKey:@"State4ImgPath"]];
+    GDataXMLElement *ShowInfoTime=[GDataXMLNode elementWithName:@"ShowInfoTime" stringValue:[systemInfo objectForKey:@"ShowInfoTime"]];
+    [rootNode addChild:UserName];
+    [rootNode addChild:Passward];
+    [rootNode addChild:RightImgPath];
+    [rootNode addChild:BackImgPath];
+    [rootNode addChild:RefreshImgPath];
+    [rootNode addChild:State1ImgPath];
+    [rootNode addChild:State2ImgPath];
+    [rootNode addChild:State3ImgPath];
+    [rootNode addChild:State4ImgPath];
+    [rootNode addChild:ShowInfoTime];
+    NSData *data=doc.XMLData;
+    [data writeToFile:filePath atomically:YES];
+    NSLog(@"Configurate system info sucessfully");
+    return true;
+}
++(NSDictionary *)getSystemConfiguration{
+    NSMutableDictionary *systemInfo=[NSMutableDictionary dictionary];
+    //filePath为配置文件的路径，其放在程序中默认的某个位置
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath=[paths objectAtIndex:0];
+    NSString *filePath=[documentsPath stringByAppendingPathComponent:@"systemConfiguration.xml"];
+    //不存在配置文件，则返回空
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        return nil;
+    }
+    NSData *info=[[NSMutableData alloc] initWithContentsOfFile:filePath];
+    NSError *error;
+    GDataXMLDocument *doc=[[GDataXMLDocument alloc] initWithData:info options:0 error:&error];
+    GDataXMLElement *rootNode=[doc rootElement];
+    NSArray *temp=[rootNode elementsForName:@"UserName"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"UserName"];
+    }
+    
+    temp=[rootNode elementsForName:@"Password"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"Password"];
+    }
+    temp=[rootNode elementsForName:@"RightImgPath"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"RightImgPath"];
+    }
+    temp=[rootNode elementsForName:@"BackImgPath"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"BackImgPath"];
+    }
+    temp=[rootNode elementsForName:@"RefreshImgPath"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"RefreshImgPath"];
+    }
+    temp=[rootNode elementsForName:@"State1ImgPath"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"State1ImgPath"];
+    }
+    temp=[rootNode elementsForName:@"State2ImgPath"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"State2ImgPath"];
+    }
+    temp=[rootNode elementsForName:@"State3ImgPath"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"State3ImgPath"];
+    }
+    temp=[rootNode elementsForName:@"State4ImgPath"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"State4ImgPath"];
+    }
+    temp=[rootNode elementsForName:@"ShowInfoTime"];
+    if ([temp count]>0) {
+        [systemInfo setObject:[(GDataXMLElement *)[temp objectAtIndex:0] stringValue] forKey:@"ShowInfoTime"];
+    }
+    return systemInfo;
 }
 @end

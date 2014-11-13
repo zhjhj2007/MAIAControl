@@ -70,6 +70,7 @@
     self.navigationItem.rightBarButtonItem = rightButton;
     
     UIBarButtonItem *edit = [[UIBarButtonItem alloc]initWithTitle:@"删除" style:UIBarButtonItemStyleDone target:self action:@selector(deleteButtonInfo)];
+    UIBarButtonItem *systemSetting = [[UIBarButtonItem alloc]initWithTitle:@"系统设置" style:UIBarButtonItemStyleDone target:self action:@selector(jumpToSystemSetting)];
     UIBarButtonItem *backGround = [[UIBarButtonItem alloc]initWithTitle:@"背景" style:UIBarButtonItemStyleDone target:self action:@selector(setViewBackground:)];
     
     int flag=[imageManager getHelpFlag];
@@ -80,13 +81,13 @@
     else
         temp=@"帮助可见";
     onHelp = [[UIBarButtonItem alloc]initWithTitle:temp style:UIBarButtonItemStyleDone target:self action:@selector(changeHelp)];
-    UIBarButtonItem *ss=[[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target:self action:nil];
-    ss.width = self.view.frame.size.width-200.0;
+//    UIBarButtonItem *ss=[[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target:self action:nil];
+//    ss.width = self.view.frame.size.width-150.0;
     
     toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, self.view.frame.size.height - toolBar.frame.size.height-44.0, self.view.frame.size.width,44.0)];
     [toolBar setBarStyle:UIBarStyleDefault];
     toolBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    [toolBar setItems:[NSArray arrayWithObjects:edit,onHelp,ss,backGround,nil] animated:YES];
+    [toolBar setItems:[NSArray arrayWithObjects:edit,onHelp,systemSetting,backGround,nil] animated:YES];
     
     [self.view addSubview:toolBar];
     
@@ -120,7 +121,10 @@
         [alert show];
     }
 }
-
+-(void)jumpToSystemSetting{
+    SystemViewController *next=[[SystemViewController alloc] initWithNibName:@"SystemViewController" bundle:nil];
+    [self.navigationController pushViewController:next animated:YES];
+}
 //代理方法，设置背景图片
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
     NSURL *imageURL = [info valueForKey:UIImagePickerControllerReferenceURL];

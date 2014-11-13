@@ -40,7 +40,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="iwd-eb-4ob"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="vex-Ch-mSE"/>
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Y轴:" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="ttb-Iy-Xuo">
@@ -56,7 +56,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="eNu-LH-csA"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="D5S-Yb-IvU"/>
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="IP地址:" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="tj7-Ai-zmd">
@@ -72,7 +72,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="Noi-B1-5kr"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="Bto-om-Afy"/>
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="端口:" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Kgv-60-evz">
@@ -88,7 +88,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="cWA-bI-wBL"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="cca-U0-blI"/>
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="请输入按钮信息" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Rgs-6D-yBm">
@@ -121,7 +121,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="VBP-FD-DxO"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="fQt-Z1-dAM"/>
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="高度:" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Yc5-ld-2UK">
@@ -137,16 +137,16 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="words" keyboardType="numberPad" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="nPa-qT-9kA"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="CgC-3t-lEt"/>
                     </connections>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ffu-Ro-O8B">
                     <rect key="frame" x="371" y="282" width="386" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="umB-Nj-2Wh"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="xUW-gM-cNp"/>
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="按钮名称:" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="m0H-Bh-Nt2">
@@ -171,9 +171,9 @@
                     <rect key="frame" x="373" y="328" width="386" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="URb-Ui-fNV"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="PFo-Yq-lqU"/>
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="是否显示底注：" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="qkx-7D-8dz">
@@ -205,9 +205,9 @@
                     <rect key="frame" x="373" y="370" width="386" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="DNu-AQ-neC"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="YVC-7n-MKf"/>
                     </connections>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="命令名称组合：" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="wlD-U6-9CN">
@@ -218,12 +218,12 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Example:nd1^nd2^nd3^nd4^nd5" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wka-mY-0Kq">
-                    <rect key="frame" x="371" y="411" width="386" height="30"/>
+                    <rect key="frame" x="371" y="412" width="386" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                     <connections>
-                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEnd" id="8fI-5i-QTZ"/>
+                        <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="Iqd-yO-WhM"/>
                     </connections>
                 </textField>
             </subviews>

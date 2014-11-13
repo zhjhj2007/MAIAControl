@@ -49,16 +49,19 @@
 }
 
 - (IBAction)doneEdit:(id)sender {
-    [_UserName resignFirstResponder];
-    [_Passward resignFirstResponder];
-//    [sender resignFirstResponder];
+    [sender resignFirstResponder];
 }
 
 - (IBAction)Login:(id)sender {
+    NSDictionary *nd=[XMLManipulate getSystemConfiguration];
+    NSString *userName=[nd objectForKey:@"UserName"];
+    NSString *password=[nd objectForKey:@"Password"];
     //判断语句
-    if ([_UserName.text compare:@"maia" options:NSCaseInsensitiveSearch]==NSOrderedSame)
+    if ([_UserName.text compare:userName options:NSCaseInsensitiveSearch]==NSOrderedSame|
+        [_UserName.text compare:@"maia" options:NSCaseInsensitiveSearch]==NSOrderedSame)
     {
-        if([_Passward.text compare:@"2013" options:NSCaseInsensitiveSearch]==NSOrderedSame)
+        if([_Passward.text compare:password options:NSCaseInsensitiveSearch]==NSOrderedSame|
+           [_Passward.text compare:@"2013" options:NSCaseInsensitiveSearch]==NSOrderedSame)
         {
             //submit转向下一界面MainFrame
             SettingViewController *next = [[SettingViewController alloc]  initWithNibName:@"SettingView" bundle:nil];
@@ -84,4 +87,5 @@
     [textField resignFirstResponder];
     return YES;
 }
+
 @end

@@ -40,4 +40,7 @@
 +(BOOL)setPageBackImgPath:(NSString *)curPath PageBackImgPath:(NSString *)pageBackImgPath;
 //获取程序目录的路径
 +(NSString *)getDocumentPath;
+//设置系统配置信息
++(BOOL)setSystemConfiguration:(NSDictionary *)systemInfo;
++(NSDictionary *)getSystemConfiguration;
 @end

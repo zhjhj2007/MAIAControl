@@ -14,6 +14,7 @@
 #import "NewGroupViewVontroller.h"
 #import "NewPopButtonViewController.h"
 #import "XMLManipulate.h"
+#import "SystemViewController.h"
 #import <AssetsLibrary/ALAsset.h>
 #import <AssetsLibrary/ALAssetsLibrary.h>
 #import <AssetsLibrary/ALAssetsGroup.h>

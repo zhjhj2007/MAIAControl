@@ -35,12 +35,12 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
-//    for(UIView *view in [self.view subviews]){
-//        [view removeFromSuperview];
-//    }
+    //    for(UIView *view in [self.view subviews]){
+    //        [view removeFromSuperview];
+    //    }
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
     //加载所有视图，包括组视图与按钮视图
-//    [self loadAllViews];
+    //    [self loadAllViews];
 }
 
 - (void)viewDidLoad
@@ -192,9 +192,10 @@
     //为了在下拉刷新时判断按钮是组视图还是命令按钮视图
     [newButton setTag:1101];
     [newButton addTarget:self action:@selector(sendCmdMsg:) forControlEvents:UIControlEventTouchUpInside];
-    //为命令按钮添加默认加载状态图标，即link.png
-    UIView *stateImg=[[UIView alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Width"] floatValue]-24, [[btnInfo objectForKey:@"Height"] floatValue]-24, 24, 24)];
-    [stateImg setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"link.png"]]];
+    //为命令按钮添加默认加载状态图标，即refresh1.gif
+    YLImageView *stateImg = [[YLImageView alloc] initWithFrame:CGRectMake([[btnInfo objectForKey:@"Width"] floatValue]-24, [[btnInfo objectForKey:@"Height"] floatValue]-24, 24, 24)];
+    stateImg.image = [YLGIFImage imageNamed:@"refresh1.gif"];
+    
     //为了在刷新状态时找到该视图
     [stateImg setTag:1102];
     [newButton addSubview:stateImg];
@@ -297,18 +298,27 @@
             [self.scrollView addSubview:[self getLabelView:tmpDict BtnTypeName:@"PopBtnName"]];
         }
     }
+    NSDictionary *nd=[XMLManipulate getSystemConfiguration];
     //加载一个按钮，用于控制显示NavigationBar
     UIButton *LoginButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.height-40, 10, 30, 30)];
     LoginButton.titleLabel.text = @"Administrator";
     LoginButton.showsTouchWhenHighlighted=true;
-    [LoginButton setBackgroundImage:[UIImage imageNamed:@"Lock.png"] forState:UIControlStateNormal];
+    //判断是否配置了用户设置的图标
+    if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"RightImgPath"]])
+        [LoginButton setBackgroundImage:[UIImage imageWithContentsOfFile:[nd objectForKey:@"RightImgPath"]] forState:UIControlStateNormal];
+    else
+        [LoginButton setBackgroundImage:[UIImage imageNamed:@"Lock.png"] forState:UIControlStateNormal];
     [LoginButton addTarget:self action:@selector(showTheNavigationBar) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:LoginButton];
     //判断是否为第一个页面，如果不是，加载一个返回按钮，否则加载登录界面按钮
     if (![_curPagePath isEqualToString:@"/"]) {
         UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 30, 30)];
         backButton.titleLabel.text = @"back";
-        [backButton setBackgroundImage:[UIImage imageNamed:@"Back.png"] forState:UIControlStateNormal];
+        //判断是否配置了用户设置的图标
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"BackImgPath"]]) {
+            [backButton setBackgroundImage:[UIImage imageWithContentsOfFile:[nd objectForKey:@"BackImgPath"]] forState:UIControlStateNormal];
+        }
+        else    [backButton setBackgroundImage:[UIImage imageNamed:@"Back.png"] forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(backToPre:) forControlEvents:UIControlEventTouchUpInside];
         [self.scrollView addSubview:backButton];
     }
@@ -321,48 +331,58 @@
         UIBarButtonItem *modalBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:modalViewButton];
         self.navigationItem.leftBarButtonItem = modalBarButtonItem;
     }
+    
+    //    YLImageView* imageView = [[YLImageView alloc] initWithFrame:CGRectMake(0, 160, 100, 100)];
+    //    [self.scrollView addSubview:imageView];
+    //    imageView.image = [YLGIFImage imageNamed:@"catTest.gif"];
 }
 
 //根据服务器返回的信息，刷新按钮状态
 -(void) refresh:(NSString *)cmdBtnName BtnState:(NSInteger) btnState{
     NSArray *allViews=[self.scrollView subviews];
+    YLImageView *stateView;
     for(UIView *subView in allViews){
         if([subView isKindOfClass:[UIButton class]]){
             UIButton *tmpBtn=(UIButton *)subView;
-            if ([tmpBtn.titleLabel.text isEqualToString:cmdBtnName]) {
-                NSArray *subViews = [tmpBtn subviews];
-                UIView *stateView = nil;
-                for (UIView *stateViewTemp in subViews) {
-                    if(stateViewTemp.tag == 1102){
-                        stateView = stateViewTemp;
-                        break;
-                    }
-                }
-                switch (btnState) {
-                        //warn
-                    case 1:
-                        [stateView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"warn.png"]]];
-                        break;
-                        //normal
-                    case 2:
-                        [stateView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"normal.png"]]];
-                        break;
-                        //error
-                    case 3:
-                        [stateView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"error.png"]]];
-                        break;
-                        //link
-                    case 4:
-                        [stateView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"link.png"]]];
-                        break;
-                    default:
-                        [stateView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"link.png"]]];
-                        break;
-                }
+            if ([tmpBtn.titleLabel.text isEqualToString:cmdBtnName]){
+                stateView = (YLImageView *)[tmpBtn viewWithTag:1102];
                 break;
             }
         }
     }
+    UIImage *img;
+    NSDictionary *nd=[XMLManipulate getSystemConfiguration];
+    switch (btnState) {
+            //warn
+        case 1:
+            if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"State1ImgPath"]])
+                img=[YLGIFImage imageWithContentsOfFile:[nd objectForKey:@"State1ImgPath"]];
+            else
+                img=[YLGIFImage imageNamed:@"warn.png"];
+            break;
+            //normal
+        case 2:
+            if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"State2ImgPath"]])
+                img=[YLGIFImage imageWithContentsOfFile:[nd objectForKey:@"State2ImgPath"]];
+            else
+                img=[YLGIFImage imageNamed:@"normal.png"];
+            break;
+            //error
+        case 3:
+            if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"State3ImgPath"]])
+                img=[YLGIFImage imageWithContentsOfFile:[nd objectForKey:@"State3ImgPath"]];
+            else
+                img=[YLGIFImage imageNamed:@"error.png"];
+            break;
+            //link
+        case 4:
+            if ([[NSFileManager defaultManager] fileExistsAtPath:[nd objectForKey:@"State4ImgPath"]])
+                img=[YLGIFImage imageWithContentsOfFile:[nd objectForKey:@"State4ImgPath"]];
+            else
+                img=[YLGIFImage imageNamed:@"link.png"];
+            break;
+    }
+    stateView.image=img;
 }
 
 -(void)disPlayNotification:(NSString *)info{
@@ -373,8 +393,9 @@
     topView.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:topView];
     topView.tag = 1104;
-    
-    [self performSelector:@selector(removeView) withObject:nil afterDelay:2];
+    NSDictionary *nd=[XMLManipulate getSystemConfiguration];
+    NSInteger timeDelay=[[nd objectForKey:@"ShowInfoTime"] integerValue];
+    [self performSelector:@selector(removeView) withObject:nil afterDelay:timeDelay];
     
 }
 
@@ -391,13 +412,13 @@
     next.title=[_curPagePath stringByAppendingFormat:@"%@/",sender.titleLabel.text];
     //[[self navigationController] pushViewController:next animated:YES];
     
-    CATransition *animation = [CATransition animation];
-    [animation setDuration:0.8];
-    [animation setType:kCATransitionFade];
-    [animation setSubtype: kCATransitionFromTop];
-    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
-    [self.navigationController pushViewController:next animated:NO];
-    [self.navigationController.view.layer addAnimation:animation forKey:nil];
+    //    CATransition *animation = [CATransition animation];
+    //    [animation setDuration:0.5];
+    //    [animation setType:kCATransitionFromRight];
+    //    [animation setSubtype: kCATransitionFromTop];
+    //    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
+    [self.navigationController pushViewController:next animated:YES];
+    //    [self.navigationController.view.layer addAnimation:animation forKey:nil];
 }
 
 //小窗口按钮的弹出函数
@@ -418,7 +439,7 @@
     
     //sender is the UIButton view
     [popover presentPopoverFromView:sender];
-
+    
 }
 - (void)presentedNewPopoverController:(FPPopoverController *)newPopoverController
           shouldDismissVisiblePopover:(FPPopoverController*)visiblePopoverController
@@ -427,18 +448,18 @@
 }
 
 -(void)backToPre:(UIButton *)sender{
-//?    [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-//    [self dismissViewControllerAnimated:YES completion:nil];
+    //?    [self setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    //    [self dismissViewControllerAnimated:YES completion:nil];
     [[self navigationController] popViewControllerAnimated:YES];
 }
 -(void)showTheNavigationBar{
     [[self navigationController] setNavigationBarHidden:NO animated:YES];
 }
 -(void)showTheLoginView{
-//    SettingViewController *next = [[SettingViewController alloc]  initWithNibName:@"SettingView" bundle:nil];
-//    [self.navigationController pushViewController:next animated:YES];
     LoginViewController *next=[[LoginViewController alloc] init];
     [self.navigationController pushViewController:next animated:YES];
+    //    SystemViewController *next=[[SystemViewController alloc] init];
+    //    [self.navigationController pushViewController:next animated:YES];
 }
 
 //向服务器发送按钮配置的命令
@@ -467,6 +488,7 @@
     NSString *btnName=[nd objectForKey:@"CmdBtnName"];
     NSInteger btnState=[[nd objectForKey:@"CmdBtnState"] integerValue];
     NSString *info = [nd objectForKey:@"NotificationInfo"];
+    //跳出提示信息
     [self disPlayNotification:info];
     [self refresh:btnName BtnState:btnState];
 }

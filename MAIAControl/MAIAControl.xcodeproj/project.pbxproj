@@ -27,6 +27,12 @@
 		0495DE7E1A0BE85B0075ED07 /* child.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0495DE7D1A0BE85B0075ED07 /* child.jpg */; };
 		04971A361A053FB70019E9BE /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */; };
 		04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 04971A3A1A0545410019E9BE /* CmdSocket.m */; };
+		04CA3F091A13970600C1F9A0 /* catTest.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04CA3F081A13970600C1F9A0 /* catTest.gif */; };
+		04CA3F0F1A13978200C1F9A0 /* YLGIFImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CA3F0C1A13978200C1F9A0 /* YLGIFImage.m */; };
+		04CA3F101A13978200C1F9A0 /* YLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CA3F0E1A13978200C1F9A0 /* YLImageView.m */; };
+		04CA3F121A1398BC00C1F9A0 /* refresh1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04CA3F111A1398BC00C1F9A0 /* refresh1.gif */; };
+		04CA3F1B1A13BC7700C1F9A0 /* SystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CA3F191A13BC7700C1F9A0 /* SystemViewController.m */; };
+		04CA3F1C1A13BC7700C1F9A0 /* SystemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04CA3F1A1A13BC7700C1F9A0 /* SystemViewController.xib */; };
 		04D696211A110B9900C2016D /* popBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D696201A110B9900C2016D /* popBtn.png */; };
 		04E62E5C1A1065D00069B86F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04E62E5A1A1059390069B86F /* AssetsLibrary.framework */; };
 		04E62E601A10F0DA0069B86F /* NewPopButtonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E62E5E1A10F0DA0069B86F /* NewPopButtonViewController.m */; };
@@ -107,6 +113,15 @@
 		04971A351A053FB70019E9BE /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
 		04971A391A0545410019E9BE /* CmdSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CmdSocket.h; sourceTree = "<group>"; };
 		04971A3A1A0545410019E9BE /* CmdSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CmdSocket.m; sourceTree = "<group>"; };
+		04CA3F081A13970600C1F9A0 /* catTest.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = catTest.gif; sourceTree = "<group>"; };
+		04CA3F0B1A13978200C1F9A0 /* YLGIFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLGIFImage.h; sourceTree = "<group>"; };
+		04CA3F0C1A13978200C1F9A0 /* YLGIFImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLGIFImage.m; sourceTree = "<group>"; };
+		04CA3F0D1A13978200C1F9A0 /* YLImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLImageView.h; sourceTree = "<group>"; };
+		04CA3F0E1A13978200C1F9A0 /* YLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLImageView.m; sourceTree = "<group>"; };
+		04CA3F111A1398BC00C1F9A0 /* refresh1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = refresh1.gif; sourceTree = "<group>"; };
+		04CA3F181A13BC7700C1F9A0 /* SystemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemViewController.h; sourceTree = "<group>"; };
+		04CA3F191A13BC7700C1F9A0 /* SystemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemViewController.m; sourceTree = "<group>"; };
+		04CA3F1A1A13BC7700C1F9A0 /* SystemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SystemViewController.xib; sourceTree = "<group>"; };
 		04D696201A110B9900C2016D /* popBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popBtn.png; sourceTree = "<group>"; };
 		04E62E5A1A1059390069B86F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		04E62E5D1A10F0DA0069B86F /* NewPopButtonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPopButtonViewController.h; sourceTree = "<group>"; };
@@ -269,6 +284,9 @@
 			isa = PBXGroup;
 			children = (
 				04EA0E461A0F830B00573FFB /* imageManager.h */,
+				04CA3F181A13BC7700C1F9A0 /* SystemViewController.h */,
+				04CA3F191A13BC7700C1F9A0 /* SystemViewController.m */,
+				04CA3F1A1A13BC7700C1F9A0 /* SystemViewController.xib */,
 				04EA0E471A0F830B00573FFB /* imageManager.m */,
 				04EA0E431A0F804400573FFB /* NameAndImageInfo.h */,
 				04EA0E441A0F804400573FFB /* NameAndImageInfo.m */,
@@ -300,6 +318,7 @@
 		04971A371A053FD90019E9BE /* ExternalClass */ = {
 			isa = PBXGroup;
 			children = (
+				04CA3F0A1A13976700C1F9A0 /* YLGIFImage */,
 				04F2C5A51A05E6F200F3353F /* EGORefreshTableHeaderView.h */,
 				04F2C5A61A05E6F200F3353F /* EGORefreshTableHeaderView.m */,
 				04EDA37C1A03BD7B0054F0B4 /* GDataXMLNode.h */,
@@ -327,9 +346,22 @@
 			name = LocalClass;
 			sourceTree = "<group>";
 		};
+		04CA3F0A1A13976700C1F9A0 /* YLGIFImage */ = {
+			isa = PBXGroup;
+			children = (
+				04CA3F0B1A13978200C1F9A0 /* YLGIFImage.h */,
+				04CA3F0C1A13978200C1F9A0 /* YLGIFImage.m */,
+				04CA3F0D1A13978200C1F9A0 /* YLImageView.h */,
+				04CA3F0E1A13978200C1F9A0 /* YLImageView.m */,
+			);
+			name = YLGIFImage;
+			sourceTree = "<group>";
+		};
 		04EDA3811A03DA3A0054F0B4 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				04CA3F111A1398BC00C1F9A0 /* refresh1.gif */,
+				04CA3F081A13970600C1F9A0 /* catTest.gif */,
 				04FC9F4A1A125B5700DF4433 /* pure.jpg */,
 				04D696201A110B9900C2016D /* popBtn.png */,
 				04849B491A0F74DE00CD497C /* Lock.png */,
@@ -377,6 +409,7 @@
 				045B1C431A0267EA001A993F /* Sources */,
 				045B1C441A0267EA001A993F /* Frameworks */,
 				045B1C451A0267EA001A993F /* Resources */,
+				0493DD131A137693005F13D3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -447,6 +480,7 @@
 				04EA0E331A0F7D9C00573FFB /* NewButtonAndGroupView.xib in Resources */,
 				04EDA3991A03DA880054F0B4 /* warn.png in Resources */,
 				04EDA3981A03DA880054F0B4 /* normal.png in Resources */,
+				04CA3F091A13970600C1F9A0 /* catTest.gif in Resources */,
 				04EDA3971A03DA880054F0B4 /* login.png in Resources */,
 				04FC9F491A1255F700DF4433 /* AboutViewController.xib in Resources */,
 				04EDA3921A03DA880054F0B4 /* Bug.png in Resources */,
@@ -454,6 +488,7 @@
 				04EA0E351A0F7D9C00573FFB /* NewGroupView.xib in Resources */,
 				04EDA38E1A03DA880054F0B4 /* 1.png in Resources */,
 				045B1C551A0267EA001A993F /* InfoPlist.strings in Resources */,
+				04CA3F1C1A13BC7700C1F9A0 /* SystemViewController.xib in Resources */,
 				0478ED6F1A0C6E1200E2AE61 /* Back.png in Resources */,
 				04EA0E3C1A0F7E6B00573FFB /* SettingView.xib in Resources */,
 				0495DE7C1A0BC4610075ED07 /* GOMON.jpg in Resources */,
@@ -466,6 +501,7 @@
 				0495DE7E1A0BE85B0075ED07 /* child.jpg in Resources */,
 				04FC9F4B1A125B5700DF4433 /* pure.jpg in Resources */,
 				045B1C5D1A0267EA001A993F /* Images.xcassets in Resources */,
+				04CA3F121A1398BC00C1F9A0 /* refresh1.gif in Resources */,
 				04E62E611A10F0DA0069B86F /* NewPopButtonViewController.xib in Resources */,
 				04EDA3951A03DA880054F0B4 /* iDisk.png in Resources */,
 				04EDA3931A03DA880054F0B4 /* DeskIcon.png in Resources */,
@@ -482,13 +518,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0493DD131A137693005F13D3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export CODESIGN_ALLOCATE=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\n\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ] || [ \"${PLATFORM_NAME}\" == \"ipados\" ]; then\n\n/Applications/Xcode.app/Contents/Developer/iphoneentitlements/gen_entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\n\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\n\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		045B1C431A0267EA001A993F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04CA3F0F1A13978200C1F9A0 /* YLGIFImage.m in Sources */,
 				045B1C5B1A0267EA001A993F /* AppDelegate.m in Sources */,
 				04EDA37E1A03BD7B0054F0B4 /* GDataXMLNode.m in Sources */,
+				04CA3F1B1A13BC7700C1F9A0 /* SystemViewController.m in Sources */,
 				04EA0E481A0F830B00573FFB /* imageManager.m in Sources */,
 				B9AA07741A0E5137001DB552 /* FPPopoverController.m in Sources */,
 				04F2C5A71A05E6F200F3353F /* EGORefreshTableHeaderView.m in Sources */,
@@ -505,6 +559,7 @@
 				04EA0E361A0F7D9C00573FFB /* NewGroupViewVontroller.m in Sources */,
 				04EA0E451A0F804400573FFB /* NameAndImageInfo.m in Sources */,
 				B9AA07761A0E5137001DB552 /* FPTouchView.m in Sources */,
+				04CA3F101A13978200C1F9A0 /* YLImageView.m in Sources */,
 				045B1C7E1A0268BB001A993F /* TextViewController.m in Sources */,
 				04FC9F431A1255DD00DF4433 /* LoginViewController.m in Sources */,
 				04971A3B1A0545410019E9BE /* CmdSocket.m in Sources */,
@@ -627,6 +682,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MAIAControl/MAIAControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -645,6 +701,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MAIAControl/MAIAControl-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

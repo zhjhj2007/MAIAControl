@@ -102,7 +102,7 @@
                     <rect key="frame" x="378" y="376" width="386" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                     <connections>
                         <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="41"/>
                     </connections>
@@ -160,7 +160,7 @@
                     <rect key="frame" x="378" y="327" width="386" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                     <connections>
                         <action selector="textFielfReturn:" destination="-1" eventType="editingDidEndOnExit" id="42"/>
                     </connections>

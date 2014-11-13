@@ -65,7 +65,7 @@
                     <rect key="frame" x="394" y="365" width="339" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                     <connections>
                         <action selector="textFieldReturn:" destination="-1" eventType="editingDidEndOnExit" id="30"/>
                     </connections>
